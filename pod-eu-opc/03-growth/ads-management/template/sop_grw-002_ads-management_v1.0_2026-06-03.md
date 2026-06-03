@@ -1,74 +1,55 @@
 # SOP-GRW-002 — Etsy Ads management (+ Meta Phase 2)
 
-**Department:** grw
-**AI Worker phụ trách:** Ads AI
-**Loại:** OPERATIONAL (template -> input -> processing -> output -> archive)
-**Phiên bản:** v1.0 · **Ngày:** 2026-06-03 · **Trạng thái:** SKELETON (cần điền chi tiết)
+**Department:** Growth (grw) · **AI Worker:** Ads AI
+**Loại:** OPERATIONAL · **v1.0** · **2026-06-03** · **ACTIVE**
 
-> SOP khung theo framework AI Native Company. Điền nội dung cụ thể theo thực tế vận hành ("Trần sao âm vậy"). Xem thiết kế: ../../../02-design/opc-design-roadmap.md
-
----
+> Tối ưu ROAS, không "đốt" budget. ROAS floor 2.5. Phase 2 mở rộng Meta/Google qua channel-config.
 
 ## 1. Tổng quan
-
 | Mục | Nội dung |
 |---|---|
-| **Mục đích** | [Vì sao tồn tại SOP này — kết quả nó tạo ra] |
-| **Phạm vi** | [Áp dụng cho cái gì / không áp dụng cho cái gì] |
-| **Trigger** | [Sự kiện kích hoạt: theo lịch / yêu cầu / đơn hàng / ngưỡng] |
+| **Mục đích** | Chạy & tối ưu quảng cáo để tăng doanh số có lãi (ROAS ≥ 2.5). |
+| **Phạm vi** | Etsy Ads (Phase 1); Meta/Google (Phase 2). |
+| **Trigger** | Listing live có tiềm năng; budget được Founder duyệt; review hàng ngày/tuần. |
 
 ### IPO
-| Thành phần | Chi tiết |
+| | |
 |---|---|
-| **Input** | [Đầu vào — lấy từ SOP/dept nào, đặt trong ./input/] |
-| **Control** | [Ràng buộc: policy, EU compliance (VAT/GPSR/GDPR), SLA, brand voice] |
-| **Output** | [Kết quả — đi tới SOP/dept nào] |
-| **Mechanism** | [Tool/API/skill: Claude API, Etsy API, Printify API, ...] |
+| **Input** | Listing live + performance, ad budget, ROAS hiện tại |
+| **Control** | Budget cap, ROAS floor 2.5, chính sách quảng cáo nền tảng |
+| **Output** | Campaign đang chạy + tối ưu + ad report |
+| **Mechanism** | Ads AI + Etsy Ads, Meta Ads (Phase 2), Claude API |
 
-## 2. Vai trò & RACI
+## 2. RACI
+| Hoạt động | Founder | Ads AI |
+|---|---|---|
+| Duyệt budget cap | **A** | C |
+| Chạy/tối ưu campaign | I | **R** |
+| Scale budget lớn | **A** | R |
 
-| Hoạt động | Founder | Ads AI | Khác |
-|---|---|---|---|
-| [Bước chính 1] | A | R | I |
-| [Bước chính 2] | I | R | C |
-
-## 3. Đầu vào & Điều kiện bắt đầu
-
-- [ ] [Input bắt buộc đã có trong ./input/]
-- [ ] [Điều kiện tiên quyết / phụ thuộc SOP upstream]
+## 3. Đầu vào
+- [ ] Budget cap (Founder) · [ ] Listing live + dữ liệu performance · [ ] ROAS floor
 
 ## 4. Quy trình
-
-> Tag AI: [AI ASSIST] người làm chính · [AI AUGMENT] AI làm + người duyệt · [AI WORKFORCE] AI tự chạy
-
-| # | Bước | Hành động | Tag AI | Prevention (chống lỗi từ gốc) |
+| # | Bước | Hành động | Tag AI | Prevention |
 |---|---|---|---|---|
-| 4.1 | [Tên bước] | [Mô tả] | [AI WORKFORCE] | [Làm sao để lỗi ở bước này KHÔNG THỂ xảy ra] |
-| 4.2 | [Tên bước] | [Mô tả] | [AI AUGMENT] | [...] |
-| 4.3 | [Tên bước] | [Mô tả] | [...] | [...] |
+| 4.1 | Chọn listing | Chọn listing tiềm năng để promote | [AI AUGMENT] | Ưu tiên listing có conversion |
+| 4.2 | Set budget | Phân bổ trong cap | [AI WORKFORCE] | Hard cap; không vượt |
+| 4.3 | Monitor ROAS | Theo dõi ROAS hàng ngày | [AI WORKFORCE] | Alert khi < floor |
+| 4.4 | Tối ưu | Pause listing lỗ, scale listing thắng | [AI AUGMENT] | Quy tắc pause khi ROAS < 2.5 kéo dài |
+| 4.5 | Report | Tổng hợp → GRW-004 | [AI WORKFORCE] | — |
 
-## 5. Quality Gate (SLI / SLO)
+## 5. Quality Gate
+| # | Tiêu chí | SLI | SLO | Pass |
+|---|---|---|---|---|
+| 1 | ROAS | ROAS tổng | ≥ 2.5 | ☐ |
+| 2 | Budget | trong cap | 100% | ☐ |
+| 3 | Tối ưu | listing lỗ được pause kịp | 100% | ☐ |
 
-| # | Tiêu chí | SLI (đo gì) | SLO (target) | Cách kiểm tra | Pass/Fail |
-|---|---|---|---|---|---|
-| 1 | [Tiêu chí 1] | [metric] | [target] | [method] | ☐ |
-| 2 | [Tiêu chí 2] | [metric] | [target] | [method] | ☐ |
-
-**Quyết định:**
-- ALL pass -> Output được chấp nhận -> chuyển ./output/
-- ANY fail -> LOOP lại bước liên quan (tối đa 3 lần)
-- 3+ loops fail -> ESCALATE Founder -> tạo Incident Report tại ../../../_quality/reports/
+**Quyết định:** ROAS < floor kéo dài → pause + escalate Founder (không "đốt" tiếp).
 
 ## 6. Output & Downstream
-
-- **Lưu tại:** ./output/ ; cuối kỳ chuyển ./archive/[YYYY-MM]/
-- **Downstream:** [SOP/dept nhận output tiếp theo]
-- **Naming:** sop-grw-002_[mô-tả]_DONE_2026-06-03.md (theo quy ước repo)
+- **Lưu:** ./output/ads-report_[YYYY-Wnn].md → archive/ · **Downstream:** GRW-004, BCK-003 (chi phí ads vào profit-per-SKU)
 
 ## 7. Phụ lục
-
-- **Upstream SOP:** [link]
-- **Downstream SOP:** [link]
-- **Knowledge:** ../../_knowledge/
-- **Rules / Quality Standards:** ../../_rules/ · ../../quality_grw-001_quality-standards_v1.0_2026-06-03.md
-- **Thiết kế tham chiếu:** ../../../02-design/opc-design-roadmap.md
+Channel: ../../_shared/channel-config/ · Pricing (ad allocation): ../../02-merchandising/pricing-margin/ · Thiết kế §3.3

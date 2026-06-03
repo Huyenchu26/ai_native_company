@@ -1,74 +1,49 @@
 # SOP-GRW-004 — Growth performance report
 
-**Department:** grw
-**AI Worker phụ trách:** Ads AI
-**Loại:** OPERATIONAL (template -> input -> processing -> output -> archive)
-**Phiên bản:** v1.0 · **Ngày:** 2026-06-03 · **Trạng thái:** SKELETON (cần điền chi tiết)
-
-> SOP khung theo framework AI Native Company. Điền nội dung cụ thể theo thực tế vận hành ("Trần sao âm vậy"). Xem thiết kế: ../../../02-design/opc-design-roadmap.md
-
----
+**Department:** Growth (grw) · **AI Worker:** Ads AI
+**Loại:** OPERATIONAL · **v1.0** · **2026-06-03** · **ACTIVE**
 
 ## 1. Tổng quan
-
 | Mục | Nội dung |
 |---|---|
-| **Mục đích** | [Vì sao tồn tại SOP này — kết quả nó tạo ra] |
-| **Phạm vi** | [Áp dụng cho cái gì / không áp dụng cho cái gì] |
-| **Trigger** | [Sự kiện kích hoạt: theo lịch / yêu cầu / đơn hàng / ngưỡng] |
+| **Mục đích** | Tổng hợp hiệu suất growth (traffic, conversion, ROAS) → insight + đề xuất cho Founder. |
+| **Phạm vi** | Báo cáo tuần (KPI) + tháng (KRI/OKR). |
+| **Trigger** | Cuối tuần / cuối tháng. |
 
 ### IPO
-| Thành phần | Chi tiết |
+| | |
 |---|---|
-| **Input** | [Đầu vào — lấy từ SOP/dept nào, đặt trong ./input/] |
-| **Control** | [Ràng buộc: policy, EU compliance (VAT/GPSR/GDPR), SLA, brand voice] |
-| **Output** | [Kết quả — đi tới SOP/dept nào] |
-| **Mechanism** | [Tool/API/skill: Claude API, Etsy API, Printify API, ...] |
+| **Input** | Pinterest/social metrics (GRW-001), ads metrics (GRW-002), email metrics (GRW-003), doanh số (FUL/BCK) |
+| **Control** | Định dạng report theo OKR/KRI/KPI, đúng hạn |
+| **Output** | Growth report + đề xuất hành động |
+| **Mechanism** | Ads AI + Claude API, report template |
 
-## 2. Vai trò & RACI
+## 2. RACI
+| Hoạt động | Founder | Ads AI |
+|---|---|---|
+| Đọc & quyết định | **A** | C |
+| Soạn report | I | **R** |
 
-| Hoạt động | Founder | Ads AI | Khác |
-|---|---|---|---|
-| [Bước chính 1] | A | R | I |
-| [Bước chính 2] | I | R | C |
-
-## 3. Đầu vào & Điều kiện bắt đầu
-
-- [ ] [Input bắt buộc đã có trong ./input/]
-- [ ] [Điều kiện tiên quyết / phụ thuộc SOP upstream]
+## 3. Đầu vào
+- [ ] Metrics từ GRW-001/002/003 · [ ] Doanh số kỳ · [ ] Report template
 
 ## 4. Quy trình
-
-> Tag AI: [AI ASSIST] người làm chính · [AI AUGMENT] AI làm + người duyệt · [AI WORKFORCE] AI tự chạy
-
-| # | Bước | Hành động | Tag AI | Prevention (chống lỗi từ gốc) |
+| # | Bước | Hành động | Tag AI | Prevention |
 |---|---|---|---|---|
-| 4.1 | [Tên bước] | [Mô tả] | [AI WORKFORCE] | [Làm sao để lỗi ở bước này KHÔNG THỂ xảy ra] |
-| 4.2 | [Tên bước] | [Mô tả] | [AI AUGMENT] | [...] |
-| 4.3 | [Tên bước] | [Mô tả] | [...] | [...] |
+| 4.1 | Thu thập | Gom metrics các kênh | [AI WORKFORCE] | Cross-check nguồn |
+| 4.2 | Phân tích | Top listing, ROAS, conversion, anomaly | [AI AUGMENT] | KPI→KRI causal chain |
+| 4.3 | Đề xuất | Hành động tuần/tháng tới | [AI AUGMENT] | Actionable, có ưu tiên |
+| 4.4 | Gửi | Xuất report → Founder | [AI WORKFORCE] | Đúng hạn |
 
-## 5. Quality Gate (SLI / SLO)
-
-| # | Tiêu chí | SLI (đo gì) | SLO (target) | Cách kiểm tra | Pass/Fail |
-|---|---|---|---|---|---|
-| 1 | [Tiêu chí 1] | [metric] | [target] | [method] | ☐ |
-| 2 | [Tiêu chí 2] | [metric] | [target] | [method] | ☐ |
-
-**Quyết định:**
-- ALL pass -> Output được chấp nhận -> chuyển ./output/
-- ANY fail -> LOOP lại bước liên quan (tối đa 3 lần)
-- 3+ loops fail -> ESCALATE Founder -> tạo Incident Report tại ../../../_quality/reports/
+## 5. Quality Gate
+| # | Tiêu chí | SLI | SLO | Pass |
+|---|---|---|---|---|
+| 1 | Đúng hạn | report nộp đúng hạn | 100% | ☐ |
+| 2 | Đầy đủ | đủ KPI + KRI (monthly) | 100% | ☐ |
+| 3 | Actionable | có đề xuất ưu tiên | đạt | ☐ |
 
 ## 6. Output & Downstream
-
-- **Lưu tại:** ./output/ ; cuối kỳ chuyển ./archive/[YYYY-MM]/
-- **Downstream:** [SOP/dept nhận output tiếp theo]
-- **Naming:** sop-grw-004_[mô-tả]_DONE_2026-06-03.md (theo quy ước repo)
+- **Lưu:** ./output/ hoặc ../reports/{weekly,monthly}/ → archive/ · **Downstream:** Founder (strategy), OKR review
 
 ## 7. Phụ lục
-
-- **Upstream SOP:** [link]
-- **Downstream SOP:** [link]
-- **Knowledge:** ../../_knowledge/
-- **Rules / Quality Standards:** ../../_rules/ · ../../quality_grw-001_quality-standards_v1.0_2026-06-03.md
-- **Thiết kế tham chiếu:** ../../../02-design/opc-design-roadmap.md
+Report template: ../../_shared/templates/ · KPI: ../kpi_grw-001_03-growth-kpis_v1.0_2026-06-03.md · Thiết kế §3.3, §7

@@ -1,74 +1,57 @@
 # SOP-GRW-001 — Pinterest & social content
 
-**Department:** grw
-**AI Worker phụ trách:** Marketing AI
-**Loại:** OPERATIONAL (template -> input -> processing -> output -> archive)
-**Phiên bản:** v1.0 · **Ngày:** 2026-06-03 · **Trạng thái:** SKELETON (cần điền chi tiết)
+**Department:** Growth (grw) · **AI Worker:** Marketing AI
+**Loại:** OPERATIONAL · **v1.0** · **2026-06-03** · **ACTIVE**
 
-> SOP khung theo framework AI Native Company. Điền nội dung cụ thể theo thực tế vận hành ("Trần sao âm vậy"). Xem thiết kế: ../../../02-design/opc-design-roadmap.md
-
----
+> Pinterest là kênh organic mạnh nhất cho POD apparel: nội dung sống lâu, ý định mua cao, dẫn traffic miễn phí về listing.
 
 ## 1. Tổng quan
-
 | Mục | Nội dung |
 |---|---|
-| **Mục đích** | [Vì sao tồn tại SOP này — kết quả nó tạo ra] |
-| **Phạm vi** | [Áp dụng cho cái gì / không áp dụng cho cái gì] |
-| **Trigger** | [Sự kiện kích hoạt: theo lịch / yêu cầu / đơn hàng / ngưỡng] |
+| **Mục đích** | Tạo & lên lịch pin/social kéo traffic chất lượng về listing live, tăng visibility không tốn phí. |
+| **Phạm vi** | Pinterest (chính) + social phụ (IG/FB). Quảng cáo trả phí là GRW-002. |
+| **Trigger** | Listing live (MER-004); lịch nội dung tuần; dịp mùa vụ (PRD-002). |
 
 ### IPO
-| Thành phần | Chi tiết |
+| | |
 |---|---|
-| **Input** | [Đầu vào — lấy từ SOP/dept nào, đặt trong ./input/] |
-| **Control** | [Ràng buộc: policy, EU compliance (VAT/GPSR/GDPR), SLA, brand voice] |
-| **Output** | [Kết quả — đi tới SOP/dept nào] |
-| **Mechanism** | [Tool/API/skill: Claude API, Etsy API, Printify API, ...] |
+| **Input** | Listing live + mockups (MER-004), seasonal calendar (PRD-002), brand voice, keyword Pinterest |
+| **Control** | Brand policy, Pinterest SEO, tần suất tối thiểu, không từ khóa IP |
+| **Output** | Pin/social posts đã lên lịch + link về listing |
+| **Mechanism** | Marketing AI + Claude API, Canva, Pinterest API, scheduler |
 
-## 2. Vai trò & RACI
+## 2. Knowledge
+- Pinterest = công cụ tìm kiếm hình ảnh → tối ưu **tiêu đề + mô tả pin theo keyword**.
+- Pin tốt: mockup + lifestyle + text overlay rõ; tạo nhiều pin/listing.
+- Mỗi pin gắn link trực tiếp tới listing đúng.
 
-| Hoạt động | Founder | Marketing AI | Khác |
-|---|---|---|---|
-| [Bước chính 1] | A | R | I |
-| [Bước chính 2] | I | R | C |
+## 3. RACI
+| Hoạt động | Founder | Marketing AI |
+|---|---|---|
+| Tạo & lên lịch nội dung | I | **R** |
+| Duyệt campaign nội dung lớn | C | R |
 
-## 3. Đầu vào & Điều kiện bắt đầu
+## 4. Đầu vào
+- [ ] Listing live + mockups · [ ] Brand voice · [ ] Keyword Pinterest · [ ] Lịch mùa vụ
 
-- [ ] [Input bắt buộc đã có trong ./input/]
-- [ ] [Điều kiện tiên quyết / phụ thuộc SOP upstream]
-
-## 4. Quy trình
-
-> Tag AI: [AI ASSIST] người làm chính · [AI AUGMENT] AI làm + người duyệt · [AI WORKFORCE] AI tự chạy
-
-| # | Bước | Hành động | Tag AI | Prevention (chống lỗi từ gốc) |
+## 5. Quy trình
+| # | Bước | Hành động | Tag AI | Prevention |
 |---|---|---|---|---|
-| 4.1 | [Tên bước] | [Mô tả] | [AI WORKFORCE] | [Làm sao để lỗi ở bước này KHÔNG THỂ xảy ra] |
-| 4.2 | [Tên bước] | [Mô tả] | [AI AUGMENT] | [...] |
-| 4.3 | [Tên bước] | [Mô tả] | [...] | [...] |
+| 5.1 | Chọn listing | Lấy listing live cần đẩy | [AI WORKFORCE] | Chỉ pin listing đang live |
+| 5.2 | Tạo pin | Thiết kế pin (mockup + overlay) nhiều biến thể | [AI AUGMENT] | ≥ N pin/listing |
+| 5.3 | Pin SEO | Viết tiêu đề + mô tả theo keyword | [AI AUGMENT] | Có keyword; link đúng listing |
+| 5.4 | Lên lịch | Schedule rải đều, ưu tiên dịp mùa vụ | [AI WORKFORCE] | Đủ tần suất tối thiểu |
+| 5.5 | Track | Theo dõi impression/click → GRW-004 | [AI WORKFORCE] | — |
 
-## 5. Quality Gate (SLI / SLO)
+## 6. Quality Gate
+| # | Tiêu chí | SLI | SLO | Pass |
+|---|---|---|---|---|
+| 1 | Tần suất | pins/tuần | ≥ 15 | ☐ |
+| 2 | Link đúng | % pin link tới listing đúng | 100% | ☐ |
+| 3 | SEO | pin có keyword + mô tả | 100% | ☐ |
 
-| # | Tiêu chí | SLI (đo gì) | SLO (target) | Cách kiểm tra | Pass/Fail |
-|---|---|---|---|---|---|
-| 1 | [Tiêu chí 1] | [metric] | [target] | [method] | ☐ |
-| 2 | [Tiêu chí 2] | [metric] | [target] | [method] | ☐ |
+## 7. Output & Downstream
+- **Lưu:** ./output/pins_[YYYY-Wnn].md → archive/ · **Downstream:** GRW-004 (report), traffic → listing
 
-**Quyết định:**
-- ALL pass -> Output được chấp nhận -> chuyển ./output/
-- ANY fail -> LOOP lại bước liên quan (tối đa 3 lần)
-- 3+ loops fail -> ESCALATE Founder -> tạo Incident Report tại ../../../_quality/reports/
-
-## 6. Output & Downstream
-
-- **Lưu tại:** ./output/ ; cuối kỳ chuyển ./archive/[YYYY-MM]/
-- **Downstream:** [SOP/dept nhận output tiếp theo]
-- **Naming:** sop-grw-001_[mô-tả]_DONE_2026-06-03.md (theo quy ước repo)
-
-## 7. Phụ lục
-
-- **Upstream SOP:** [link]
-- **Downstream SOP:** [link]
-- **Knowledge:** ../../_knowledge/
-- **Rules / Quality Standards:** ../../_rules/ · ../../quality_grw-001_quality-standards_v1.0_2026-06-03.md
-- **Thiết kế tham chiếu:** ../../../02-design/opc-design-roadmap.md
+## 8. Phụ lục
+Brand: ../../_shared/policies/brand-policy.md · Mùa vụ: ../../01-product-studio/trend-seasonal-scan/ · Thiết kế §3.3
