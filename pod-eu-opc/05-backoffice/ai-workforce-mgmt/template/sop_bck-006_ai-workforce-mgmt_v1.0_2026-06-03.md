@@ -1,74 +1,53 @@
 # SOP-BCK-006 — AI workforce management
 
-**Department:** bck
-**AI Worker phụ trách:** Ops-HR AI
-**Loại:** OPERATIONAL (template -> input -> processing -> output -> archive)
-**Phiên bản:** v1.0 · **Ngày:** 2026-06-03 · **Trạng thái:** SKELETON (cần điền chi tiết)
+**Department:** Backoffice (bck) · **AI Worker:** Ops/HR AI
+**Loại:** OPERATIONAL · **v1.0** · **2026-06-03** · **ACTIVE**
 
-> SOP khung theo framework AI Native Company. Điền nội dung cụ thể theo thực tế vận hành ("Trần sao âm vậy"). Xem thiết kế: ../../../02-design/opc-design-roadmap.md
-
----
+> "HR" cho 11 AI Worker: theo dõi uptime, chất lượng output, chi phí, năng lực; cập nhật skill/SOP.
 
 ## 1. Tổng quan
-
 | Mục | Nội dung |
 |---|---|
-| **Mục đích** | [Vì sao tồn tại SOP này — kết quả nó tạo ra] |
-| **Phạm vi** | [Áp dụng cho cái gì / không áp dụng cho cái gì] |
-| **Trigger** | [Sự kiện kích hoạt: theo lịch / yêu cầu / đơn hàng / ngưỡng] |
+| **Mục đích** | Đảm bảo 11 AI Worker hoạt động ổn định, đạt SLO, chi phí trong budget; phát hiện & vá lỗ hổng năng lực. |
+| **Phạm vi** | Toàn bộ AI Workforce (xem _ai-workforce/). |
+| **Trigger** | Hàng tuần (uptime/cost) + review hiệu suất hàng tháng. |
 
 ### IPO
-| Thành phần | Chi tiết |
+| | |
 |---|---|
-| **Input** | [Đầu vào — lấy từ SOP/dept nào, đặt trong ./input/] |
-| **Control** | [Ràng buộc: policy, EU compliance (VAT/GPSR/GDPR), SLA, brand voice] |
-| **Output** | [Kết quả — đi tới SOP/dept nào] |
-| **Mechanism** | [Tool/API/skill: Claude API, Etsy API, Printify API, ...] |
+| **Input** | AI usage/cost, output quality từ Quality Gate các SOP, SLO compliance, incident log |
+| **Control** | Uptime ≥ 99%, cost trong budget (cost-analysis), SLO mỗi worker |
+| **Output** | Workforce roster, performance review, capacity plan, skill-gap actions |
+| **Mechanism** | Ops/HR AI + Claude API, monitoring, _ai-workforce docs |
 
-## 2. Vai trò & RACI
+## 2. RACI
+| Hoạt động | Founder | Ops/HR AI |
+|---|---|---|
+| Duyệt thay đổi workforce/budget | **A** | C |
+| Monitor & review | I | **R** |
 
-| Hoạt động | Founder | Ops-HR AI | Khác |
-|---|---|---|---|
-| [Bước chính 1] | A | R | I |
-| [Bước chính 2] | I | R | C |
-
-## 3. Đầu vào & Điều kiện bắt đầu
-
-- [ ] [Input bắt buộc đã có trong ./input/]
-- [ ] [Điều kiện tiên quyết / phụ thuộc SOP upstream]
+## 3. Đầu vào
+- [ ] AI usage/cost kỳ · [ ] Quality Gate pass/fail các SOP · [ ] Incident log (_quality/)
 
 ## 4. Quy trình
-
-> Tag AI: [AI ASSIST] người làm chính · [AI AUGMENT] AI làm + người duyệt · [AI WORKFORCE] AI tự chạy
-
-| # | Bước | Hành động | Tag AI | Prevention (chống lỗi từ gốc) |
+| # | Bước | Hành động | Tag AI | Prevention |
 |---|---|---|---|---|
-| 4.1 | [Tên bước] | [Mô tả] | [AI WORKFORCE] | [Làm sao để lỗi ở bước này KHÔNG THỂ xảy ra] |
-| 4.2 | [Tên bước] | [Mô tả] | [AI AUGMENT] | [...] |
-| 4.3 | [Tên bước] | [Mô tả] | [...] | [...] |
+| 4.1 | Monitor | Theo dõi uptime + cost từng worker | [AI WORKFORCE] | Alert khi uptime <99% hoặc cost vượt |
+| 4.2 | Review chất lượng | Tổng hợp quality gate pass-rate theo worker | [AI AUGMENT] | Dùng dữ liệu thật từ SOP |
+| 4.3 | Skill-gap | Worker fail lặp → xác định gap → update skill/SOP/knowledge | [AI AUGMENT] | Lỗi lặp ≥3 → bắt buộc cải tiến |
+| 4.4 | Capacity | Dự báo tải; đề xuất thêm/bớt/điều chỉnh worker | [AI AUGMENT] | Gắn với khối lượng pipeline |
+| 4.5 | Roster + report | Cập nhật roster + performance report → Founder | [AI WORKFORCE] | Đúng hạn |
 
-## 5. Quality Gate (SLI / SLO)
-
-| # | Tiêu chí | SLI (đo gì) | SLO (target) | Cách kiểm tra | Pass/Fail |
-|---|---|---|---|---|---|
-| 1 | [Tiêu chí 1] | [metric] | [target] | [method] | ☐ |
-| 2 | [Tiêu chí 2] | [metric] | [target] | [method] | ☐ |
-
-**Quyết định:**
-- ALL pass -> Output được chấp nhận -> chuyển ./output/
-- ANY fail -> LOOP lại bước liên quan (tối đa 3 lần)
-- 3+ loops fail -> ESCALATE Founder -> tạo Incident Report tại ../../../_quality/reports/
+## 5. Quality Gate
+| # | Tiêu chí | SLI | SLO | Pass |
+|---|---|---|---|---|
+| 1 | Uptime | uptime trung bình | ≥ 99% | ☐ |
+| 2 | Performance | mọi worker có score | 100% | ☐ |
+| 3 | Cost | tổng cost vs budget | trong budget | ☐ |
 
 ## 6. Output & Downstream
-
-- **Lưu tại:** ./output/ ; cuối kỳ chuyển ./archive/[YYYY-MM]/
-- **Downstream:** [SOP/dept nhận output tiếp theo]
-- **Naming:** sop-bck-006_[mô-tả]_DONE_2026-06-03.md (theo quy ước repo)
+- **Lưu:** ./output/workforce-roster_[YYYY-MM].md, performance-review → archive/
+- **Downstream:** Founder (workforce decisions), _ai-workforce/ (cập nhật map/build-plan)
 
 ## 7. Phụ lục
-
-- **Upstream SOP:** [link]
-- **Downstream SOP:** [link]
-- **Knowledge:** ../../_knowledge/
-- **Rules / Quality Standards:** ../../_rules/ · ../../quality_bck-001_quality-standards_v1.0_2026-06-03.md
-- **Thiết kế tham chiếu:** ../../../02-design/opc-design-roadmap.md
+Workforce: ../../_ai-workforce/ (map, build-plan, skills-matrix, cost-analysis) · Thiết kế §3.5, §5

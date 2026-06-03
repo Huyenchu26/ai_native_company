@@ -1,74 +1,53 @@
 # SOP-BCK-003 — Profit-per-SKU & financial report
 
-**Department:** bck
-**AI Worker phụ trách:** Finance AI
-**Loại:** OPERATIONAL (template -> input -> processing -> output -> archive)
-**Phiên bản:** v1.0 · **Ngày:** 2026-06-03 · **Trạng thái:** SKELETON (cần điền chi tiết)
+**Department:** Backoffice (bck) · **AI Worker:** Finance AI
+**Loại:** OPERATIONAL · **v1.0** · **2026-06-03** · **ACTIVE**
 
-> SOP khung theo framework AI Native Company. Điền nội dung cụ thể theo thực tế vận hành ("Trần sao âm vậy"). Xem thiết kế: ../../../02-design/opc-design-roadmap.md
-
----
+> Profit-per-SKU là chỉ số sống còn của POD: biết SKU nào lãi để scale, SKU nào lỗ để kill.
 
 ## 1. Tổng quan
-
 | Mục | Nội dung |
 |---|---|
-| **Mục đích** | [Vì sao tồn tại SOP này — kết quả nó tạo ra] |
-| **Phạm vi** | [Áp dụng cho cái gì / không áp dụng cho cái gì] |
-| **Trigger** | [Sự kiện kích hoạt: theo lịch / yêu cầu / đơn hàng / ngưỡng] |
+| **Mục đích** | Tính lợi nhuận thực từng SKU sau mọi phí; lập P&L tháng + CEO brief; đề xuất scale/kill. |
+| **Phạm vi** | Profit-per-SKU + báo cáo tài chính tháng. |
+| **Trigger** | Cuối tháng (trước ngày 5 tháng sau). |
 
 ### IPO
-| Thành phần | Chi tiết |
+| | |
 |---|---|
-| **Input** | [Đầu vào — lấy từ SOP/dept nào, đặt trong ./input/] |
-| **Control** | [Ràng buộc: policy, EU compliance (VAT/GPSR/GDPR), SLA, brand voice] |
-| **Output** | [Kết quả — đi tới SOP/dept nào] |
-| **Mechanism** | [Tool/API/skill: Claude API, Etsy API, Printify API, ...] |
+| **Input** | Ledger (BCK-001), pricing (MER-003), ad spend theo SKU (GRW-002), refund (FUL-004) |
+| **Control** | Báo cáo trước ngày 5, accuracy, margin floor 30% để đánh giá |
+| **Output** | Profit-per-SKU table, P&L tháng, CEO financial brief, đề xuất scale/kill |
+| **Mechanism** | Finance AI + Claude API, Sheets/Xero |
 
-## 2. Vai trò & RACI
+## 2. RACI
+| Hoạt động | Founder | Finance AI |
+|---|---|---|
+| Đọc & quyết định scale/kill | **A** | C |
+| Tính & soạn report | I | **R** |
 
-| Hoạt động | Founder | Finance AI | Khác |
-|---|---|---|---|
-| [Bước chính 1] | A | R | I |
-| [Bước chính 2] | I | R | C |
-
-## 3. Đầu vào & Điều kiện bắt đầu
-
-- [ ] [Input bắt buộc đã có trong ./input/]
-- [ ] [Điều kiện tiên quyết / phụ thuộc SOP upstream]
+## 3. Đầu vào
+- [ ] Ledger kỳ (BCK-001) · [ ] Pricing sheet (MER-003) · [ ] Ad spend theo SKU (GRW-002)
 
 ## 4. Quy trình
-
-> Tag AI: [AI ASSIST] người làm chính · [AI AUGMENT] AI làm + người duyệt · [AI WORKFORCE] AI tự chạy
-
-| # | Bước | Hành động | Tag AI | Prevention (chống lỗi từ gốc) |
+| # | Bước | Hành động | Tag AI | Prevention |
 |---|---|---|---|---|
-| 4.1 | [Tên bước] | [Mô tả] | [AI WORKFORCE] | [Làm sao để lỗi ở bước này KHÔNG THỂ xảy ra] |
-| 4.2 | [Tên bước] | [Mô tả] | [AI AUGMENT] | [...] |
-| 4.3 | [Tên bước] | [Mô tả] | [...] | [...] |
+| 4.1 | Gom theo SKU | Doanh thu + chi phí (in/ship/fees/ads/refund) theo SKU | [AI WORKFORCE] | Map đầy đủ, không sót chi phí |
+| 4.2 | Tính profit | Lợi nhuận & margin thực mỗi SKU | [AI WORKFORCE] | Đối chiếu vs floor 30% |
+| 4.3 | P&L | Tổng hợp P&L tháng | [AI AUGMENT] | Khớp tổng với ledger |
+| 4.4 | Insight | SKU lãi nhất / lỗ; đề xuất scale (→GRW) / kill (→MER) | [AI AUGMENT] | Có ngưỡng rõ để kill |
+| 4.5 | CEO brief | Tóm tắt cho Founder + gửi đúng hạn | [AI AUGMENT] | Reminder trước ngày 5 |
 
-## 5. Quality Gate (SLI / SLO)
-
-| # | Tiêu chí | SLI (đo gì) | SLO (target) | Cách kiểm tra | Pass/Fail |
-|---|---|---|---|---|---|
-| 1 | [Tiêu chí 1] | [metric] | [target] | [method] | ☐ |
-| 2 | [Tiêu chí 2] | [metric] | [target] | [method] | ☐ |
-
-**Quyết định:**
-- ALL pass -> Output được chấp nhận -> chuyển ./output/
-- ANY fail -> LOOP lại bước liên quan (tối đa 3 lần)
-- 3+ loops fail -> ESCALATE Founder -> tạo Incident Report tại ../../../_quality/reports/
+## 5. Quality Gate
+| # | Tiêu chí | SLI | SLO | Pass |
+|---|---|---|---|---|
+| 1 | Đúng hạn | report nộp | trước ngày 5 | ☐ |
+| 2 | Coverage | mọi SKU có profit number | 100% | ☐ |
+| 3 | Khớp sổ | P&L khớp ledger BCK-001 | = €0 chênh | ☐ |
 
 ## 6. Output & Downstream
-
-- **Lưu tại:** ./output/ ; cuối kỳ chuyển ./archive/[YYYY-MM]/
-- **Downstream:** [SOP/dept nhận output tiếp theo]
-- **Naming:** sop-bck-003_[mô-tả]_DONE_2026-06-03.md (theo quy ước repo)
+- **Lưu:** ./output/profit-per-sku_[YYYY-MM].md, pnl_[YYYY-MM].md → archive/
+- **Downstream:** Founder (scale/kill), GRW-002 (scale ads SKU lãi), MER (kill SKU lỗ), OKR review
 
 ## 7. Phụ lục
-
-- **Upstream SOP:** [link]
-- **Downstream SOP:** [link]
-- **Knowledge:** ../../_knowledge/
-- **Rules / Quality Standards:** ../../_rules/ · ../../quality_bck-001_quality-standards_v1.0_2026-06-03.md
-- **Thiết kế tham chiếu:** ../../../02-design/opc-design-roadmap.md
+Ledger: ../bookkeeping/ · Pricing: ../../02-merchandising/pricing-margin/ · Thiết kế §3.5, §7
