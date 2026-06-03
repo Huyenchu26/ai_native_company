@@ -1,74 +1,60 @@
 # SOP-PRD-003 — Design brief & production
 
-**Department:** prd
-**AI Worker phụ trách:** Design AI
-**Loại:** OPERATIONAL (template -> input -> processing -> output -> archive)
-**Phiên bản:** v1.0 · **Ngày:** 2026-06-03 · **Trạng thái:** SKELETON (cần điền chi tiết)
-
-> SOP khung theo framework AI Native Company. Điền nội dung cụ thể theo thực tế vận hành ("Trần sao âm vậy"). Xem thiết kế: ../../../02-design/opc-design-roadmap.md
-
----
+**Department:** Product Studio (prd) · **AI Worker:** Design AI
+**Loại:** OPERATIONAL · **v1.0** · **2026-06-03** · **ACTIVE**
 
 ## 1. Tổng quan
-
 | Mục | Nội dung |
 |---|---|
-| **Mục đích** | [Vì sao tồn tại SOP này — kết quả nó tạo ra] |
-| **Phạm vi** | [Áp dụng cho cái gì / không áp dụng cho cái gì] |
-| **Trigger** | [Sự kiện kích hoạt: theo lịch / yêu cầu / đơn hàng / ngưỡng] |
+| **Mục đích** | Biến validated niche thành **design print-ready** đúng chuẩn kỹ thuật, đủ biến thể. |
+| **Phạm vi** | Brief → tạo → export print-ready. QC & IP clearance là PRD-004. |
+| **Trigger** | Có validated niche từ PRD-001 / opportunity từ PRD-002. |
 
 ### IPO
-| Thành phần | Chi tiết |
+| | |
 |---|---|
-| **Input** | [Đầu vào — lấy từ SOP/dept nào, đặt trong ./input/] |
-| **Control** | [Ràng buộc: policy, EU compliance (VAT/GPSR/GDPR), SLA, brand voice] |
-| **Output** | [Kết quả — đi tới SOP/dept nào] |
-| **Mechanism** | [Tool/API/skill: Claude API, Etsy API, Printify API, ...] |
+| **Input** | Validated niche list (PRD-001), brand guidelines, print spec theo sản phẩm |
+| **Control** | Print-ready spec, brand voice/visual, phù hợp vùng in apparel |
+| **Output** | Design file print-ready + design brief + concept variations |
+| **Mechanism** | Design AI + Claude API (brief/prompt), image-gen (Midjourney/Ideogram/DALL·E), Printify mockup |
 
-## 2. Vai trò & RACI
+## 2. Print-ready spec (Knowledge)
+- **Độ phân giải:** ≥ 300 DPI
+- **Định dạng:** PNG nền trong suốt (transparent)
+- **Kích thước:** theo product Printify (DTG thường ~4500×5400 px)
+- **Vùng in an toàn:** giữ trong print area; tránh chi tiết sát mép
+- **Màu:** RGB; lưu ý chênh màu in; tránh full-bleed trừ AOP (all-over-print)
+- **Biến thể:** chuẩn bị bản cho nền áo sáng & tối nếu cần
 
-| Hoạt động | Founder | Design AI | Khác |
-|---|---|---|---|
-| [Bước chính 1] | A | R | I |
-| [Bước chính 2] | I | R | C |
+## 3. RACI
+| Hoạt động | Founder | Design AI |
+|---|---|---|
+| Tạo & export design | I | **R** |
+| Duyệt hướng sáng tạo lớn | C | R |
 
-## 3. Đầu vào & Điều kiện bắt đầu
+## 4. Đầu vào
+- [ ] Validated niche (PRD-001) · [ ] Brand guidelines · [ ] Print spec product mục tiêu
 
-- [ ] [Input bắt buộc đã có trong ./input/]
-- [ ] [Điều kiện tiên quyết / phụ thuộc SOP upstream]
-
-## 4. Quy trình
-
-> Tag AI: [AI ASSIST] người làm chính · [AI AUGMENT] AI làm + người duyệt · [AI WORKFORCE] AI tự chạy
-
-| # | Bước | Hành động | Tag AI | Prevention (chống lỗi từ gốc) |
+## 5. Quy trình
+| # | Bước | Hành động | Tag AI | Prevention |
 |---|---|---|---|---|
-| 4.1 | [Tên bước] | [Mô tả] | [AI WORKFORCE] | [Làm sao để lỗi ở bước này KHÔNG THỂ xảy ra] |
-| 4.2 | [Tên bước] | [Mô tả] | [AI AUGMENT] | [...] |
-| 4.3 | [Tên bước] | [Mô tả] | [...] | [...] |
+| 5.1 | Brief | Soạn design brief từ niche (thông điệp, style, audience) | [AI AUGMENT] | Brief template chuẩn |
+| 5.2 | Concept | Sinh nhiều concept (prompt image-gen) | [AI AUGMENT] | ≥ N concept để chọn |
+| 5.3 | Chọn & refine | Chọn concept tốt nhất, tinh chỉnh | [AI AUGMENT] | Đối chiếu brand fit |
+| 5.4 | Export | Xuất print-ready đúng spec §2 | [AI WORKFORCE] | Auto-check DPI/size/format trước khi lưu |
+| 5.5 | Handoff QC | Chuyển design + brief sang PRD-004 | [AI WORKFORCE] | Không qua MER khi chưa QC |
 
-## 5. Quality Gate (SLI / SLO)
+## 6. Quality Gate
+| # | Tiêu chí | SLI | SLO | Pass |
+|---|---|---|---|---|
+| 1 | Kỹ thuật | DPI/size/format đúng spec | 100% | ☐ |
+| 2 | Vùng in | nằm trong print area | 100% | ☐ |
+| 3 | Số concept | đủ tối thiểu để chọn | đạt | ☐ |
+| 4 | Brand fit | đúng visual/voice | đạt | ☐ |
 
-| # | Tiêu chí | SLI (đo gì) | SLO (target) | Cách kiểm tra | Pass/Fail |
-|---|---|---|---|---|---|
-| 1 | [Tiêu chí 1] | [metric] | [target] | [method] | ☐ |
-| 2 | [Tiêu chí 2] | [metric] | [target] | [method] | ☐ |
+## 7. Output & Downstream
+- **Lưu:** ./output/design_[niche]_[YYYY-MM-DD]/ (file + brief) → archive/
+- **Downstream:** PRD-004 (QC + IP) → MER-001/MER-002
 
-**Quyết định:**
-- ALL pass -> Output được chấp nhận -> chuyển ./output/
-- ANY fail -> LOOP lại bước liên quan (tối đa 3 lần)
-- 3+ loops fail -> ESCALATE Founder -> tạo Incident Report tại ../../../_quality/reports/
-
-## 6. Output & Downstream
-
-- **Lưu tại:** ./output/ ; cuối kỳ chuyển ./archive/[YYYY-MM]/
-- **Downstream:** [SOP/dept nhận output tiếp theo]
-- **Naming:** sop-prd-003_[mô-tả]_DONE_2026-06-03.md (theo quy ước repo)
-
-## 7. Phụ lục
-
-- **Upstream SOP:** [link]
-- **Downstream SOP:** [link]
-- **Knowledge:** ../../_knowledge/
-- **Rules / Quality Standards:** ../../_rules/ · ../../quality_prd-001_quality-standards_v1.0_2026-06-03.md
-- **Thiết kế tham chiếu:** ../../../02-design/opc-design-roadmap.md
+## 8. Phụ lục
+Knowledge: ../_knowledge/ · Policy brand: ../../_shared/policies/brand-policy.md · Thiết kế §3.1

@@ -1,74 +1,67 @@
-# SOP-MER-001 — Tạo listing + Etsy SEO + nhãn GPSR
+# SOP-MER-001 — Tạo listing + Etsy SEO (+ nhãn GPSR)
 
-**Department:** mer
-**AI Worker phụ trách:** Listing-SEO AI
-**Loại:** OPERATIONAL (template -> input -> processing -> output -> archive)
-**Phiên bản:** v1.0 · **Ngày:** 2026-06-03 · **Trạng thái:** SKELETON (cần điền chi tiết)
+**Department:** Merchandising (mer) · **AI Worker:** Listing-SEO AI
+**Loại:** OPERATIONAL · **v1.0** · **2026-06-03** · **ACTIVE**
 
-> SOP khung theo framework AI Native Company. Điền nội dung cụ thể theo thực tế vận hành ("Trần sao âm vậy"). Xem thiết kế: ../../../02-design/opc-design-roadmap.md
-
----
+> Gate publish của shop: listing KHÔNG được publish nếu thiếu nhãn GPSR (clearance từ SOP-BCK-004) hoặc dính từ khóa IP.
 
 ## 1. Tổng quan
-
 | Mục | Nội dung |
 |---|---|
-| **Mục đích** | [Vì sao tồn tại SOP này — kết quả nó tạo ra] |
-| **Phạm vi** | [Áp dụng cho cái gì / không áp dụng cho cái gì] |
-| **Trigger** | [Sự kiện kích hoạt: theo lịch / yêu cầu / đơn hàng / ngưỡng] |
+| **Mục đích** | Tạo listing chuẩn Etsy SEO + gắn nhãn GPSR, sẵn sàng publish có khả năng được tìm thấy. |
+| **Phạm vi** | Soạn nội dung listing (title/tags/desc/attributes/images). Publish thực hiện ở MER-004. |
+| **Trigger** | Có cleared design (PRD-004) + Printify product (MER-002) + pricing (MER-003). |
 
 ### IPO
-| Thành phần | Chi tiết |
+| | |
 |---|---|
-| **Input** | [Đầu vào — lấy từ SOP/dept nào, đặt trong ./input/] |
-| **Control** | [Ràng buộc: policy, EU compliance (VAT/GPSR/GDPR), SLA, brand voice] |
-| **Output** | [Kết quả — đi tới SOP/dept nào] |
-| **Mechanism** | [Tool/API/skill: Claude API, Etsy API, Printify API, ...] |
+| **Input** | Cleared design + IP log (PRD-004), mockups (MER-002), pricing (MER-003), keyword data, GPSR clearance (BCK-004) |
+| **Control** | Etsy SEO rules (title ≤140, 13 tags), GPSR labeling, brand voice (EN), không từ khóa IP |
+| **Output** | Listing publish-ready (EN) |
+| **Mechanism** | Listing-SEO AI + Claude API, eRank, Etsy API |
 
-## 2. Vai trò & RACI
+## 2. Etsy SEO checklist (Knowledge)
+- **Title** ≤ 140 ký tự, **front-load** keyword chính (Etsy ưu tiên đầu title)
+- **13 tags**, multi-word, tận dụng tối đa 20 ký tự/tag, không trùng lặp
+- **Description:** hook → benefits → chất liệu/size → **size guide** → shipping EU → care
+- **Attributes & category** điền đầy đủ (Etsy dùng để xếp hạng)
+- **Ảnh:** ≥ 5-10 mockup + 1 size chart; ảnh đầu là ảnh mạnh nhất
+- **GPSR block:** nhà sản xuất + Responsible Person EU + cảnh báo (nếu có)
 
-| Hoạt động | Founder | Listing-SEO AI | Khác |
+## 3. RACI
+| Hoạt động | Founder | Listing-SEO AI | Compliance AI (05) |
 |---|---|---|---|
-| [Bước chính 1] | A | R | I |
-| [Bước chính 2] | I | R | C |
+| Soạn title/tags/desc | I | **R** | I |
+| Chèn nhãn GPSR | I | R | **C** (cấp clearance) |
+| Spot-check listing | C | R | I |
 
-## 3. Đầu vào & Điều kiện bắt đầu
+## 4. Đầu vào
+- [ ] Cleared design + IP log · [ ] Mockups · [ ] Pricing · [ ] **GPSR clearance (BCK-004)**
 
-- [ ] [Input bắt buộc đã có trong ./input/]
-- [ ] [Điều kiện tiên quyết / phụ thuộc SOP upstream]
-
-## 4. Quy trình
-
-> Tag AI: [AI ASSIST] người làm chính · [AI AUGMENT] AI làm + người duyệt · [AI WORKFORCE] AI tự chạy
-
-| # | Bước | Hành động | Tag AI | Prevention (chống lỗi từ gốc) |
+## 5. Quy trình
+| # | Bước | Hành động | Tag AI | Prevention |
 |---|---|---|---|---|
-| 4.1 | [Tên bước] | [Mô tả] | [AI WORKFORCE] | [Làm sao để lỗi ở bước này KHÔNG THỂ xảy ra] |
-| 4.2 | [Tên bước] | [Mô tả] | [AI AUGMENT] | [...] |
-| 4.3 | [Tên bước] | [Mô tả] | [...] | [...] |
+| 5.1 | Keyword | Chọn keyword chính + phụ từ eRank | [AI WORKFORCE] | Dữ liệu thật |
+| 5.2 | Title & tags | Viết title ≤140 front-load + 13 tags | [AI AUGMENT] | Auto-count ký tự + số tag |
+| 5.3 | Description | Soạn theo cấu trúc §2 (EN) | [AI AUGMENT] | Template; có size guide + shipping EU |
+| 5.4 | Attributes/images | Điền attributes, gắn ≥5 mockup + size chart | [AI WORKFORCE] | Checklist ảnh |
+| 5.5 | GPSR | Chèn nhãn GPSR từ clearance BCK-004 | [AI AUGMENT] | Không có clearance → BLOCK |
+| 5.6 | IP recheck | Quét title/tags không chứa từ khóa IP | [AI WORKFORCE] | Block nếu có brand/character |
+| 5.7 | Handoff | Listing publish-ready → MER-004 | [AI WORKFORCE] | Gate đủ điều kiện |
 
-## 5. Quality Gate (SLI / SLO)
+## 6. Quality Gate
+| # | Tiêu chí | SLI | SLO | Pass |
+|---|---|---|---|---|
+| 1 | Title | ≤ 140 ký tự, front-load | 100% | ☐ |
+| 2 | Tags | đủ 13 | 100% | ☐ |
+| 3 | Ảnh | ≥ 5 mockup + size chart | 100% | ☐ |
+| 4 | **GPSR** | nhãn present | 100% | ☐ |
+| 5 | IP | 0 từ khóa vi phạm | 100% | ☐ |
 
-| # | Tiêu chí | SLI (đo gì) | SLO (target) | Cách kiểm tra | Pass/Fail |
-|---|---|---|---|---|---|
-| 1 | [Tiêu chí 1] | [metric] | [target] | [method] | ☐ |
-| 2 | [Tiêu chí 2] | [metric] | [target] | [method] | ☐ |
+**Quyết định:** ALL pass → MER-004 publish. GPSR/IP fail → **BLOCK** (không loop "cho qua") → escalate.
 
-**Quyết định:**
-- ALL pass -> Output được chấp nhận -> chuyển ./output/
-- ANY fail -> LOOP lại bước liên quan (tối đa 3 lần)
-- 3+ loops fail -> ESCALATE Founder -> tạo Incident Report tại ../../../_quality/reports/
+## 7. Output & Downstream
+- **Lưu:** ./output/listing_[sku]_READY.md → archive/ · **Downstream:** MER-004 (publish), MER-003 (giá)
 
-## 6. Output & Downstream
-
-- **Lưu tại:** ./output/ ; cuối kỳ chuyển ./archive/[YYYY-MM]/
-- **Downstream:** [SOP/dept nhận output tiếp theo]
-- **Naming:** sop-mer-001_[mô-tả]_DONE_2026-06-03.md (theo quy ước repo)
-
-## 7. Phụ lục
-
-- **Upstream SOP:** [link]
-- **Downstream SOP:** [link]
-- **Knowledge:** ../../_knowledge/
-- **Rules / Quality Standards:** ../../_rules/ · ../../quality_mer-001_quality-standards_v1.0_2026-06-03.md
-- **Thiết kế tham chiếu:** ../../../02-design/opc-design-roadmap.md
+## 8. Phụ lục
+Doc: ../listing-template-style.md · GPSR: ../../05-backoffice/gpsr-compliance/ · Channel: ../../_shared/channel-config/etsy.md · Thiết kế §3.2

@@ -1,74 +1,61 @@
 # SOP-PRD-001 — Niche & keyword research
 
-**Department:** prd
-**AI Worker phụ trách:** Niche Research AI
-**Loại:** OPERATIONAL (template -> input -> processing -> output -> archive)
-**Phiên bản:** v1.0 · **Ngày:** 2026-06-03 · **Trạng thái:** SKELETON (cần điền chi tiết)
+**Department:** Product Studio (prd) · **AI Worker:** Niche Research AI
+**Loại:** OPERATIONAL · **v1.0** · **2026-06-03** · **ACTIVE**
 
-> SOP khung theo framework AI Native Company. Điền nội dung cụ thể theo thực tế vận hành ("Trần sao âm vậy"). Xem thiết kế: ../../../02-design/opc-design-roadmap.md
-
----
+> Đầu nguồn của pipeline. Chất lượng niche quyết định toàn bộ tỉ lệ thắng phía sau.
 
 ## 1. Tổng quan
-
 | Mục | Nội dung |
 |---|---|
-| **Mục đích** | [Vì sao tồn tại SOP này — kết quả nó tạo ra] |
-| **Phạm vi** | [Áp dụng cho cái gì / không áp dụng cho cái gì] |
-| **Trigger** | [Sự kiện kích hoạt: theo lịch / yêu cầu / đơn hàng / ngưỡng] |
+| **Mục đích** | Tìm niche apparel có **demand thật** trên Etsy EU + cạnh tranh không quá bão hòa, sạch IP → feed design. |
+| **Phạm vi** | Chỉ nghiên cứu & validate niche. KHÔNG tạo design (đó là PRD-003). |
+| **Trigger** | Theo lịch hàng tuần; hoặc khi cần mở rộng portfolio / sau seasonal scan (PRD-002). |
 
 ### IPO
-| Thành phần | Chi tiết |
+| | |
 |---|---|
-| **Input** | [Đầu vào — lấy từ SOP/dept nào, đặt trong ./input/] |
-| **Control** | [Ràng buộc: policy, EU compliance (VAT/GPSR/GDPR), SLA, brand voice] |
-| **Output** | [Kết quả — đi tới SOP/dept nào] |
-| **Mechanism** | [Tool/API/skill: Claude API, Etsy API, Printify API, ...] |
+| **Input** | Etsy search/autocomplete, eRank/Marmalead, Pinterest Trends, competitor shops, seed ideas, output PRD-002 |
+| **Control** | Tiêu chí demand-vs-competition, brand fit, phù hợp in apparel, không vi phạm IP |
+| **Output** | Validated niche list (mỗi niche: keyword chính, search volume, competition, seasonality, audience EU, demand score) |
+| **Mechanism** | Niche Research AI + Claude API, eRank, Pinterest Trends, Etsy |
 
-## 2. Vai trò & RACI
+## 2. Tiêu chí Demand Score (Knowledge)
+Mỗi niche chấm theo: **Demand** (search volume/engagement) · **Competition** (số listing, độ bão hòa) · **Buyer intent** · **Seasonality** (evergreen vs mùa) · **Audience EU rõ ràng** · **IP-safe**.
+→ Ưu tiên: demand trung bình-cao + competition vừa (tránh "red ocean") + audience cụ thể (micro-niche).
 
-| Hoạt động | Founder | Niche Research AI | Khác |
-|---|---|---|---|
-| [Bước chính 1] | A | R | I |
-| [Bước chính 2] | I | R | C |
+## 3. RACI
+| Hoạt động | Founder | Niche Research AI |
+|---|---|---|
+| Chốt portfolio niche | **A** | R |
+| Phân tích & chấm điểm | C | **R** |
 
-## 3. Đầu vào & Điều kiện bắt đầu
+## 4. Đầu vào
+- [ ] Seed ideas / hướng portfolio (Founder) · [ ] Truy cập eRank/Pinterest Trends · [ ] Output PRD-002 (nếu có)
 
-- [ ] [Input bắt buộc đã có trong ./input/]
-- [ ] [Điều kiện tiên quyết / phụ thuộc SOP upstream]
-
-## 4. Quy trình
-
-> Tag AI: [AI ASSIST] người làm chính · [AI AUGMENT] AI làm + người duyệt · [AI WORKFORCE] AI tự chạy
-
-| # | Bước | Hành động | Tag AI | Prevention (chống lỗi từ gốc) |
+## 5. Quy trình
+| # | Bước | Hành động | Tag AI | Prevention |
 |---|---|---|---|---|
-| 4.1 | [Tên bước] | [Mô tả] | [AI WORKFORCE] | [Làm sao để lỗi ở bước này KHÔNG THỂ xảy ra] |
-| 4.2 | [Tên bước] | [Mô tả] | [AI AUGMENT] | [...] |
-| 4.3 | [Tên bước] | [Mô tả] | [...] | [...] |
+| 5.1 | Seed | Thu thập ý tưởng + dịp từ PRD-002 | [AI WORKFORCE] | — |
+| 5.2 | Keyword expansion | Mở rộng long-tail từ Etsy autocomplete + eRank | [AI WORKFORCE] | Dùng dữ liệu thật, không đoán volume |
+| 5.3 | Demand vs competition | Phân tích volume, số listing, top sellers | [AI AUGMENT] | Cross-check ≥2 nguồn |
+| 5.4 | IP pre-flag | Loại sớm niche dính brand/character/celebrity | [AI WORKFORCE] | Pre-flag trước khi chấm điểm → không tốn công design |
+| 5.5 | Score & rank | Chấm demand score, xếp hạng, chọn top | [AI AUGMENT] | Ngưỡng demand score tối thiểu |
+| 5.6 | Handoff | Xuất validated niche list cho PRD-003 | [AI WORKFORCE] | Đủ field bắt buộc |
 
-## 5. Quality Gate (SLI / SLO)
+## 6. Quality Gate (SLI/SLO)
+| # | Tiêu chí | SLI | SLO | Pass |
+|---|---|---|---|---|
+| 1 | Đủ dữ liệu | % niche đủ field | 100% | ☐ |
+| 2 | Demand | demand score | ≥ ngưỡng | ☐ |
+| 3 | Competition | độ bão hòa | không "saturated" | ☐ |
+| 4 | IP | red-flag check | 0 niche dính IP rõ | ☐ |
 
-| # | Tiêu chí | SLI (đo gì) | SLO (target) | Cách kiểm tra | Pass/Fail |
-|---|---|---|---|---|---|
-| 1 | [Tiêu chí 1] | [metric] | [target] | [method] | ☐ |
-| 2 | [Tiêu chí 2] | [metric] | [target] | [method] | ☐ |
+**Quyết định:** pass → output/ ; fail → loop (max 3) → escalate.
 
-**Quyết định:**
-- ALL pass -> Output được chấp nhận -> chuyển ./output/
-- ANY fail -> LOOP lại bước liên quan (tối đa 3 lần)
-- 3+ loops fail -> ESCALATE Founder -> tạo Incident Report tại ../../../_quality/reports/
+## 7. Output & Downstream
+- **Lưu:** ./output/niche-list_[YYYY-Wnn]_DONE.md → ./archive/
+- **Downstream:** PRD-003 (design), PRD-002 (mùa vụ)
 
-## 6. Output & Downstream
-
-- **Lưu tại:** ./output/ ; cuối kỳ chuyển ./archive/[YYYY-MM]/
-- **Downstream:** [SOP/dept nhận output tiếp theo]
-- **Naming:** sop-prd-001_[mô-tả]_DONE_2026-06-03.md (theo quy ước repo)
-
-## 7. Phụ lục
-
-- **Upstream SOP:** [link]
-- **Downstream SOP:** [link]
-- **Knowledge:** ../../_knowledge/
-- **Rules / Quality Standards:** ../../_rules/ · ../../quality_prd-001_quality-standards_v1.0_2026-06-03.md
-- **Thiết kế tham chiếu:** ../../../02-design/opc-design-roadmap.md
+## 8. Phụ lục
+- Doc: ../niche-selection-criteria.md (SOP-PRD-005) · Knowledge: ../_knowledge/ · Thiết kế: ../../02-design/opc-design-roadmap.md §3.1

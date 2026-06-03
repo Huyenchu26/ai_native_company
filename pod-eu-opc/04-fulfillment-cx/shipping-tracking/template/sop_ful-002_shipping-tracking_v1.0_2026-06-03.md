@@ -1,74 +1,56 @@
 # SOP-FUL-002 — Production & shipping tracking
 
-**Department:** ful
-**AI Worker phụ trách:** Order-Ops AI
-**Loại:** OPERATIONAL (template -> input -> processing -> output -> archive)
-**Phiên bản:** v1.0 · **Ngày:** 2026-06-03 · **Trạng thái:** SKELETON (cần điền chi tiết)
+**Department:** Fulfillment & CX (ful) · **AI Worker:** Order-Ops AI
+**Loại:** OPERATIONAL · **v1.0** · **2026-06-03** · **ACTIVE**
 
-> SOP khung theo framework AI Native Company. Điền nội dung cụ thể theo thực tế vận hành ("Trần sao âm vậy"). Xem thiết kế: ../../../02-design/opc-design-roadmap.md
-
----
+> Giao đúng hạn so với **Etsy estimated delivery** là yếu tố giữ Star Seller. Chậm → chủ động báo khách trước.
 
 ## 1. Tổng quan
-
 | Mục | Nội dung |
 |---|---|
-| **Mục đích** | [Vì sao tồn tại SOP này — kết quả nó tạo ra] |
-| **Phạm vi** | [Áp dụng cho cái gì / không áp dụng cho cái gì] |
-| **Trigger** | [Sự kiện kích hoạt: theo lịch / yêu cầu / đơn hàng / ngưỡng] |
+| **Mục đích** | Theo dõi sản xuất + vận chuyển, gửi tracking cho khách, phát hiện & xử lý chậm trễ chủ động. |
+| **Phạm vi** | Từ lúc đơn vào sản xuất đến khi giao. |
+| **Trigger** | Đơn đã route sản xuất (FUL-001). |
 
 ### IPO
-| Thành phần | Chi tiết |
+| | |
 |---|---|
-| **Input** | [Đầu vào — lấy từ SOP/dept nào, đặt trong ./input/] |
-| **Control** | [Ràng buộc: policy, EU compliance (VAT/GPSR/GDPR), SLA, brand voice] |
-| **Output** | [Kết quả — đi tới SOP/dept nào] |
-| **Mechanism** | [Tool/API/skill: Claude API, Etsy API, Printify API, ...] |
+| **Input** | Trạng thái sản xuất Printify, tracking number, Etsy estimated delivery date |
+| **Control** | On-time ship rate (Star Seller), gửi tracking 100%, notify chậm trước hạn |
+| **Output** | Tracking gửi khách + delay flags |
+| **Mechanism** | Order-Ops AI + Printify API + Etsy/Shopify API |
 
-## 2. Vai trò & RACI
+## 2. Knowledge
+- Production Printify ~2-5 ngày + shipping nội EU ~3-7 ngày (xác nhận theo provider).
+- Đối chiếu liên tục với **estimated delivery date** trên đơn Etsy.
 
-| Hoạt động | Founder | Order-Ops AI | Khác |
+## 3. RACI
+| Hoạt động | Founder | Order-Ops AI | CX AI |
 |---|---|---|---|
-| [Bước chính 1] | A | R | I |
-| [Bước chính 2] | I | R | C |
+| Track & gửi tracking | I | **R** | I |
+| Xử lý delay | I | **R** | **C** (báo khách) |
 
-## 3. Đầu vào & Điều kiện bắt đầu
+## 4. Đầu vào
+- [ ] Đơn đang sản xuất (FUL-001) · [ ] Estimated delivery của từng đơn
 
-- [ ] [Input bắt buộc đã có trong ./input/]
-- [ ] [Điều kiện tiên quyết / phụ thuộc SOP upstream]
-
-## 4. Quy trình
-
-> Tag AI: [AI ASSIST] người làm chính · [AI AUGMENT] AI làm + người duyệt · [AI WORKFORCE] AI tự chạy
-
-| # | Bước | Hành động | Tag AI | Prevention (chống lỗi từ gốc) |
+## 5. Quy trình
+| # | Bước | Hành động | Tag AI | Prevention |
 |---|---|---|---|---|
-| 4.1 | [Tên bước] | [Mô tả] | [AI WORKFORCE] | [Làm sao để lỗi ở bước này KHÔNG THỂ xảy ra] |
-| 4.2 | [Tên bước] | [Mô tả] | [AI AUGMENT] | [...] |
-| 4.3 | [Tên bước] | [Mô tả] | [...] | [...] |
+| 5.1 | Track production | Theo dõi status Printify | [AI WORKFORCE] | Poll định kỳ |
+| 5.2 | Lấy tracking | Khi shipped, lấy tracking number | [AI WORKFORCE] | — |
+| 5.3 | Push tracking | Cập nhật tracking vào đơn + email khách | [AI WORKFORCE] | 100% đơn có tracking |
+| 5.4 | Monitor vs ETA | So tiến độ với estimated delivery | [AI AUGMENT] | Alert khi risk chậm |
+| 5.5 | Xử lý delay | Báo CX (FUL-003) chủ động liên hệ khách | [AI AUGMENT] | Notify TRƯỚC khi khách hỏi |
 
-## 5. Quality Gate (SLI / SLO)
+## 6. Quality Gate
+| # | Tiêu chí | SLI | SLO | Pass |
+|---|---|---|---|---|
+| 1 | Tracking | % đơn gửi tracking | 100% | ☐ |
+| 2 | On-time | % đơn ship đúng hạn | ≥ mục tiêu Star Seller | ☐ |
+| 3 | Delay notify | chậm được báo trước | 100% | ☐ |
 
-| # | Tiêu chí | SLI (đo gì) | SLO (target) | Cách kiểm tra | Pass/Fail |
-|---|---|---|---|---|---|
-| 1 | [Tiêu chí 1] | [metric] | [target] | [method] | ☐ |
-| 2 | [Tiêu chí 2] | [metric] | [target] | [method] | ☐ |
+## 7. Output & Downstream
+- **Lưu:** ./output/tracking-log_[YYYY-Wnn].md → archive/ · **Downstream:** FUL-003 (CX), FUL-004 (nếu lỗi giao)
 
-**Quyết định:**
-- ALL pass -> Output được chấp nhận -> chuyển ./output/
-- ANY fail -> LOOP lại bước liên quan (tối đa 3 lần)
-- 3+ loops fail -> ESCALATE Founder -> tạo Incident Report tại ../../../_quality/reports/
-
-## 6. Output & Downstream
-
-- **Lưu tại:** ./output/ ; cuối kỳ chuyển ./archive/[YYYY-MM]/
-- **Downstream:** [SOP/dept nhận output tiếp theo]
-- **Naming:** sop-ful-002_[mô-tả]_DONE_2026-06-03.md (theo quy ước repo)
-
-## 7. Phụ lục
-
-- **Upstream SOP:** [link]
-- **Downstream SOP:** [link]
-- **Knowledge:** ../../_knowledge/
-- **Rules / Quality Standards:** ../../_rules/ · ../../quality_ful-001_quality-standards_v1.0_2026-06-03.md
-- **Thiết kế tham chiếu:** ../../../02-design/opc-design-roadmap.md
+## 8. Phụ lục
+Channel: ../../_shared/channel-config/printify.md · Thiết kế §3.4

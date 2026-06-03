@@ -1,74 +1,67 @@
 # SOP-PRD-002 — Trend & seasonal scan (EU)
 
-**Department:** prd
-**AI Worker phụ trách:** Niche Research AI
-**Loại:** OPERATIONAL (template -> input -> processing -> output -> archive)
-**Phiên bản:** v1.0 · **Ngày:** 2026-06-03 · **Trạng thái:** SKELETON (cần điền chi tiết)
+**Department:** Product Studio (prd) · **AI Worker:** Niche Research AI
+**Loại:** OPERATIONAL · **v1.0** · **2026-06-03** · **ACTIVE**
 
-> SOP khung theo framework AI Native Company. Điền nội dung cụ thể theo thực tế vận hành ("Trần sao âm vậy"). Xem thiết kế: ../../../02-design/opc-design-roadmap.md
-
----
+> Nắm cơ hội theo mùa/xu hướng với **lead time đủ** — POD cần listing index + Ads ramp trước mùa 4-8 tuần.
 
 ## 1. Tổng quan
-
 | Mục | Nội dung |
 |---|---|
-| **Mục đích** | [Vì sao tồn tại SOP này — kết quả nó tạo ra] |
-| **Phạm vi** | [Áp dụng cho cái gì / không áp dụng cho cái gì] |
-| **Trigger** | [Sự kiện kích hoạt: theo lịch / yêu cầu / đơn hàng / ngưỡng] |
+| **Mục đích** | Lập lịch cơ hội theo mùa/trend cho thị trường EU, đảm bảo bắt đầu sản xuất đủ sớm. |
+| **Phạm vi** | Scan trend + dịp lễ EU; ra opportunity calendar. Không tạo design. |
+| **Trigger** | Hàng tháng (rolling 3 tháng tới); hoặc khi phát hiện trend đột biến. |
 
 ### IPO
-| Thành phần | Chi tiết |
+| | |
 |---|---|
-| **Input** | [Đầu vào — lấy từ SOP/dept nào, đặt trong ./input/] |
-| **Control** | [Ràng buộc: policy, EU compliance (VAT/GPSR/GDPR), SLA, brand voice] |
-| **Output** | [Kết quả — đi tới SOP/dept nào] |
-| **Mechanism** | [Tool/API/skill: Claude API, Etsy API, Printify API, ...] |
+| **Input** | Pinterest Trends/Predicts, Google Trends, Etsy trending, lịch lễ EU theo nước |
+| **Control** | Lead time tối thiểu (≥4-8 tuần trước dịp), audience EU, IP-safe |
+| **Output** | Seasonal opportunity calendar (dịp, ngày, lead-time bắt đầu, niche gợi ý) |
+| **Mechanism** | Niche Research AI + Claude API, Pinterest/Google Trends, Etsy |
 
-## 2. Vai trò & RACI
-
-| Hoạt động | Founder | Niche Research AI | Khác |
+## 2. Lịch dịp lễ EU (Knowledge — bắt đầu trước dịp)
+| Dịp | Thời điểm | Bắt đầu sản xuất | Lưu ý EU |
 |---|---|---|---|
-| [Bước chính 1] | A | R | I |
-| [Bước chính 2] | I | R | C |
+| Christmas | 24-25/12 | Tháng 9-10 | Lớn nhất; gift apparel, "family/ugly sweater" |
+| New Year | 31/12-1/1 | Tháng 11 | Resolution, motivational |
+| Valentine | 14/2 | Tháng 12 | Couple, pet-love |
+| Easter | T3-4 (đổi) | ~6 tuần trước | Spring themes |
+| Mother's Day | **Khác từng nước** (UK: T3; phần lớn EU: T5) | ~6 tuần trước | ⚠️ Không dùng 1 ngày chung |
+| Father's Day | Phần lớn EU: T6 | ~6 tuần trước | — |
+| Pride | Tháng 6 | Tháng 4 | LGBTQ+ |
+| Oktoberfest | Cuối T9 (DE) | Tháng 8 | Mạnh ở Đức/Áo |
+| Halloween | 31/10 | Tháng 8-9 | — |
+| Back-to-school | T8-9 | Tháng 6-7 | Teacher gifts |
 
-## 3. Đầu vào & Điều kiện bắt đầu
+> ⚠️ **Mother's/Father's Day khác nhau theo từng nước EU** — phải tách theo thị trường (DE/FR/UK), không gộp.
 
-- [ ] [Input bắt buộc đã có trong ./input/]
-- [ ] [Điều kiện tiên quyết / phụ thuộc SOP upstream]
+## 3. RACI
+| Hoạt động | Founder | Niche Research AI |
+|---|---|---|
+| Duyệt opportunity calendar | A | **R** |
 
-## 4. Quy trình
+## 4. Đầu vào
+- [ ] Truy cập Pinterest/Google Trends · [ ] Lịch lễ EU theo nước · [ ] Portfolio hiện tại
 
-> Tag AI: [AI ASSIST] người làm chính · [AI AUGMENT] AI làm + người duyệt · [AI WORKFORCE] AI tự chạy
-
-| # | Bước | Hành động | Tag AI | Prevention (chống lỗi từ gốc) |
+## 5. Quy trình
+| # | Bước | Hành động | Tag AI | Prevention |
 |---|---|---|---|---|
-| 4.1 | [Tên bước] | [Mô tả] | [AI WORKFORCE] | [Làm sao để lỗi ở bước này KHÔNG THỂ xảy ra] |
-| 4.2 | [Tên bước] | [Mô tả] | [AI AUGMENT] | [...] |
-| 4.3 | [Tên bước] | [Mô tả] | [...] | [...] |
+| 5.1 | Scan trend | Quét Pinterest Predicts, Google Trends, Etsy trending | [AI WORKFORCE] | ≥2 nguồn xác nhận |
+| 5.2 | Map dịp lễ | Đối chiếu lịch lễ EU theo nước (3 tháng tới) | [AI WORKFORCE] | Dùng bảng §2, tách theo nước |
+| 5.3 | Check lead time | Loại cơ hội không đủ thời gian sản xuất | [AI AUGMENT] | Lead-time gate ≥4 tuần |
+| 5.4 | Xuất calendar | Lập opportunity calendar + niche gợi ý cho PRD-001 | [AI AUGMENT] | Mỗi mục có ngày bắt đầu rõ |
 
-## 5. Quality Gate (SLI / SLO)
+## 6. Quality Gate
+| # | Tiêu chí | SLI | SLO | Pass |
+|---|---|---|---|---|
+| 1 | Lead time | mọi opportunity đủ lead time | 100% | ☐ |
+| 2 | Nguồn | xác nhận ≥2 nguồn | 100% | ☐ |
+| 3 | Theo nước | dịp lễ tách đúng nước EU | 100% | ☐ |
 
-| # | Tiêu chí | SLI (đo gì) | SLO (target) | Cách kiểm tra | Pass/Fail |
-|---|---|---|---|---|---|
-| 1 | [Tiêu chí 1] | [metric] | [target] | [method] | ☐ |
-| 2 | [Tiêu chí 2] | [metric] | [target] | [method] | ☐ |
+## 7. Output & Downstream
+- **Lưu:** ./output/seasonal-calendar_[YYYY-MM]_DONE.md → archive/
+- **Downstream:** PRD-001 (seed niche), PRD-003 (design)
 
-**Quyết định:**
-- ALL pass -> Output được chấp nhận -> chuyển ./output/
-- ANY fail -> LOOP lại bước liên quan (tối đa 3 lần)
-- 3+ loops fail -> ESCALATE Founder -> tạo Incident Report tại ../../../_quality/reports/
-
-## 6. Output & Downstream
-
-- **Lưu tại:** ./output/ ; cuối kỳ chuyển ./archive/[YYYY-MM]/
-- **Downstream:** [SOP/dept nhận output tiếp theo]
-- **Naming:** sop-prd-002_[mô-tả]_DONE_2026-06-03.md (theo quy ước repo)
-
-## 7. Phụ lục
-
-- **Upstream SOP:** [link]
-- **Downstream SOP:** [link]
-- **Knowledge:** ../../_knowledge/
-- **Rules / Quality Standards:** ../../_rules/ · ../../quality_prd-001_quality-standards_v1.0_2026-06-03.md
-- **Thiết kế tham chiếu:** ../../../02-design/opc-design-roadmap.md
+## 8. Phụ lục
+Knowledge: ../_knowledge/ · Thiết kế: ../../02-design/opc-design-roadmap.md §3.1

@@ -1,74 +1,53 @@
 # SOP-FUL-001 — Order monitoring & exception
 
-**Department:** ful
-**AI Worker phụ trách:** Order-Ops AI
-**Loại:** OPERATIONAL (template -> input -> processing -> output -> archive)
-**Phiên bản:** v1.0 · **Ngày:** 2026-06-03 · **Trạng thái:** SKELETON (cần điền chi tiết)
+**Department:** Fulfillment & CX (ful) · **AI Worker:** Order-Ops AI
+**Loại:** OPERATIONAL · **v1.0** · **2026-06-03** · **ACTIVE**
 
-> SOP khung theo framework AI Native Company. Điền nội dung cụ thể theo thực tế vận hành ("Trần sao âm vậy"). Xem thiết kế: ../../../02-design/opc-design-roadmap.md
-
----
+> Printify tự fulfill khi đã kết nối + thanh toán, nhưng vẫn cần giám sát & xử lý ngoại lệ để không "rơi" đơn.
 
 ## 1. Tổng quan
-
 | Mục | Nội dung |
 |---|---|
-| **Mục đích** | [Vì sao tồn tại SOP này — kết quả nó tạo ra] |
-| **Phạm vi** | [Áp dụng cho cái gì / không áp dụng cho cái gì] |
-| **Trigger** | [Sự kiện kích hoạt: theo lịch / yêu cầu / đơn hàng / ngưỡng] |
+| **Mục đích** | Giám sát đơn mới, verify, đưa vào sản xuất Printify ≤24h, xử lý ngoại lệ. |
+| **Phạm vi** | Đơn Etsy (Phase 1), Shopify (Phase 2). |
+| **Trigger** | Đơn mới phát sinh (near real-time). |
 
 ### IPO
-| Thành phần | Chi tiết |
+| | |
 |---|---|
-| **Input** | [Đầu vào — lấy từ SOP/dept nào, đặt trong ./input/] |
-| **Control** | [Ràng buộc: policy, EU compliance (VAT/GPSR/GDPR), SLA, brand voice] |
-| **Output** | [Kết quả — đi tới SOP/dept nào] |
-| **Mechanism** | [Tool/API/skill: Claude API, Etsy API, Printify API, ...] |
+| **Input** | Đơn hàng (Etsy/Shopify), trạng thái thanh toán, địa chỉ giao, tồn provider |
+| **Control** | Confirm production ≤24h, validate địa chỉ, phát hiện fraud, GDPR |
+| **Output** | Đơn vào sản xuất + exception log |
+| **Mechanism** | Order-Ops AI + Etsy/Shopify API + Printify API |
 
-## 2. Vai trò & RACI
-
-| Hoạt động | Founder | Order-Ops AI | Khác |
+## 2. RACI
+| Hoạt động | Founder | Order-Ops AI | CX AI |
 |---|---|---|---|
-| [Bước chính 1] | A | R | I |
-| [Bước chính 2] | I | R | C |
+| Verify & route | I | **R** | I |
+| Exception thường | I | **R** | C |
+| Exception lớn (fraud/refund) | **A** | R | C |
 
-## 3. Đầu vào & Điều kiện bắt đầu
-
-- [ ] [Input bắt buộc đã có trong ./input/]
-- [ ] [Điều kiện tiên quyết / phụ thuộc SOP upstream]
+## 3. Đầu vào
+- [ ] Etsy/Printify đã kết nối auto-fulfill · [ ] Quy tắc validate địa chỉ · [ ] Hạn mức xử lý ngoại lệ
 
 ## 4. Quy trình
-
-> Tag AI: [AI ASSIST] người làm chính · [AI AUGMENT] AI làm + người duyệt · [AI WORKFORCE] AI tự chạy
-
-| # | Bước | Hành động | Tag AI | Prevention (chống lỗi từ gốc) |
+| # | Bước | Hành động | Tag AI | Prevention |
 |---|---|---|---|---|
-| 4.1 | [Tên bước] | [Mô tả] | [AI WORKFORCE] | [Làm sao để lỗi ở bước này KHÔNG THỂ xảy ra] |
-| 4.2 | [Tên bước] | [Mô tả] | [AI AUGMENT] | [...] |
-| 4.3 | [Tên bước] | [Mô tả] | [...] | [...] |
+| 4.1 | Detect | Nhận đơn mới qua API | [AI WORKFORCE] | Poll/webhook; không bỏ sót |
+| 4.2 | Verify | Check thanh toán OK + địa chỉ hợp lệ | [AI WORKFORCE] | Validate địa chỉ tự động |
+| 4.3 | Route | Confirm vào sản xuất Printify ≤24h | [AI WORKFORCE] | SLA timer; alert nếu chưa route |
+| 4.4 | Exception | Địa chỉ lỗi→CX; OOS→đổi variant/provider; payment hold; fraud→escalate | [AI AUGMENT] | Playbook ngoại lệ; escalate khi vượt hạn mức |
+| 4.5 | Log | Ghi trạng thái đơn + exception | [AI WORKFORCE] | — |
 
-## 5. Quality Gate (SLI / SLO)
-
-| # | Tiêu chí | SLI (đo gì) | SLO (target) | Cách kiểm tra | Pass/Fail |
-|---|---|---|---|---|---|
-| 1 | [Tiêu chí 1] | [metric] | [target] | [method] | ☐ |
-| 2 | [Tiêu chí 2] | [metric] | [target] | [method] | ☐ |
-
-**Quyết định:**
-- ALL pass -> Output được chấp nhận -> chuyển ./output/
-- ANY fail -> LOOP lại bước liên quan (tối đa 3 lần)
-- 3+ loops fail -> ESCALATE Founder -> tạo Incident Report tại ../../../_quality/reports/
+## 5. Quality Gate
+| # | Tiêu chí | SLI | SLO | Pass |
+|---|---|---|---|---|
+| 1 | Route đúng hạn | % đơn confirm production ≤24h | 100% | ☐ |
+| 2 | Địa chỉ | % đơn validated | 100% | ☐ |
+| 3 | Exception | resolved/escalated, không tồn đọng | 100% | ☐ |
 
 ## 6. Output & Downstream
-
-- **Lưu tại:** ./output/ ; cuối kỳ chuyển ./archive/[YYYY-MM]/
-- **Downstream:** [SOP/dept nhận output tiếp theo]
-- **Naming:** sop-ful-001_[mô-tả]_DONE_2026-06-03.md (theo quy ước repo)
+- **Lưu:** ./output/order-status_[YYYY-Wnn].md + exception-log → archive/ · **Downstream:** FUL-002 (tracking), BCK-001 (doanh thu)
 
 ## 7. Phụ lục
-
-- **Upstream SOP:** [link]
-- **Downstream SOP:** [link]
-- **Knowledge:** ../../_knowledge/
-- **Rules / Quality Standards:** ../../_rules/ · ../../quality_ful-001_quality-standards_v1.0_2026-06-03.md
-- **Thiết kế tham chiếu:** ../../../02-design/opc-design-roadmap.md
+Channel: ../../_shared/channel-config/ · GDPR: ../../05-backoffice/gdpr-data/ · Thiết kế §3.4

@@ -1,74 +1,65 @@
 # SOP-MER-002 — Printify product setup + chọn EU provider
 
-**Department:** mer
-**AI Worker phụ trách:** Catalog-Sync AI
-**Loại:** OPERATIONAL (template -> input -> processing -> output -> archive)
-**Phiên bản:** v1.0 · **Ngày:** 2026-06-03 · **Trạng thái:** SKELETON (cần điền chi tiết)
+**Department:** Merchandising (mer) · **AI Worker:** Catalog-Sync AI
+**Loại:** OPERATIONAL · **v1.0** · **2026-06-03** · **ACTIVE**
 
-> SOP khung theo framework AI Native Company. Điền nội dung cụ thể theo thực tế vận hành ("Trần sao âm vậy"). Xem thiết kế: ../../../02-design/opc-design-roadmap.md
-
----
+> Chọn **xưởng in trong EU** là quyết định chiến lược: ship nhanh, không hải quan, né IOSS, hợp GPSR, giảm hoàn/khiếu nại.
 
 ## 1. Tổng quan
-
 | Mục | Nội dung |
 |---|---|
-| **Mục đích** | [Vì sao tồn tại SOP này — kết quả nó tạo ra] |
-| **Phạm vi** | [Áp dụng cho cái gì / không áp dụng cho cái gì] |
-| **Trigger** | [Sự kiện kích hoạt: theo lịch / yêu cầu / đơn hàng / ngưỡng] |
+| **Mục đích** | Setup sản phẩm trên Printify với print provider EU phù hợp, file in đúng spec, đủ biến thể & mockup. |
+| **Phạm vi** | Cấu hình product Printify. |
+| **Trigger** | Có cleared design (PRD-004). |
 
 ### IPO
-| Thành phần | Chi tiết |
+| | |
 |---|---|
-| **Input** | [Đầu vào — lấy từ SOP/dept nào, đặt trong ./input/] |
-| **Control** | [Ràng buộc: policy, EU compliance (VAT/GPSR/GDPR), SLA, brand voice] |
-| **Output** | [Kết quả — đi tới SOP/dept nào] |
-| **Mechanism** | [Tool/API/skill: Claude API, Etsy API, Printify API, ...] |
+| **Input** | Cleared design (PRD-004), Printify catalog & giá in, ràng buộc EU |
+| **Control** | Provider phải EU (ưu tiên); print spec; giá in nằm trong floor để margin ≥30% |
+| **Output** | Printify product (blank + provider + print file + variants + mockups) |
+| **Mechanism** | Catalog-Sync AI + Printify API |
 
-## 2. Vai trò & RACI
+## 2. Tiêu chí chọn provider EU (Knowledge)
+| Tiêu chí | Ưu tiên |
+|---|---|
+| **Vị trí EU** | Đức / Latvia / Czech / EU-mainland. ⚠️ **UK = ngoài EU sau Brexit** → coi như nhập khẩu, tránh cho khách EU |
+| Giá in + shipping nội EU | thấp, ổn định |
+| Chất lượng & review | cao |
+| Thời gian sản xuất + ship | nhanh (đáp ứng Etsy estimated delivery) |
+| Sản phẩm available + GPSR data | có sẵn |
 
-| Hoạt động | Founder | Catalog-Sync AI | Khác |
-|---|---|---|---|
-| [Bước chính 1] | A | R | I |
-| [Bước chính 2] | I | R | C |
+## 3. RACI
+| Hoạt động | Founder | Catalog-Sync AI |
+|---|---|---|
+| Chọn provider EU | A | **R** |
+| Setup product | I | **R** |
 
-## 3. Đầu vào & Điều kiện bắt đầu
+## 4. Đầu vào
+- [ ] Cleared design · [ ] Sản phẩm blank mục tiêu (tee/hoodie...) · [ ] Tài khoản Printify (keys ngoài git)
 
-- [ ] [Input bắt buộc đã có trong ./input/]
-- [ ] [Điều kiện tiên quyết / phụ thuộc SOP upstream]
-
-## 4. Quy trình
-
-> Tag AI: [AI ASSIST] người làm chính · [AI AUGMENT] AI làm + người duyệt · [AI WORKFORCE] AI tự chạy
-
-| # | Bước | Hành động | Tag AI | Prevention (chống lỗi từ gốc) |
+## 5. Quy trình
+| # | Bước | Hành động | Tag AI | Prevention |
 |---|---|---|---|---|
-| 4.1 | [Tên bước] | [Mô tả] | [AI WORKFORCE] | [Làm sao để lỗi ở bước này KHÔNG THỂ xảy ra] |
-| 4.2 | [Tên bước] | [Mô tả] | [AI AUGMENT] | [...] |
-| 4.3 | [Tên bước] | [Mô tả] | [...] | [...] |
+| 5.1 | Chọn blank | Chọn sản phẩm (tee/hoodie/sweat) | [AI WORKFORCE] | — |
+| 5.2 | Chọn provider EU | So sánh provider theo §2, chọn EU | [AI AUGMENT] | Hard rule: provider EU; UK loại cho khách EU |
+| 5.3 | Upload print file | Đặt design vào print area đúng spec | [AI WORKFORCE] | Auto-check spec; preview print area |
+| 5.4 | Set variants | Cấu hình size/color | [AI WORKFORCE] | Checklist biến thể đủ |
+| 5.5 | Mockups | Sinh mockup cho listing + Pinterest | [AI WORKFORCE] | ≥5 mockup |
+| 5.6 | Handoff | Product → MER-003 (giá) + MER-001 (listing) | [AI WORKFORCE] | Ghi provider + giá in để MER-003 dùng |
 
-## 5. Quality Gate (SLI / SLO)
+## 6. Quality Gate
+| # | Tiêu chí | SLI | SLO | Pass |
+|---|---|---|---|---|
+| 1 | Provider EU | % SKU provider EU | ≥ 90% | ☐ |
+| 2 | Print file | đúng spec, trong print area | 100% | ☐ |
+| 3 | Variants | đủ size/color | 100% | ☐ |
+| 4 | Mockup | ≥ 5 | 100% | ☐ |
+| 5 | Giá in | trong floor (margin ≥30% khả thi) | 100% | ☐ |
 
-| # | Tiêu chí | SLI (đo gì) | SLO (target) | Cách kiểm tra | Pass/Fail |
-|---|---|---|---|---|---|
-| 1 | [Tiêu chí 1] | [metric] | [target] | [method] | ☐ |
-| 2 | [Tiêu chí 2] | [metric] | [target] | [method] | ☐ |
+## 7. Output & Downstream
+- **Lưu:** ./output/printify-product_[sku]_DONE.md (provider, giá in, variants) → archive/
+- **Downstream:** MER-003 (pricing), MER-001 (listing), BCK-002 (nơi in cho VAT), BCK-004 (nhà SX cho GPSR)
 
-**Quyết định:**
-- ALL pass -> Output được chấp nhận -> chuyển ./output/
-- ANY fail -> LOOP lại bước liên quan (tối đa 3 lần)
-- 3+ loops fail -> ESCALATE Founder -> tạo Incident Report tại ../../../_quality/reports/
-
-## 6. Output & Downstream
-
-- **Lưu tại:** ./output/ ; cuối kỳ chuyển ./archive/[YYYY-MM]/
-- **Downstream:** [SOP/dept nhận output tiếp theo]
-- **Naming:** sop-mer-002_[mô-tả]_DONE_2026-06-03.md (theo quy ước repo)
-
-## 7. Phụ lục
-
-- **Upstream SOP:** [link]
-- **Downstream SOP:** [link]
-- **Knowledge:** ../../_knowledge/
-- **Rules / Quality Standards:** ../../_rules/ · ../../quality_mer-001_quality-standards_v1.0_2026-06-03.md
-- **Thiết kế tham chiếu:** ../../../02-design/opc-design-roadmap.md
+## 8. Phụ lục
+Channel: ../../_shared/channel-config/printify.md · GPSR: ../../05-backoffice/gpsr-compliance/ · VAT: ../../05-backoffice/vat-oss-ioss/ · Thiết kế §3.2
