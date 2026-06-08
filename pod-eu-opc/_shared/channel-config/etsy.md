@@ -1,9 +1,9 @@
-# Channel Config — Etsy (ACTIVE — Phase 1)
+# Channel Config — Etsy (INACTIVE — reference only, đã pivot)
 
-- **Status:** active
-- **API/keys:** lưu NGOÀI git (vd .env / secret manager) — KHÔNG commit
-- **Fees (xác nhận bảng hiện hành):** listing ~$0.20/SKU (4 tháng) · transaction ~6.5% · payment processing ~3-4% + phí cố định/đơn · Offsite Ads 12-15% (khi áp dụng)
-- **SEO:** title ≤140 (front-load keyword) · 13 tags · ≥5-10 ảnh + size chart · attributes/category đầy đủ
-- **Compliance:** GPSR label bắt buộc (SOP-BCK-004) · VAT có thể Etsy thu hộ ở vài thị trường (SOP-BCK-002)
-- **SLA chất lượng (Star Seller):** ship on-time · phản hồi <24h · rating ≥4.8 · tracking đầy đủ
-- **Tích hợp:** Printify ↔ Etsy (auto-publish + auto-fulfill)
+- **Status:** inactive / reference — đã pivot sang ShopBase + Facebook Ads. Giữ làm tham khảo, KHÔNG dùng làm kênh bán.
+- **Lý do hạ kênh:** model mới là Paid Ads → landing page → convert (ShopBase). Etsy organic SEO không phù hợp; brand bị giới hạn; Pixel/CAPI hạn chế. Xem `shopbase.md` (active primary).
+- **API/keys:** lưu NGOÀI git (vd .env / secret manager) — KHÔNG commit (nếu tái kích hoạt)
+- **Fees (tham khảo):** listing ~$0.20/SKU (4 tháng) · transaction ~6.5% · payment processing ~3-4% + phí cố định/đơn · Offsite Ads 12-15%
+- **SEO (legacy, không còn áp dụng):** title ≤140 + 13 tags → đã thay bằng **ShopBase product page copy + CRO + upsell/bundle + social proof** (SOP-MER-001)
+- **Compliance (vẫn áp dụng nếu tái kích hoạt):** GPSR label cho đơn EU (SOP-BCK-004) · VAT (SOP-BCK-002)
+- **Tích hợp (legacy):** Printify ↔ Etsy — hiện dùng Printify ↔ ShopBase

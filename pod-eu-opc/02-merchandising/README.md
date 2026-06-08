@@ -1,34 +1,35 @@
 # 02 — Merchandising
 
-> Listing + Etsy SEO · Printify setup · pricing/margin · channel sync & catalog QC.
-> Chi tiết: [Design Roadmap §3.2](../02-design/opc-design-roadmap.md)
+> ShopBase product page + CRO/upsell · Printify/PrintBase setup AOP leggings · pricing/margin · ShopBase sync & catalog QC.
+> Niche: Dog Breed AOP Leggings · Store: ShopBase · Traffic: 100% FB Ads · Market: US + EU. Chi tiết: [Niche §2–4](../docs/08-niche-dog-breed-leggings-shopbase.md)
 
 ## Department IPO
 | Component | Detail |
 |---|---|
-| **Input** | Design + mockup (từ 01), keyword data, Printify catalog & giá in, channel config |
-| **Control** | Etsy SEO (title ≤140, 13 tags), pricing floor (margin ≥30%), GPSR labeling, brand voice |
-| **Output** | Published listing, Printify product, pricing sheet, sync log, catalog QC report |
-| **Mechanism** | Etsy API, Printify API, Shopify API (Phase 2), Claude API, eRank |
+| **Input** | Cleared design + mockup (từ 01), AOP product, Printify/PrintBase catalog & giá in, channel config |
+| **Control** | ShopBase CRO (mobile-first, upsell sports bra), pricing floor (gross margin ~45–55%), GPSR labeling (đơn EU), IP/TM breed, brand voice |
+| **Output** | Published product (ShopBase), AOP product, pricing sheet, sync log, catalog QC report |
+| **Mechanism** | ShopBase API, Printify API, PrintBase, Claude API |
 
 ## Value Chain Position
 - **Layer:** Operations (Outbound)
-- **Upstream:** 01 Product Studio · **Downstream:** 03 Growth, 04 Fulfillment
+- **Upstream:** 01 Product Studio · **Downstream:** 03 Growth (FB Creative/FB Ads), 04 Fulfillment
 
 ## SOP Index
 | SOP | Tên | Loại | AI Worker |
 |---|---|---|---|
-| SOP-MER-001 | Tạo listing + Etsy SEO (+ GPSR) | OPERATIONAL | Listing-SEO AI |
-| SOP-MER-002 | Printify setup + chọn EU provider | OPERATIONAL | Catalog-Sync AI |
+| SOP-MER-001 | Tạo product page ShopBase + CRO/upsell (+ GPSR EU) | OPERATIONAL | Product Page AI |
+| SOP-MER-002 | Printify/PrintBase setup AOP leggings + chọn provider | OPERATIONAL | Catalog-Sync AI |
 | SOP-MER-003 | Pricing & margin | OPERATIONAL | Catalog-Sync AI |
-| SOP-MER-004 | Channel sync & catalog QC | OPERATIONAL | Catalog-Sync AI |
-| SOP-MER-005 | Listing template & brand style | DOC-ONLY | — |
+| SOP-MER-004 | ShopBase sync & catalog QC | OPERATIONAL | Catalog-Sync AI |
+| SOP-MER-005 | Product page template & brand style | DOC-ONLY | — |
 
 ## KPIs (xem kpi_mer-001)
 | KPI | Target |
 |---|---|
-| Listing publish/tuần | ≥ 10 |
-| SEO completeness (≥13 tags, ≥5 ảnh) | 100% |
-| Margin/SKU | ≥ 30% |
-| Provider EU coverage | ≥ 90% |
-| GPSR label present | 100% |
+| Product page publish/tuần | ≥ 10 |
+| CRO completeness (CTA/size guide/social proof) | 100% |
+| Upsell/bundle sports bra present | 100% |
+| Gross margin/SKU | ~45–55% |
+| Variant size XS–3XL/color đủ | 100% |
+| GPSR label present (đơn EU) | 100% |

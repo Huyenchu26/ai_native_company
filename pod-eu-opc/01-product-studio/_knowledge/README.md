@@ -18,4 +18,4 @@
 | [KPI1] | [factor] | quality_prd-001 | Daily/Weekly |
 
 ## Domain knowledge
-- [POD apparel reference, Etsy/Printify docs, EU compliance notes]
+- Dog Breed AOP Leggings niche reference (450+ breed), Meta Audience Insights + AdSpy/BigSpy + Google Trends, Printify AOP docs, IP/TM breed-name notes, US+EU seasonal calendar

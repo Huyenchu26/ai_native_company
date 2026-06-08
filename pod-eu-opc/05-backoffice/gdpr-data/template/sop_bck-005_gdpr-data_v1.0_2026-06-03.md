@@ -2,9 +2,9 @@
 
 **Department:** Backoffice (bck) · **AI Worker phụ trách:** Compliance AI
 **Loại:** OPERATIONAL (template → input → processing → output → archive)
-**Phiên bản:** v1.0 · **Ngày:** 2026-06-03 · **Trạng thái:** ACTIVE
+**Phiên bản:** v1.0 · **Ngày:** 2026-06-08 · **Trạng thái:** ACTIVE
 
-> ⚠️ **Miễn trừ:** Quy trình vận hành nội bộ, không phải tư vấn pháp lý. GDPR (Regulation EU 2016/679) áp dụng cho mọi xử lý dữ liệu cá nhân của người ở EU. Trên Etsy, phần lớn dữ liệu khách do **Etsy** kiểm soát; công ty là bên xử lý/đồng kiểm soát cho dữ liệu nhận được. Xác nhận vai trò với tư vấn.
+> ⚠️ **Miễn trừ:** Quy trình vận hành nội bộ, không phải tư vấn pháp lý. GDPR (Regulation EU 2016/679) áp dụng cho mọi xử lý dữ liệu cá nhân của người ở EU. Với ShopBase (store chính) công ty là controller dữ liệu khách; ShopBase/Printify/Klaviyo là processor. Xác nhận vai trò với tư vấn.
 
 ---
 
@@ -13,16 +13,16 @@
 | Mục | Nội dung |
 |---|---|
 | **Mục đích** | Xử lý dữ liệu cá nhân khách EU hợp lệ, an toàn, tối thiểu; đáp ứng quyền của chủ thể dữ liệu; sẵn sàng khi có sự cố. |
-| **Phạm vi** | Mọi dữ liệu cá nhân thu/xử lý: tên, địa chỉ giao hàng, email, nội dung tin nhắn CSKH (Etsy/Shopify, email tool, helpdesk). |
+| **Phạm vi** | Mọi dữ liệu cá nhân thu/xử lý: tên, địa chỉ giao hàng, email, dữ liệu Facebook Pixel/CAPI, nội dung CSKH (ShopBase, Klaviyo, Printify, helpdesk). |
 | **Trigger** | (a) Theo lịch: audit dữ liệu hàng quý; (b) Sự kiện: yêu cầu của khách (truy cập/xóa), nghi ngờ rò rỉ dữ liệu, thêm tool mới xử lý dữ liệu. |
 
 ### IPO
 | Thành phần | Chi tiết |
 |---|---|
-| **Input** | Danh mục dữ liệu thu thập, danh sách tool/processor (Etsy, Shopify, email, helpdesk, Printify), yêu cầu chủ thể dữ liệu, sự cố |
+| **Input** | Danh mục dữ liệu thu thập, danh sách tool/processor (ShopBase, Printify, Klaviyo, Meta Pixel/CAPI, helpdesk), yêu cầu chủ thể dữ liệu, sự cố |
 | **Control** | GDPR: hợp pháp (lawful basis), tối thiểu hóa, mục đích rõ, thời hạn lưu, quyền truy cập/xóa/đính chính, thông báo vi phạm trong **72h** |
 | **Output** | Data inventory (ROPA rút gọn), privacy notice, log xử lý yêu cầu chủ thể, danh sách processor + DPA, breach log |
-| **Mechanism** | Compliance AI + Claude API, công cụ lưu trữ an toàn, helpdesk/email |
+| **Mechanism** | Compliance AI + Claude API, công cụ lưu trữ an toàn, ShopBase/Klaviyo/helpdesk |
 
 ---
 
@@ -30,12 +30,12 @@
 
 | Nguyên tắc | Áp dụng |
 |---|---|
-| **Lawful basis** | Xử lý đơn hàng = "thực hiện hợp đồng"; marketing email = cần **consent** (opt-in). |
-| **Data minimization** | Chỉ thu dữ liệu cần để giao hàng & hỗ trợ. Không lưu thẻ thanh toán (Etsy/Shopify xử lý). |
+| **Lawful basis** | Xử lý đơn hàng = "thực hiện hợp đồng"; **email marketing (Klaviyo/ShopBase) = cần consent (opt-in)**; Facebook Pixel/quảng cáo retarget với khách EU → cần consent (cookie banner). |
+| **Data minimization** | Chỉ thu dữ liệu cần để giao hàng & hỗ trợ. Không lưu thẻ thanh toán (ShopBase payment xử lý). |
 | **Purpose limitation** | Dữ liệu giao hàng không dùng cho marketing nếu chưa có consent. |
-| **Storage limitation** | Đặt thời hạn lưu (vd dữ liệu đơn giữ theo yêu cầu thuế ~10 năm cho hóa đơn; dữ liệu marketing xóa khi rút consent). |
+| **Storage limitation** | Đặt thời hạn lưu (vd dữ liệu đơn giữ theo yêu cầu thuế ~10 năm cho hóa đơn; dữ liệu marketing Klaviyo xóa khi rút consent). |
 | **Quyền chủ thể** | Truy cập, đính chính, **xóa ("right to be forgotten")**, di chuyển dữ liệu — đáp ứng trong **1 tháng**. |
-| **Processors & DPA** | Mỗi bên thứ ba xử lý dữ liệu (email tool, helpdesk, Printify) cần có Data Processing Agreement. |
+| **Processors & DPA** | Mỗi bên thứ ba xử lý dữ liệu (ShopBase, Klaviyo, Printify, helpdesk) cần có Data Processing Agreement. |
 | **Breach 72h** | Rò rỉ dữ liệu có rủi ro → thông báo cơ quan giám sát trong **72 giờ**. |
 
 > ⚙️ **Khi dùng AI (Claude API) cho CSKH:** không gửi nhiều dữ liệu cá nhân hơn mức cần; ưu tiên ẩn danh/giảm thiểu (vd chỉ gửi nội dung câu hỏi, không kèm địa chỉ đầy đủ trừ khi cần).
@@ -55,7 +55,7 @@
 ## 4. Đầu vào & Điều kiện bắt đầu
 
 - [ ] Danh sách tool/processor đang xử lý dữ liệu khách (đặt trong `./input/processor-list.md`)
-- [ ] Privacy notice đã publish (link trên shop/Shopify) — điều kiện trước launch
+- [ ] Privacy notice + cookie/consent banner đã publish trên ShopBase — điều kiện trước launch
 - [ ] Kênh tiếp nhận yêu cầu chủ thể dữ liệu (email/biểu mẫu) đã có
 
 ## 5. Quy trình
@@ -65,10 +65,10 @@
 | # | Bước | Hành động | Tag AI | Prevention (chống lỗi từ gốc) |
 |---|---|---|---|---|
 | 5.1 | Data inventory | Lập/cập nhật danh mục: dữ liệu gì, ở đâu, mục đích, thời hạn lưu, processor nào | [AI AUGMENT] | Review mỗi quý + khi thêm tool mới; template ROPA rút gọn |
-| 5.2 | Privacy notice | Soạn/cập nhật thông báo quyền riêng tư (EN) hiển thị cho khách | [AI AUGMENT] | Checklist các mục bắt buộc GDPR; Founder duyệt |
-| 5.3 | Consent marketing | Đảm bảo email marketing chỉ gửi cho người opt-in; lưu bằng chứng consent | [AI WORKFORCE] | Double opt-in; tách list "đơn hàng" vs "marketing" |
+| 5.2 | Privacy notice | Soạn/cập nhật thông báo quyền riêng tư + cookie/consent banner (EN) trên ShopBase | [AI AUGMENT] | Checklist các mục bắt buộc GDPR; Founder duyệt |
+| 5.3 | Consent marketing | Đảm bảo email marketing (Klaviyo/ShopBase) chỉ gửi cho người opt-in; lưu bằng chứng consent | [AI WORKFORCE] | Double opt-in; tách list "đơn hàng" vs "marketing" |
 | 5.4 | Xử lý yêu cầu chủ thể | Nhận yêu cầu truy cập/xóa → xác minh danh tính → thực hiện trong 1 tháng → log | [AI AUGMENT] | SLA nhắc hạn; mẫu phản hồi; xác minh trước khi xóa |
-| 5.5 | Quản lý processor | Rà soát DPA với từng processor; gắn cờ thiếu DPA | [AI WORKFORCE] | Không tích hợp tool mới khi chưa có DPA |
+| 5.5 | Quản lý processor | Rà soát DPA với từng processor (ShopBase/Klaviyo/Printify/helpdesk); gắn cờ thiếu DPA | [AI WORKFORCE] | Không tích hợp tool mới khi chưa có DPA |
 | 5.6 | Breach response | Phát hiện rò rỉ → đánh giá rủi ro → nếu cần thông báo cơ quan ≤72h → log + RCA | [AI ASSIST] | Playbook breach sẵn; đồng hồ 72h bắt đầu từ lúc phát hiện |
 
 ## 6. Quality Gate (SLI / SLO)
@@ -86,15 +86,14 @@
 ## 7. Output & Downstream
 
 - **Lưu tại:** `./output/` (data-inventory, privacy-notice, subject-request-log, breach-log) → `./archive/`
-- **Downstream:** SOP-FUL-003 (CX AI tuân thủ khi xử lý dữ liệu), SOP-BCK-003 (audit report)
+- **Downstream:** SOP-FUL-003 (CX AI tuân thủ khi xử lý dữ liệu), SOP-GRW-003 (email chỉ gửi opt-in), SOP-BCK-003 (audit report)
 - **Naming:** `sop-bck-005_data-inventory_[YYYY-Q]_DONE_[date].md`, `..._subject-request-log_[YYYY]_DONE_[date].md`
 
 ## 8. Phụ lục
 
 - **Upstream:** danh sách tool/processor, privacy notice (Founder duyệt)
-- **Downstream:** SOP-FUL-003 (customer support)
+- **Downstream:** SOP-FUL-003 (customer support), SOP-GRW-003 (email/promotions)
 - **Knowledge:** `../../_knowledge/`
 - **Rules / Quality:** `../../_rules/README.md` · `../../quality_bck-001_quality-standards_v1.0_2026-06-03.md`
 - **Policy:** `../../../_shared/policies/data-protection-policy.md`
-- **Thiết kế:** `../../../02-design/opc-design-roadmap.md` §6.3
-- **TODO Founder (trước launch):** ① publish privacy notice ② ký/đối chiếu DPA với email tool + helpdesk + Printify ③ lập kênh tiếp nhận yêu cầu chủ thể dữ liệu.
+- **TODO Founder (trước launch):** ① publish privacy notice + cookie/consent banner trên ShopBase ② ký/đối chiếu DPA với ShopBase + Klaviyo + Printify + helpdesk ③ lập kênh tiếp nhận yêu cầu chủ thể dữ liệu.

@@ -18,4 +18,4 @@
 | [KPI1] | [factor] | quality_ful-001 | Daily/Weekly |
 
 ## Domain knowledge
-- [POD apparel reference, Etsy/Printify docs, EU compliance notes]
+- ShopBase order/helpdesk reference, Printify production & shipping (US 3–7d / EU 5–10d), size guide XS–3XL, return/refund policy, GDPR (dữ liệu khách EU), GPSR label (đơn EU)

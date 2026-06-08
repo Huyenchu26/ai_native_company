@@ -18,4 +18,4 @@
 | [KPI1] | [factor] | quality_grw-001 | Daily/Weekly |
 
 ## Domain knowledge
-- [POD apparel reference, Etsy/Printify docs, EU compliance notes]
+- Facebook Ads reference (BM 5-tier anti-ban, ABO→CBO, 4-layer targeting, CAPI), ad creative formula (hook/body/CTA, UGC), Klaviyo email flows, Meta Ad Policy, ROAS/CPA/AOV benchmarks

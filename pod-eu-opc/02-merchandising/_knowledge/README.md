@@ -18,4 +18,4 @@
 | [KPI1] | [factor] | quality_mer-001 | Daily/Weekly |
 
 ## Domain knowledge
-- [POD apparel reference, Etsy/Printify docs, EU compliance notes]
+- ShopBase product page / CRO / upsell-bundle reference, Printify/PrintBase AOP leggings docs (US+EU providers), pricing & margin (~45–55% gross), GPSR label (đơn EU)

@@ -18,4 +18,4 @@
 | [KPI1] | [factor] | quality_bck-001 | Daily/Weekly |
 
 ## Domain knowledge
-- [POD apparel reference, Etsy/Printify docs, EU compliance notes]
+- ShopBase/Printify/Meta Ads payout & fee docs, profit-per-SKU + ROAS/CPA, VAT EU/OSS + US sales tax (marketplace facilitator), GPSR/GDPR compliance, USD→VND, 12-worker workforce ops

@@ -1,61 +1,61 @@
-# SOP-PRD-001 — Niche & keyword research
+# SOP-PRD-001 — Niche & breed demand research
 
 **Department:** Product Studio (prd) · **AI Worker:** Niche Research AI
-**Loại:** OPERATIONAL · **v1.0** · **2026-06-03** · **ACTIVE**
+**Loại:** OPERATIONAL · **v1.0** · **2026-06-08** · **ACTIVE**
 
-> Đầu nguồn của pipeline. Chất lượng niche quyết định toàn bộ tỉ lệ thắng phía sau.
+> Đầu nguồn của pipeline. Chất lượng breed-niche quyết định toàn bộ tỉ lệ thắng (ROAS) phía sau.
 
 ## 1. Tổng quan
 | Mục | Nội dung |
 |---|---|
-| **Mục đích** | Tìm niche apparel có **demand thật** trên Etsy EU + cạnh tranh không quá bão hòa, sạch IP → feed design. |
-| **Phạm vi** | Chỉ nghiên cứu & validate niche. KHÔNG tạo design (đó là PRD-003). |
-| **Trigger** | Theo lịch hàng tuần; hoặc khi cần mở rộng portfolio / sau seasonal scan (PRD-002). |
+| **Mục đích** | Tìm **dog breed** có **demand thật** (FB audience đủ lớn + có ad đang chạy/scale) cho AOP Leggings, cạnh tranh không bão hòa, sạch IP/TM → feed design. |
+| **Phạm vi** | Chỉ nghiên cứu & validate breed-niche. KHÔNG tạo design (đó là PRD-003). |
+| **Trigger** | Theo lịch hàng tuần; hoặc khi cần mở rộng portfolio breed / sau seasonal scan (PRD-002) / tín hiệu demand từ FB Ads Specialist AI. |
 
 ### IPO
 | | |
 |---|---|
-| **Input** | Etsy search/autocomplete, eRank/Marmalead, Pinterest Trends, competitor shops, seed ideas, output PRD-002 |
-| **Control** | Tiêu chí demand-vs-competition, brand fit, phù hợp in apparel, không vi phạm IP |
-| **Output** | Validated niche list (mỗi niche: keyword chính, search volume, competition, seasonality, audience EU, demand score) |
-| **Mechanism** | Niche Research AI + Claude API, eRank, Pinterest Trends, Etsy |
+| **Input** | Meta Audience Insights (FB audience size), AdSpy/BigSpy (competitor ads), Google Trends, seed breed, output PRD-002 |
+| **Control** | Demand-vs-ad-competition, FB audience đủ lớn, phù hợp AOP leggings, không vi phạm IP/TM (tên breed) |
+| **Output** | Validated niche list (mỗi breed: FB audience size, ad-competition, seasonality/gift angle, design type gợi ý, demand score, IP/TM status) |
+| **Mechanism** | Niche Research AI + Claude API, Meta Audience Insights, AdSpy/BigSpy, Google Trends |
 
 ## 2. Tiêu chí Demand Score (Knowledge)
-Mỗi niche chấm theo: **Demand** (search volume/engagement) · **Competition** (số listing, độ bão hòa) · **Buyer intent** · **Seasonality** (evergreen vs mùa) · **Audience EU rõ ràng** · **IP-safe**.
-→ Ưu tiên: demand trung bình-cao + competition vừa (tránh "red ocean") + audience cụ thể (micro-niche).
+Mỗi breed chấm theo: **FB audience size** (Audience Insights, vd Golden Retriever ~8M / French Bulldog ~6M US) · **Ad competition** (AdSpy/BigSpy — winner đang scale?) · **Buyer intent** ("dog mom" identity, engaged shoppers) · **Seasonality / gift angle** · **Design fit AOP** (4 loại: tile/watercolor/funny/mandala) · **IP/TM-safe** (tên breed).
+→ Ưu tiên: FB audience trung bình-cao + ad-competition vừa (tránh "red ocean") + identity rõ (micro-niche theo breed). Start: Golden Retriever, French Bulldog, Corgi, Dachshund.
 
 ## 3. RACI
 | Hoạt động | Founder | Niche Research AI |
 |---|---|---|
-| Chốt portfolio niche | **A** | R |
+| Chốt portfolio breed | **A** | R |
 | Phân tích & chấm điểm | C | **R** |
 
 ## 4. Đầu vào
-- [ ] Seed ideas / hướng portfolio (Founder) · [ ] Truy cập eRank/Pinterest Trends · [ ] Output PRD-002 (nếu có)
+- [ ] Seed breed / hướng portfolio (Founder) · [ ] Truy cập Meta Audience Insights + AdSpy/BigSpy + Google Trends · [ ] Output PRD-002 (nếu có)
 
 ## 5. Quy trình
 | # | Bước | Hành động | Tag AI | Prevention |
 |---|---|---|---|---|
-| 5.1 | Seed | Thu thập ý tưởng + dịp từ PRD-002 | [AI WORKFORCE] | — |
-| 5.2 | Keyword expansion | Mở rộng long-tail từ Etsy autocomplete + eRank | [AI WORKFORCE] | Dùng dữ liệu thật, không đoán volume |
-| 5.3 | Demand vs competition | Phân tích volume, số listing, top sellers | [AI AUGMENT] | Cross-check ≥2 nguồn |
-| 5.4 | IP pre-flag | Loại sớm niche dính brand/character/celebrity | [AI WORKFORCE] | Pre-flag trước khi chấm điểm → không tốn công design |
-| 5.5 | Score & rank | Chấm demand score, xếp hạng, chọn top | [AI AUGMENT] | Ngưỡng demand score tối thiểu |
+| 5.1 | Seed | Thu thập breed + dịp từ PRD-002 + tín hiệu từ FB Ads Specialist AI | [AI WORKFORCE] | — |
+| 5.2 | Audience sizing | Đo FB audience size từng breed (Meta Audience Insights) | [AI WORKFORCE] | Dùng dữ liệu thật, không đoán size |
+| 5.3 | Ad spy + demand vs competition | Spy ad đang chạy/scale (AdSpy/BigSpy) + Google Trends | [AI AUGMENT] | Cross-check ≥2 nguồn |
+| 5.4 | IP/TM pre-flag | Loại sớm breed name đã đăng ký TM / dính brand/character/celebrity | [AI WORKFORCE] | Pre-flag trước khi chấm điểm → không tốn công design |
+| 5.5 | Score & rank | Chấm demand score, xếp hạng, chọn top breed | [AI AUGMENT] | Ngưỡng demand score tối thiểu |
 | 5.6 | Handoff | Xuất validated niche list cho PRD-003 | [AI WORKFORCE] | Đủ field bắt buộc |
 
 ## 6. Quality Gate (SLI/SLO)
 | # | Tiêu chí | SLI | SLO | Pass |
 |---|---|---|---|---|
-| 1 | Đủ dữ liệu | % niche đủ field | 100% | ☐ |
+| 1 | Đủ dữ liệu | % breed đủ field | 100% | ☐ |
 | 2 | Demand | demand score | ≥ ngưỡng | ☐ |
-| 3 | Competition | độ bão hòa | không "saturated" | ☐ |
-| 4 | IP | red-flag check | 0 niche dính IP rõ | ☐ |
+| 3 | Competition | độ bão hòa ad | không "saturated" | ☐ |
+| 4 | IP/TM | red-flag check tên breed | 0 breed dính IP/TM rõ | ☐ |
 
 **Quyết định:** pass → output/ ; fail → loop (max 3) → escalate.
 
 ## 7. Output & Downstream
 - **Lưu:** ./output/niche-list_[YYYY-Wnn]_DONE.md → ./archive/
-- **Downstream:** PRD-003 (design), PRD-002 (mùa vụ)
+- **Downstream:** PRD-003 (design), PRD-002 (mùa vụ), FB Ads Specialist AI (targeting input)
 
 ## 8. Phụ lục
-- Doc: ../niche-selection-criteria.md (SOP-PRD-005) · Knowledge: ../_knowledge/ · Thiết kế: ../../02-design/opc-design-roadmap.md §3.1
+- Doc: ../niche-selection-criteria.md (SOP-PRD-005) · Knowledge: ../_knowledge/ · Niche strategy: ../../../docs/08-niche-dog-breed-leggings-shopbase.md §3
