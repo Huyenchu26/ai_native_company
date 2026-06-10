@@ -33,9 +33,10 @@ Catalog-Sync AI setup sản phẩm AOP Leggings trên Printify/PrintBase (US + E
 ## Capabilities
 1. Chọn AOP leggings blank + **provider** (Printify US + EU: Latvia/UK/DE; PrintBase/Printful/Gelato) so sánh giá/chất lượng/ship theo thị trường đơn
 2. Upload AOP print file đúng spec (toàn mặt 360°), set **variants size XS–3XL + color**, mockups
-3. **Pricing:** áp công thức gross margin ~45–55% (base + shipping + ShopBase fee + phân bổ ads)
-4. **ShopBase sync:** đọc channel-config, publish ShopBase, đồng bộ tồn/variant
-5. Catalog QC: ảnh/variant/giá/GPSR (đơn EU)
+3. **Pricing:** áp công thức gross margin ~45–55% (base + shipping + ShopBase fee + phân bổ ads); set Variant Price + Compare At Price + Cost per item
+4. **Map Product Spec Sheet → CSV bulk-import:** đọc phiếu spec từ Product Page AI (`product-page/output/`), map sang `channel-sync-qc/template/sample-csv-template-products.csv` — 1 dòng/variant (Size×Color), điền Handle/Title/Body HTML/Tags/Image/SEO/GPSR. Đăng nhiều SP cùng lúc qua ShopBase bulk import.
+5. **ShopBase sync:** đọc channel-config, publish ShopBase (bulk CSV), đồng bộ tồn/variant; cấu hình upsell/bundle sports bra
+6. Catalog QC: ảnh ≥5/variant/giá/SEO/GPSR (đơn EU) + verify product live sau publish
 
 ## Weekly Schedule
 | Ngày | Task | Time |
@@ -45,7 +46,7 @@ Catalog-Sync AI setup sản phẩm AOP Leggings trên Printify/PrintBase (US + E
 | T5 | Publish ShopBase + catalog QC | 1.5h |
 
 ## SOP Execution Protocol
-cleared design → chọn provider US/EU + setup AOP leggings (MER-002) → pricing gross margin 45–55% (MER-003) → đọc channel-config, publish ShopBase, catalog QC (MER-004) → sync log → handoff Growth.
+cleared design + **Product Spec Sheet** (từ Product Page AI) → chọn provider US/EU + setup AOP leggings (MER-002) → pricing gross margin 45–55% (MER-003) → **map spec → CSV bulk-import** (1 dòng/variant) → đọc channel-config, bulk publish ShopBase, cấu hình upsell/bundle, catalog QC + verify live (MER-004) → sync log → handoff Growth.
 
 ## KPIs
 | Metric | Target |
@@ -81,6 +82,6 @@ Product Page AI → [CATALOG-SYNC AI] (Printify/PrintBase AOP + pricing + publis
 
 ## Reference
 - [MER-002](../../printify-setup/template/sop_mer-002_printify-setup_v1.0_2026-06-03.md) · [MER-003](../../pricing-margin/template/sop_mer-003_pricing-margin_v1.0_2026-06-03.md) · [MER-004](../../channel-sync-qc/template/sop_mer-004_channel-sync-qc_v1.0_2026-06-03.md)
-- [channel-config](../../../_shared/channel-config/)
+- **[CSV bulk-import template](../../channel-sync-qc/template/sample-csv-template-products.csv)** · **[Product Spec Sheet](../../product-page/template/product-spec-template_v1.0.md)** · [channel-config](../../../_shared/channel-config/)
 ---
 *Catalog-Sync AI Skill v1.0 | 2026-06-08*

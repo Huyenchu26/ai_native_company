@@ -18,6 +18,8 @@ Chuẩn hóa giọng văn và bố cục product page ShopBase để bán bằng
 - Copy tiếng Anh; urgency chỉ dùng khi đúng sự thật.
 
 ## Liên kết
+- **Phiếu điền mỗi sản phẩm (đủ field để đăng ShopBase):** ./product-page/template/product-spec-template_v1.0.md
+- **CSV bulk-import:** ./channel-sync-qc/template/sample-csv-template-products.csv
 - Niche & angle: ../docs/08-niche-dog-breed-leggings-shopbase.md (§3 design types, §5 creative)
 - SOP: ./product-page/template/sop_mer-001_product-page_v1.0_2026-06-03.md
 - Rules: ./_rules/

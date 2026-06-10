@@ -30,12 +30,14 @@ Product Page AI tạo product page tiếng Anh cho ShopBase (Dog Breed AOP Leggi
 | SOP-BCK-004 | GPSR compliance | Consulted (nhận clearance) |
 
 ## Capabilities
-1. **Emotional copy theo breed** (identity: "Golden Retriever Mom") — hook → benefits → AOP feature (squat-proof, 4-way stretch, XS–3XL)
-2. **Mobile-first CRO:** above-the-fold offer, sticky ATC, size guide, trust badge, urgency hợp lệ
-3. **Upsell/bundle sports bra cùng design** → đẩy AOV $75–95 (post-ATC upsell + bundle widget ShopBase)
-4. **Social proof:** review/UGC block, "as seen" dog-mom community, star rating
-5. Mockup curation: ≥5 mockup AOP 360° + size chart; ảnh đầu là ảnh mạnh nhất (mobile)
-6. Chèn **GPSR block** cho đơn EU (từ clearance BCK-004); **IP/TM recheck** tên breed (tránh breed đã đăng ký TM)
+1. **Điền đủ Product Spec Sheet** (`template/product-spec-template_v1.0.md`) cho MỖI sản phẩm mới — 1 phiếu gom đủ thông tin để Catalog-Sync đăng ShopBase (cấu trúc tham khảo gearbunch yoga-pants). Đủ 10 mục: định danh/tag, giá+compare-at, variant Size×Color, Body HTML, ảnh, trust, upsell, SEO, GPSR, gate.
+2. **Emotional copy theo breed** (identity: "Golden Retriever Mom") — hook → mô tả design → "Why You'll Love It" bullets (squat-proof, 4-way stretch, high-waist) → material `82% poly/18% spandex` → care → size guide → shipping (US/EU)
+3. **Mobile-first CRO:** above-the-fold offer, sticky ATC, size guide XS–3XL, trust badge, urgency hợp lệ
+4. **Upsell/bundle sports bra cùng design** → đẩy AOV $75–95 (post-ATC upsell + bundle widget ShopBase)
+5. **Social proof:** review/UGC block, dog-mom community, star rating (chỉ số liệu thật — Meta Ad Policy)
+6. Mockup curation: ≥5 mockup AOP 360° + size chart; ảnh đầu là ảnh mạnh nhất (mobile); set Alt text + Image Position
+7. **SEO + Google Shopping fields** (SEO Title/Desc, age group/gender/category) sẵn cho CSV
+8. Chèn **GPSR block** cho đơn EU (từ clearance BCK-004); **IP/TM recheck** tên breed (tránh breed đã đăng ký TM)
 
 ## Weekly Schedule
 | Ngày | Task | Time |
@@ -44,15 +46,18 @@ Product Page AI tạo product page tiếng Anh cho ShopBase (Dog Breed AOP Leggi
 | T5 | GPSR (EU) + IP/TM recheck + handoff publish | 1h |
 
 ## SOP Execution Protocol
-cleared design + mockup + pricing + **GPSR clearance** (input/) → emotional copy theo breed → mobile CRO + social proof → cấu hình upsell/bundle sports bra → chèn GPSR (đơn EU) → IP/TM recheck breed → page READY (output/) → handoff Catalog-Sync AI (MER-004).
+cleared design + mockup + pricing + **GPSR clearance** (input/) → **mở Product Spec Sheet** (`template/product-spec-template_v1.0.md`) → điền định danh/tag/giá/variant → emotional copy + "Why You'll Love It" + material/care/size/shipping (Body HTML) → mobile CRO + social proof → cấu hình upsell/bundle sports bra → SEO + Google Shopping fields → chèn GPSR (đơn EU) → IP/TM recheck breed → **check mục 10 Gate** → spec READY (output/) → handoff Catalog-Sync AI map CSV (MER-004).
 
 ## KPIs
 | Metric | Target |
 |---|---|
 | Product page/tuần | ≥ 10 |
+| **Product Spec Sheet đủ 10 mục** | 100% |
 | CRO block đủ (offer/CTA/size/social proof) | 100% |
+| Material + care + shipping (US/EU) present | 100% |
 | Upsell/bundle sports bra present | 100% |
-| Ảnh ≥5 + size chart | 100% |
+| Ảnh ≥5 + size chart + Alt text | 100% |
+| SEO Title/Desc + Google Shopping fields | 100% |
 | GPSR present (đơn EU) | 100% |
 | Từ khóa IP/TM breed | 0 |
 
@@ -80,6 +85,6 @@ Design AI (cleared) + Compliance AI (GPSR/TM) → [PRODUCT PAGE AI] → Catalog-
 
 ## Reference
 - [SOP-MER-001](../../product-page/template/sop_mer-001_product-page_v1.0_2026-06-03.md) · [GPSR SOP-BCK-004](../../../05-backoffice/gpsr-compliance/template/sop_bck-004_gpsr-compliance_v1.0_2026-06-03.md)
-- [Product page template](../../listing-template-style.md) · [channel-config](../../../_shared/channel-config/)
+- **[Product Spec Sheet template](../../product-page/template/product-spec-template_v1.0.md)** (phiếu điền mỗi sản phẩm) · [Brand style](../../listing-template-style.md) · [channel-config](../../../_shared/channel-config/)
 ---
 *Product Page AI Skill v1.0 | 2026-06-08*
