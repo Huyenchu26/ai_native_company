@@ -47,7 +47,8 @@
 | 5.3 | Upload print file | Đặt AOP design phủ toàn mặt đúng spec 360° | [AI WORKFORCE] | Auto-check spec; preview AOP print area |
 | 5.4 | Set variants | Cấu hình **size XS–3XL + color** | [AI WORKFORCE] | Checklist size XS–3XL đủ |
 | 5.5 | Mockups | Sinh mockup AOP 360° cho product page + ads | [AI WORKFORCE] | ≥5 mockup |
-| 5.6 | Handoff | Product → MER-003 (giá) + MER-001 (page) | [AI WORKFORCE] | Ghi provider + giá in để MER-003 dùng |
+| 5.6 | **Connect + Push ShopBase** | Bật tích hợp Printify↔ShopBase, **Publish/Push** product → mockup + variant + giá tự sync sang ShopBase (xem §9). **Ảnh hiển thị trên shop = mockup này** | [AI WORKFORCE] | Verify ảnh hiện đủ ≥5 trên product live; không trùng product |
+| 5.7 | Handoff | Product (đã có ảnh) → MER-003 (giá) + MER-001 (page) | [AI WORKFORCE] | Ghi provider + giá in để MER-003 dùng |
 
 ## 6. Quality Gate
 | # | Tiêu chí | SLI | SLO | Pass |
@@ -57,10 +58,36 @@
 | 3 | Variants | đủ size XS–3XL/color | 100% | ☐ |
 | 4 | Mockup | ≥ 5 (360°) | 100% | ☐ |
 | 5 | Giá in | trong floor (gross margin ~45–55% khả thi) | 100% | ☐ |
+| 6 | **Ảnh trên ShopBase** | mockup hiển thị đủ sau Push (mở product live, không trắng ảnh) | 100% | ☐ |
 
 ## 7. Output & Downstream
 - **Lưu:** ./output/printify-product_[sku]_DONE.md (provider, giá in, variants) → archive/
 - **Downstream:** MER-003 (pricing), MER-001 (page), BCK-002 (nơi in cho VAT), BCK-004 (nhà SX cho GPSR đơn EU)
 
-## 8. Phụ lục
-Channel: ../../_shared/channel-config/printify.md · GPSR: ../../05-backoffice/gpsr-compliance/ · VAT: ../../05-backoffice/vat-oss-ioss/ · Niche: ../../docs/08-niche-dog-breed-leggings-shopbase.md
+## 9. Tích hợp Printify ↔ ShopBase (Cách A — publish ảnh tự động) ⭐ chuẩn cho AOP
+
+> **Nguyên tắc:** với AOP, **không nhập ảnh bằng CSV thủ công**. Tạo product trên Printify → Push sang ShopBase → mockup + variant + giá **auto-sync**. ShopBase tự host ảnh nên product page không bao giờ trắng ảnh.
+
+### 9.1 Setup tích hợp (làm 1 lần)
+- [ ] ShopBase → **Apps / Sales channels → Printify** → Connect (OAuth tài khoản Printify)
+- [ ] Cấp quyền publish; chọn store ShopBase đích
+- [ ] Bật **Auto-fulfill** (đơn ShopBase tự đẩy về Printify sản xuất — đồng bộ SOP-FUL-001/002)
+- [ ] Map provider US + EU theo §2 (route theo địa chỉ giao)
+
+### 9.2 Publish từng product (mỗi sản phẩm)
+- [ ] Printify: tạo product (blank leggings + print file + variants XS–3XL/color + ≥5 mockup) — §5.1–5.5
+- [ ] Đặt **Title/Description/Tags theo Product Spec Sheet** (Product Page AI) ngay trên Printify, hoặc để trống rồi sửa ở ShopBase sau khi push
+- [ ] Bấm **Publish → ShopBase** → chờ sync (mockup + variant + SKU + giá về ShopBase)
+- [ ] ShopBase: mở product → **bổ sung field Printify không đẩy:** Compare At Price (giá gạch), SEO Title/Desc, Collection, **GPSR block (đơn EU)**, **upsell/bundle sports bra**
+- [ ] **Verify ảnh hiện đủ ≥5** + variant đúng → set **Published = visible**
+
+### 9.3 Khi nào vẫn dùng CSV (Cách B)
+- Chỉ khi product **không** đi qua Printify (provider khác chưa tích hợp) → tự host ảnh (ShopBase Media/Cloudinary) rồi điền `Image Src` = URL public. KHÔNG để placeholder.
+
+### 9.4 Trị "product lên nhưng trắng ảnh"
+1. Print file chưa được áp lên blank / chưa sinh mockup trên Printify → quay lại §5.3–5.5
+2. Push lỗi giữa chừng → ShopBase product chưa nhận ảnh → **Re-publish** từ Printify
+3. (Cách B) `Image Src` là placeholder/đường dẫn local/Drive share → thay bằng URL ảnh public trực tiếp
+
+## 10. Phụ lục
+Channel: ../../_shared/channel-config/printify.md · ../../_shared/channel-config/shopbase.md · GPSR: ../../05-backoffice/gpsr-compliance/ · VAT: ../../05-backoffice/vat-oss-ioss/ · Niche: ../../docs/08-niche-dog-breed-leggings-shopbase.md

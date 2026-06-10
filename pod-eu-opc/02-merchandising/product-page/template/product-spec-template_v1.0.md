@@ -52,11 +52,16 @@
 8. **Guarantee / Returns:** đổi size XS–3XL, policy đổi/hoàn (link SOP-FUL-003/004)
 
 ## 5. Hình ảnh *  → `Image Src` / `Image Position` / `Image Alt Text` / `Variant Image`
-| # | Loại | Alt text | Ghi chú |
+> ⚠️ **`Image Src` PHẢI là URL ảnh PUBLIC đã host** — KHÔNG dùng đường dẫn file repo/local hay placeholder.
+> Nguồn hợp lệ: **(a) URL mockup Printify/PrintBase** (sinh ở bước MER-002, ưu tiên) · **(b) URL ShopBase Media** (upload thủ công) · (c) Cloudinary/S3 link `.jpg/.png` trực tiếp.
+> ❌ File in 300 DPI của Design AI KHÔNG phải ảnh sản phẩm — phải áp lên blank leggings (Printify) để ra mockup trước.
+> Nếu dùng **tích hợp Printify↔ShopBase**: bỏ trống cột ảnh trong CSV — ảnh tự sync từ Printify.
+
+| # | Loại | Alt text | Nguồn URL |
 |---|---|---|---|
-| 1 * | Ảnh AOP mạnh nhất (mobile hero) | `[Breed] AOP leggings front` | Image Position 1 |
-| 2–5 * | Model 360°, flat-lay, close-up vải | `[...]` | ≥5 ảnh tổng |
-| 6 * | Size chart XS–3XL | `Size guide` | — |
+| 1 * | Ảnh AOP mạnh nhất (mobile hero) | `[Breed] AOP leggings front` | Printify mockup |
+| 2–5 * | Model 360°, flat-lay, close-up vải | `[...]` | Printify mockup (≥5 ảnh tổng) |
+| 6 * | Size chart XS–3XL | `Size guide` | asset chung / ShopBase Media |
 
 ## 6. Trust / Social proof  *(chèn vào Body HTML đầu trang)*
 - Badge: `🐾 [N] Happy Dog Moms | 🚚 Fast US & EU Shipping | ✅ Squat-Proof Guarantee`

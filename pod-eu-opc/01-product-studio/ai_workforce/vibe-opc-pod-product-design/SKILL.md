@@ -38,7 +38,7 @@ Design AI biến breed đã validate thành AOP design print-ready (4 loại: ti
    - **Watercolor + Florals** (premium, justify giá cao — Midjourney/Firefly)
    - **Funny / Quote** (viral organic — tránh quote dính TM)
    - **Mandala / Geometric** (EU mạnh — cross-sell yoga/spiritual)
-3. **Export print-ready:** 300 DPI, full-bleed AOP đúng kích thước Printify leggings
+3. **Export print-ready:** 300 DPI, full-bleed AOP đúng kích thước Printify leggings (đây là **file in**, KHÔNG phải ảnh sản phẩm — ảnh mockup do Catalog-Sync sinh từ Printify ở MER-002). Đặt tên file rõ theo breed + 1 preview mockup cho FB Creative AI.
 4. **QC kỹ thuật AOP 360°:** verify DPI/size/format + kiểm pattern liền mạch (seamless) khi mặc trực tiếp, không lỗi đường may/đối xứng quanh chân
 5. **IP/TM clearance:** scan trademark theo **tên breed** (EUIPO/USPTO), copyright (artwork/character/lyrics), publicity rights
 
@@ -84,8 +84,10 @@ Design AI biến breed đã validate thành AOP design print-ready (4 loại: ti
 ```
 Niche Research AI → [DESIGN AI] (brief→AOP design 4 loại→QC 360°→IP/TM clear) → Product Page AI (MER-001)
                           IP-clearance-log ─┘ (gate)         │
-                          cleared design ────────────────────┴──> FB Creative AI (GRW-005, asset)
+                          print file 300DPI ─────────────────┼──> Catalog-Sync AI (MER-002: áp blank → sinh MOCKUP → URL ảnh)
+                          preview mockup ────────────────────┴──> FB Creative AI (GRW-005, asset)
 ```
+> **Lưu ý asset:** print file ≠ ảnh sản phẩm. Ảnh hiển thị trên shop là **mockup** Catalog-Sync sinh từ Printify (MER-002). Nếu shop "không có ảnh" → kiểm tra bước sinh mockup + URL ảnh public, không phải lỗi design.
 
 ## Reference
 - [SOP-PRD-003](../../design-production/template/sop_prd-003_design-production_v1.0_2026-06-03.md) · [SOP-PRD-004](../../design-qc-ip/template/sop_prd-004_design-qc-ip_v1.0_2026-06-03.md)

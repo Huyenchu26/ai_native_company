@@ -32,11 +32,12 @@ Catalog-Sync AI setup sản phẩm AOP Leggings trên Printify/PrintBase (US + E
 
 ## Capabilities
 1. Chọn AOP leggings blank + **provider** (Printify US + EU: Latvia/UK/DE; PrintBase/Printful/Gelato) so sánh giá/chất lượng/ship theo thị trường đơn
-2. Upload AOP print file đúng spec (toàn mặt 360°), set **variants size XS–3XL + color**, mockups
+2. **Upload print file → sinh mockup:** lấy print file 300 DPI từ Design AI (`01-product-studio/design-production/output/`), áp lên blank leggings trên Printify/PrintBase → **sinh mockup 360°** → **thu URL mockup public** (Printify CDN). Đây là nguồn ảnh sản phẩm — file in KHÔNG phải ảnh.
 3. **Pricing:** áp công thức gross margin ~45–55% (base + shipping + ShopBase fee + phân bổ ads); set Variant Price + Compare At Price + Cost per item
-4. **Map Product Spec Sheet → CSV bulk-import:** đọc phiếu spec từ Product Page AI (`product-page/output/`), map sang `channel-sync-qc/template/sample-csv-template-products.csv` — 1 dòng/variant (Size×Color), điền Handle/Title/Body HTML/Tags/Image/SEO/GPSR. Đăng nhiều SP cùng lúc qua ShopBase bulk import.
-5. **ShopBase sync:** đọc channel-config, publish ShopBase (bulk CSV), đồng bộ tồn/variant; cấu hình upsell/bundle sports bra
-6. Catalog QC: ảnh ≥5/variant/giá/SEO/GPSR (đơn EU) + verify product live sau publish
+4. **Map Product Spec Sheet → CSV bulk-import:** đọc phiếu spec từ Product Page AI (`product-page/output/`), map sang `channel-sync-qc/template/sample-csv-template-products.csv` — 1 dòng/variant (Size×Color), điền Handle/Title/Body HTML/Tags/SEO/GPSR. **`Image Src` = URL mockup Printify (mục 2) hoặc ShopBase Media — KHÔNG để placeholder/đường dẫn local.** Đăng nhiều SP cùng lúc qua ShopBase bulk import.
+5. **2 đường publish ảnh:** (a) **Tích hợp Printify↔ShopBase** — product + mockup auto-sync, bỏ trống cột ảnh CSV (ưu tiên cho AOP); (b) **CSV thủ công** — phải điền Image Src bằng URL public đã host.
+6. **ShopBase sync:** đọc channel-config, publish ShopBase, đồng bộ tồn/variant; cấu hình upsell/bundle sports bra
+7. Catalog QC: **verify ảnh hiện đủ ≥5** (mở product live, không lỗi ảnh) + variant/giá/SEO/GPSR (đơn EU) sau publish
 
 ## Weekly Schedule
 | Ngày | Task | Time |
@@ -46,7 +47,7 @@ Catalog-Sync AI setup sản phẩm AOP Leggings trên Printify/PrintBase (US + E
 | T5 | Publish ShopBase + catalog QC | 1.5h |
 
 ## SOP Execution Protocol
-cleared design + **Product Spec Sheet** (từ Product Page AI) → chọn provider US/EU + setup AOP leggings (MER-002) → pricing gross margin 45–55% (MER-003) → **map spec → CSV bulk-import** (1 dòng/variant) → đọc channel-config, bulk publish ShopBase, cấu hình upsell/bundle, catalog QC + verify live (MER-004) → sync log → handoff Growth.
+cleared design (print file) + **Product Spec Sheet** (từ Product Page AI) → chọn provider US/EU + upload print file + **sinh mockup → thu URL mockup public** (MER-002) → pricing gross margin 45–55% (MER-003) → **map spec → CSV bulk-import, điền Image Src = URL mockup** (1 dòng/variant) → đọc channel-config, bulk publish ShopBase (hoặc tích hợp Printify auto-sync ảnh), cấu hình upsell/bundle, catalog QC + **verify ảnh hiện đủ trên product live** (MER-004) → sync log → handoff Growth.
 
 ## KPIs
 | Metric | Target |
@@ -76,8 +77,12 @@ cleared design + **Product Spec Sheet** (từ Product Page AI) → chọn provid
 
 ## Integration
 ```
-Product Page AI → [CATALOG-SYNC AI] (Printify/PrintBase AOP + pricing + publish ShopBase) → live product → Growth
-                  channel-config (shopbase/printify) ─┘
+Design AI (print file 300DPI) ─┐
+Product Page AI (spec sheet) ──┤→ [CATALOG-SYNC AI]
+                               │   1. upload print → Printify sinh mockup → URL ảnh public
+                               │   2. pricing 45–55%  3. map spec→CSV (Image Src=URL mockup)
+                               │   4. bulk publish ShopBase (hoặc Printify auto-sync ảnh)
+                  channel-config ┘   → live product (ảnh hiện đủ) → Growth
 ```
 
 ## Reference
