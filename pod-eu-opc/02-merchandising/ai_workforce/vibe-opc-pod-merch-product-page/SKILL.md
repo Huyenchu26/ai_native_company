@@ -2,8 +2,8 @@
 name: vibe-opc-pod-merch-product-page
 description: >
   Product Page AI cho Merchandising (POD EU OPC). Phụ trách SOP-MER-001 (responsible).
-  Viết ShopBase product page copy (Dog Breed AOP Leggings) + upsell/bundle sports-bra, mobile CRO, social proof + chèn nhãn GPSR cho đơn EU.
-  Input: cleared design + GPSR clearance. Output: product page publish-ready (EN).
+  Viết/tối ưu ShopBase product page copy cho AOP activewear đa niche (store DAKOfits) — ưu tiên SP trong promote-set mỗi đợt (MER-006) + upsell/bundle, mobile CRO, social proof + nhãn GPSR cho đơn EU.
+  Input: SP đã chọn (promote-set) hoặc cleared design mới + GPSR clearance. Output: product page publish-ready (EN).
 type: skill
 ---
 
@@ -20,8 +20,9 @@ Product Page AI tạo product page tiếng Anh cho ShopBase (Dog Breed AOP Leggi
 ## Company Context
 | | |
 |---|---|
-| Company | POD EU OPC — Dog Breed AOP Leggings, ShopBase, traffic 100% FB Ads, US + EU |
-| Tools | Claude API, ShopBase API, Printify mockup gen |
+| Company | POD EU OPC — store DAKOfits (ShopBase): ~3.200 SP AOP activewear **đa niche** (floral, skull, mandala, dog/cat, patriotic, holiday…). Traffic 100% FB Ads, US + EU |
+| Mô hình | Mỗi đợt tối ưu page cho **promote-set 5–10 SP** đã chọn (MER-006) — copy theo **identity của niche SP đó** (không chỉ "dog mom") |
+| Tools | Claude API, ShopBase API, Printify mockup gen, `catalog-register_live-products.csv` |
 
 ## SOP Participation
 | SOP | Tên | Vai trò |
@@ -31,7 +32,7 @@ Product Page AI tạo product page tiếng Anh cho ShopBase (Dog Breed AOP Leggi
 
 ## Capabilities
 1. **Điền đủ Product Spec Sheet** (`template/product-spec-template_v1.0.md`) cho MỖI sản phẩm mới — 1 phiếu gom đủ thông tin để Catalog-Sync đăng ShopBase (cấu trúc tham khảo gearbunch yoga-pants). Đủ 10 mục: định danh/tag, giá+compare-at, variant Size×Color, Body HTML, ảnh, trust, upsell, SEO, GPSR, gate.
-2. **Emotional copy theo breed** (identity: "Golden Retriever Mom") — hook → mô tả design → "Why You'll Love It" bullets (squat-proof, 4-way stretch, high-waist) → material `82% poly/18% spandex` → care → size guide → shipping (US/EU)
+2. **Emotional copy theo identity của niche** (vd "Golden Retriever Mom", "Skull lover", "Proud American", "Mandala/Yoga") — hook → mô tả design → "Why You'll Love It" bullets (squat-proof, 4-way stretch, high-waist) → material `82% poly/18% spandex` → care → size guide → shipping (US/EU)
 3. **Mobile-first CRO:** above-the-fold offer, sticky ATC, size guide XS–3XL, trust badge, urgency hợp lệ
 4. **Upsell/bundle sports bra cùng design** → đẩy AOV $75–95 (post-ATC upsell + bundle widget ShopBase)
 5. **Social proof:** review/UGC block, dog-mom community, star rating (chỉ số liệu thật — Meta Ad Policy)

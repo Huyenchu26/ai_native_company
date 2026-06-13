@@ -1,5 +1,6 @@
 # AI Workforce Map
-> Cập nhật: 2026-06-08 — Platform: ShopBase + Facebook Ads | Niche: Dog Breed AOP Leggings | Market: US + EU
+> Cập nhật: 2026-06-11 — Platform: ShopBase (store **DAKOfits**) + Facebook Ads | Market: US + EU
+> **Mô hình thực tế:** store có sẵn **~3.200 SP AOP activewear đa niche** (floral/skull/mandala/dog/cat/patriotic/holiday…). KHÔNG chạy ads dàn trải — mỗi đợt chọn **promote-set 5–10 SP** (SOP-MER-006) để tối ưu + ads tập trung, scale winner. "Dog Breed Leggings" chỉ là một trong các niche.
 > Worker mới: FB Creative AI (#5). Đổi tên: Listing-SEO AI → Product Page AI (#3), Ads AI → FB Ads Specialist AI (#6).
 
 | # | AI Worker | Dept | Vai trò | Phương pháp | Tự động |

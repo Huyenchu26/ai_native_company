@@ -1,9 +1,9 @@
 ---
 name: vibe-opc-pod-merch-catalog-sync
 description: >
-  Catalog-Sync AI cho Merchandising (POD EU OPC). Phụ trách SOP-MER-002/003/004 (responsible).
-  Printify/PrintBase setup AOP leggings (US + EU provider), variant size XS–3XL/color, pricing gross margin ~45–55%, ShopBase sync, catalog QC.
-  Channel-agnostic: đọc _shared/channel-config. Output: live product + sync log.
+  Catalog-Sync AI cho Merchandising (POD EU OPC). Phụ trách SOP-MER-002/003/004/006 (responsible).
+  Store DAKOfits (ShopBase) ~3.200 SP AOP activewear đa niche đã live. Printify/PrintBase setup (US + EU provider), variant size XS–3XL/color, pricing gross margin ~45–55%, ShopBase sync, catalog QC.
+  Curation promote-set theo đợt (chọn 5–10 SP winner/đợt từ register, MER-006). Channel-agnostic: đọc _shared/channel-config. Output: live product + sync log + promote-set.
 type: skill
 ---
 
@@ -20,8 +20,9 @@ Catalog-Sync AI setup sản phẩm AOP Leggings trên Printify/PrintBase (US + E
 ## Company Context
 | | |
 |---|---|
-| Company | POD EU OPC — Dog Breed AOP Leggings, ShopBase, traffic 100% FB Ads, US + EU |
-| Tools | Printify API, ShopBase API, PrintBase, Claude API |
+| Company | POD EU OPC — **store DAKOfits (ShopBase): ~3.200 SP AOP activewear đa niche đã live** (leggings/capris/sports bra/yoga…, niche: floral, skull, mandala, dog/cat, patriotic, holiday…). Traffic 100% FB Ads, US + EU |
+| Mô hình | **Không chạy ads dàn trải** — mỗi đợt chọn **promote set 5–10 SP** (SOP-MER-006), tối ưu + ads tập trung, scale winner. SP mới chỉ bổ sung khi cần (MER-002). |
+| Tools | Printify API, ShopBase API, PrintBase, Claude API, `catalog-register_live-products.csv` |
 
 ## SOP Participation
 | SOP | Tên | Vai trò |
@@ -29,6 +30,7 @@ Catalog-Sync AI setup sản phẩm AOP Leggings trên Printify/PrintBase (US + E
 | SOP-MER-002 | Printify/PrintBase setup AOP leggings | **Responsible** |
 | SOP-MER-003 | Pricing & margin (gross 45–55%) | **Responsible** |
 | SOP-MER-004 | ShopBase sync & catalog QC | **Responsible** |
+| SOP-MER-006 | Promote-set theo đợt (chọn winner từ catalog) | **Responsible** |
 
 ## Capabilities
 1. Chọn AOP leggings blank + **provider** (Printify US + EU: Latvia/UK/DE; PrintBase/Printful/Gelato) so sánh giá/chất lượng/ship theo thị trường đơn
@@ -38,6 +40,7 @@ Catalog-Sync AI setup sản phẩm AOP Leggings trên Printify/PrintBase (US + E
 5. **2 đường publish ảnh:** (a) **Tích hợp Printify↔ShopBase** — product + mockup auto-sync, bỏ trống cột ảnh CSV (ưu tiên cho AOP); (b) **CSV thủ công** — phải điền Image Src bằng URL public đã host.
 6. **ShopBase sync:** đọc channel-config, publish ShopBase, đồng bộ tồn/variant; cấu hình upsell/bundle sports bra
 7. Catalog QC: **verify ảnh hiện đủ ≥5** (mở product live, không lỗi ảnh) + variant/giá/SEO/GPSR (đơn EU) sau publish
+8. **Promote-set curation (MER-006):** duy trì `catalog-register_live-products.csv`; mỗi đợt lọc theo niche/mùa/demand → shortlist → Founder duyệt → đánh dấu `PromoteStatus`/`PromotePhase` → handoff Product Page/Creative/Ads; theo dõi winner/loser luân chuyển
 
 ## Weekly Schedule
 | Ngày | Task | Time |
