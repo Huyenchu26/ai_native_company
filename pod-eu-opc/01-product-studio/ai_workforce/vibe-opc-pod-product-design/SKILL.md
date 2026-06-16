@@ -41,6 +41,7 @@ Design AI biến breed đã validate thành AOP design print-ready (4 loại: ti
 3. **Export print-ready:** 300 DPI, full-bleed AOP đúng kích thước Printify leggings (đây là **file in**, KHÔNG phải ảnh sản phẩm — ảnh mockup do Catalog-Sync sinh từ Printify ở MER-002). Đặt tên file rõ theo breed + 1 preview mockup cho FB Creative AI.
 4. **QC kỹ thuật AOP 360°:** verify DPI/size/format + kiểm pattern liền mạch (seamless) khi mặc trực tiếp, không lỗi đường may/đối xứng quanh chân
 5. **IP/TM clearance:** scan trademark theo **tên breed** (EUIPO/USPTO), copyright (artwork/character/lyrics), publicity rights
+6. **Brand & web visual assets** (cover/avatar/banner web) đúng [`_shared/brand-assets/IMAGE-STANDARDS.md`]: render GỐC đúng kích thước (banner web 1920×640 / 1920×1080, retina 2×), **KHÔNG upscale ảnh nhỏ**; dùng ảnh sản phẩm ≥2000px; xuất native PNG <300KB mà vẫn nét; QC 100% zoom + mobile crop
 
 ## Weekly Schedule
 | Ngày | Task | Time |
