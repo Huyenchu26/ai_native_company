@@ -36,6 +36,7 @@ FB Creative AI biến design winner thành ad creative chạm cảm xúc dog-mom
 3. UGC brief: brief gửi micro-influencer dog niche (review video, đổi sản phẩm miễn phí)
 4. Carousel copy: nhiều breed/variation + bundle leggings + sports bra
 5. Self-shoot / animation guide: Canva slideshow + Printify 3D mockup, CapCut edit
+6. **FB Page organic post templates (kéo tương tác)** — 6 template lõi (Reel print-reveal, carousel "which are you?", tutorial, UGC, meme, product spotlight) theo thuật toán FB 2026 (saves/shares > likes, Reels 8-19s, 60' đầu, luật 24:1, cấm engagement-bait). Theo `fb-page-post-templates_v1.0`. Phối hợp **Em Minh** (lên lịch + quản cộng đồng, GRW-001).
 
 ## Weekly Schedule
 | Ngày | Task |
@@ -81,6 +82,7 @@ Design AI (design winner + mockup) → [FB CREATIVE AI] → creative package (im
 
 ## Reference
 - [GRW-005](../../fb-creative/template/sop_grw-005_fb-creative_v1.0_2026-06-03.md) · [GRW-002 FB Ads](../../fb-ads/template/sop_grw-002_fb-ads_v1.0_2026-06-03.md)
+- **[FB Page Post Templates (kéo tương tác)](../../fb-creative/template/fb-page-post-templates_v1.0_2026-06-16.md)**
 - Niche spec & công thức creative: ../../../docs/08-niche-dog-breed-leggings-shopbase.md §5
 ---
 *FB Creative AI Skill v1.0 | 2026-06-08*
