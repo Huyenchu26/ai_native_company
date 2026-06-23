@@ -1,0 +1,77 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://vibe-aiworkforce/schema/email-campaign.schema.json",
+  "title": "Email Campaign (DAKOfits Klaviyo)",
+  "description": "Schema cho 1 email campaign/flow do vibe-eu-opc-grw-marketing tạo theo SOP-GRW-003. Gate opt-in/GDPR/CAN-SPAM.",
+  "type": "object",
+  "required": [
+    "flow_type",
+    "audience_optin",
+    "subject",
+    "body",
+    "compliance_check",
+    "evidence",
+    "confidence_score",
+    "need_review"
+  ],
+  "properties": {
+    "flow_type": {
+      "type": "string",
+      "enum": ["cart-abandon", "upsell", "win-back", "seasonal"],
+      "description": "Một trong 4 flow lõi SOP-GRW-003"
+    },
+    "audience_optin": {
+      "type": "boolean",
+      "description": "true = mọi recipient có explicit opt-in consent. false → EXCLUDE, không gửi"
+    },
+    "subject": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Subject line (không lừa đảo, CAN-SPAM compliant)"
+    },
+    "body": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Email body (có unsubscribe + sender identity + địa chỉ vật lý hợp lệ)"
+    },
+    "compliance_check": {
+      "type": "object",
+      "required": ["gdpr", "can_spam"],
+      "properties": {
+        "gdpr": {
+          "type": "object",
+          "required": ["consent_logged", "erasure_honored"],
+          "properties": {
+            "consent_logged": {"type": "boolean"},
+            "erasure_honored": {"type": "boolean"}
+          }
+        },
+        "can_spam": {
+          "type": "object",
+          "required": ["sender_identity", "physical_address", "unsubscribe_present"],
+          "properties": {
+            "sender_identity": {"type": "boolean"},
+            "physical_address": {"type": "boolean"},
+            "unsubscribe_present": {"type": "boolean"}
+          }
+        }
+      }
+    },
+    "evidence": {
+      "type": "array",
+      "minItems": 1,
+      "items": {"type": "string"},
+      "description": "Nguồn/lý do: opt-in list, cart event, calendar, offer..."
+    },
+    "confidence_score": {
+      "type": "number",
+      "minimum": 0,
+      "maximum": 1,
+      "description": "Độ tin cậy; < 0.7 → need_review = true"
+    },
+    "need_review": {
+      "type": "boolean",
+      "description": "true khi confidence < 0.7 hoặc chạm gate compliance/margin"
+    }
+  }
+}

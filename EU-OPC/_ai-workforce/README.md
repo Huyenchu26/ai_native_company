@@ -16,7 +16,7 @@ Human Layer (SOP = ground truth) + AI Layer (12 worker vận hành theo đúng S
 |-----------|-------------|--------|
 | 01 Product Studio | niche-research, product-design | 🟢 skill có sẵn |
 | 02 Merchandising | catalog-sync, product-page | 🟢 skill có sẵn |
-| 03 Growth | fb-ads, fb-creative, marketing | 🟢 skill có sẵn |
+| 03 Growth | **vibe-eu-opc-grw-** orchestrator/fb-ads/creative/marketing | 🟢 **ACTIVATED** (8-comp, bám SOP) |
 | 04 Fulfillment & CX | order-ops, cx | 🟢 skill có sẵn |
 | 05 Backoffice | finance, compliance, ops-hr | 🟢 skill có sẵn |
 

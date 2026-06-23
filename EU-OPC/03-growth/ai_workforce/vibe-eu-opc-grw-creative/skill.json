@@ -1,0 +1,68 @@
+{
+  "$schema": "./schema/skill-meta.schema.json",
+  "name": "vibe-eu-opc-grw-creative",
+  "version": "1.0",
+  "description": "FB Ad Creative AI Worker cho DAKOfits (SOP-GRW-005): tạo creative package hook 0–3s / body 360° / CTA, UGC brief, carousel cho POD AOP leggings, pass Meta Ad Policy self-check trước handoff cho fb-ads.",
+  "phases": {
+    "brief": {
+      "inputs": ["input/niche-brief", "validated niche + angle", "AOP mockup 360°", "winner signal cần refresh"],
+      "outputs": ["processing/ai-draft/angle-selection"],
+      "min_confidence": 0.7,
+      "evidence_required": true
+    },
+    "script": {
+      "inputs": ["angle-selection"],
+      "outputs": ["processing/ai-draft/hook-body-cta", "UGC brief"],
+      "schema": "schema/creative-package.schema.json",
+      "min_confidence": 0.7,
+      "evidence_required": true
+    },
+    "carousel": {
+      "inputs": ["angle-selection", "product info (02-merchandising)"],
+      "outputs": ["processing/ai-draft/carousel-copy"],
+      "schema": "schema/creative-package.schema.json",
+      "min_confidence": 0.7,
+      "evidence_required": true
+    },
+    "policy-check": {
+      "inputs": ["hook-body-cta", "carousel-copy", "UGC brief"],
+      "outputs": ["output/creative-package", "human-review/"],
+      "schema": "schema/creative-package.schema.json",
+      "min_confidence": 0.7,
+      "evidence_required": true
+    }
+  },
+  "dependencies": {
+    "upstream": ["vibe-opc-pod-product-design"],
+    "downstream": ["vibe-eu-opc-grw-fb-ads", "vibe-eu-opc-grw-orchestrator"]
+  },
+  "scripts": {
+    "validator": "script/validator.py",
+    "anonymizer": "script/anonymizer.py",
+    "install_hooks": "script/install_hooks.sh",
+    "log_helper": "script/log_helper.py",
+    "review_queue": "script/review_queue.py"
+  },
+  "folders": {
+    "kb": true,
+    "script": true,
+    "prompt": true,
+    "schema": true,
+    "test": true,
+    "synthetic_data": true
+  },
+  "quality_gates": [
+    {
+      "step": "policy-check",
+      "min_confidence": 0.7,
+      "schema_required": true,
+      "evidence_required": true
+    },
+    {
+      "step": "handoff",
+      "min_confidence": 0.7,
+      "schema_required": true,
+      "evidence_required": true
+    }
+  ]
+}

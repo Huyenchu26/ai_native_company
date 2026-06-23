@@ -1,0 +1,163 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://vibe-aiworkforce/schema/growth-batch-plan.schema.json",
+  "title": "Growth Batch Plan",
+  "description": "Kế hoạch điều phối 1 đợt promote (SOP-MER-006 ↔ Growth) của vibe-eu-opc-grw-orchestrator. Manager dùng để route batch 5-10 SP qua creative → fb-ads → report và enforce gate cứng.",
+  "type": "object",
+  "required": [
+    "batch_id",
+    "products",
+    "creative_assignee",
+    "ads_assignee",
+    "gate_checks",
+    "routing",
+    "evidence",
+    "confidence_score",
+    "need_review"
+  ],
+  "properties": {
+    "batch_id": {
+      "type": "string",
+      "description": "Mã đợt promote, vd BATCH-2026-06-W26-001",
+      "pattern": "^BATCH-\\d{4}-\\d{2}-[A-Za-z0-9-]+$"
+    },
+    "created_at": {
+      "type": "string",
+      "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}Z$"
+    },
+    "source_sop": {
+      "type": "string",
+      "description": "SOP nguồn của batch",
+      "default": "SOP-MER-006"
+    },
+    "market": {
+      "type": "string",
+      "enum": ["US", "EU", "US+EU"]
+    },
+    "products": {
+      "type": "array",
+      "description": "5-10 SP trong đợt",
+      "minItems": 1,
+      "maxItems": 10,
+      "items": {
+        "type": "object",
+        "required": ["sku", "niche", "break_even_roas"],
+        "properties": {
+          "sku": {"type": "string"},
+          "niche": {"type": "string"},
+          "market": {"type": "string", "enum": ["US", "EU"]},
+          "price": {"type": "number"},
+          "break_even_roas": {
+            "type": "number",
+            "description": "BE-ROAS per-SKU/market (US ~2.75, EU ~5.3) — KHÔNG hard-code 2.5",
+            "minimum": 0
+          }
+        }
+      }
+    },
+    "creative_assignee": {
+      "type": "string",
+      "const": "vibe-eu-opc-grw-creative"
+    },
+    "ads_assignee": {
+      "type": "string",
+      "const": "vibe-eu-opc-grw-fb-ads"
+    },
+    "marketing_assignee": {
+      "type": "string",
+      "description": "Bổ trợ email/organic (opt-in)",
+      "const": "vibe-eu-opc-grw-marketing"
+    },
+    "gate_checks": {
+      "type": "object",
+      "required": ["meta_policy", "optin", "break_even_roas"],
+      "properties": {
+        "meta_policy": {
+          "type": "object",
+          "required": ["status"],
+          "properties": {
+            "status": {"type": "string", "enum": ["pass", "pending", "fail"]},
+            "cleared_by": {"type": "string", "default": "05-compliance"},
+            "note": {"type": "string"}
+          }
+        },
+        "optin": {
+          "type": "object",
+          "required": ["status"],
+          "properties": {
+            "status": {"type": "string", "enum": ["pass", "n/a", "fail"]},
+            "basis": {"type": "string", "description": "GDPR/CAN-SPAM explicit consent"}
+          }
+        },
+        "break_even_roas": {
+          "type": "object",
+          "required": ["enforced"],
+          "properties": {
+            "enforced": {"type": "boolean", "description": "Winner check dùng BE-ROAS per-SKU, KHÔNG 2.5 cứng"},
+            "source": {"type": "string", "default": "_shared/unit-economics.md"}
+          }
+        },
+        "budget_escalate": {
+          "type": "object",
+          "properties": {
+            "daily_cap_usd": {"type": "number"},
+            "escalate_threshold_usd": {"type": "number", "default": 150},
+            "escalated": {"type": "boolean"}
+          }
+        }
+      }
+    },
+    "routing": {
+      "type": "array",
+      "description": "Các bước route → worker → SOP",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": ["step", "worker", "sop", "action"],
+        "properties": {
+          "step": {"type": "integer", "minimum": 1},
+          "worker": {
+            "type": "string",
+            "enum": [
+              "vibe-eu-opc-grw-creative",
+              "vibe-eu-opc-grw-fb-ads",
+              "vibe-eu-opc-grw-marketing"
+            ]
+          },
+          "sop": {
+            "type": "string",
+            "enum": ["SOP-GRW-001", "SOP-GRW-002", "SOP-GRW-003", "SOP-GRW-004", "SOP-GRW-005"]
+          },
+          "action": {"type": "string"},
+          "status": {"type": "string", "enum": ["queued", "in-progress", "done", "blocked"]},
+          "decision": {"type": "string", "enum": ["SCALE", "KILL", "HOLD", "OPTIMIZE", "REFRESH", "N/A"]}
+        }
+      }
+    },
+    "evidence": {
+      "type": "array",
+      "description": "Link report/signal/clearance làm bằng chứng cho quyết định",
+      "minItems": 1,
+      "items": {"type": "string"}
+    },
+    "confidence_score": {
+      "type": "number",
+      "minimum": 0,
+      "maximum": 1
+    },
+    "need_review": {
+      "type": "boolean",
+      "description": "true khi gate fail / Blended<BE-ROAS / vượt budget / BM flag / confidence<0.7 / task mơ hồ"
+    },
+    "escalation": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "trigger": {"type": "string"},
+          "escalate_to": {"type": "string", "description": "OPC / 05-finance / 05-compliance / 02 / 04"}
+        }
+      }
+    }
+  }
+}

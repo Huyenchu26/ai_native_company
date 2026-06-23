@@ -1,0 +1,85 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://vibe-aiworkforce/schema/creative-package.schema.json",
+  "title": "Creative Package (SOP-GRW-005 output)",
+  "description": "Ad creative package sẵn bàn giao cho vibe-eu-opc-grw-fb-ads",
+  "type": "object",
+  "required": [
+    "niche",
+    "format",
+    "hook_0_3s",
+    "body_360",
+    "cta",
+    "policy_self_check",
+    "evidence",
+    "confidence_score",
+    "need_review"
+  ],
+  "properties": {
+    "niche": {
+      "type": "string",
+      "description": "Niche/breed + angle, vd 'French Bulldog — identity'"
+    },
+    "format": {
+      "type": "string",
+      "enum": ["video", "image", "carousel"],
+      "description": "Loại creative"
+    },
+    "hook_0_3s": {
+      "type": "string",
+      "description": "Hook 0–3s thumb-stop (text + mô tả pattern-interrupt visual)"
+    },
+    "body_360": {
+      "type": "string",
+      "description": "Body show-off all-over-print 360° (góc quay/mockup, close-up, lifestyle, social proof)"
+    },
+    "cta": {
+      "type": "string",
+      "description": "1 CTA rõ + urgency có thật + link product page"
+    },
+    "ugc_brief": {
+      "type": "object",
+      "description": "UGC brief (optional)",
+      "properties": {
+        "persona": {"type": "string"},
+        "voiceover_script": {"type": "string"},
+        "shot_list": {"type": "array", "items": {"type": "string"}},
+        "do_dont": {"type": "array", "items": {"type": "string"}}
+      }
+    },
+    "carousel_cards": {
+      "type": "array",
+      "description": "Copy từng card khi format=carousel",
+      "items": {"type": "string"}
+    },
+    "policy_self_check": {
+      "type": "boolean",
+      "description": "true = pass Meta Ad Policy (no health-claim, no before-after cơ thể, no misleading, no IP/TM breed). GATE cứng phải true mới handoff"
+    },
+    "policy_notes": {
+      "type": "string",
+      "description": "Ghi chú self-check / lý do route 05-compliance nếu có"
+    },
+    "variant_count": {
+      "type": "integer",
+      "minimum": 1,
+      "description": "Số variant/SP (≥ 2 cho ABO test)"
+    },
+    "evidence": {
+      "type": "array",
+      "minItems": 1,
+      "description": "Nguồn niche/angle, winner signal, review, mockup",
+      "items": {"type": "string"}
+    },
+    "confidence_score": {
+      "type": "number",
+      "minimum": 0,
+      "maximum": 1,
+      "description": "≥ 0.7 mới qua quality gate"
+    },
+    "need_review": {
+      "type": "boolean",
+      "description": "true nếu chạm policy biên / IP nhạy cảm / confidence thấp"
+    }
+  }
+}
