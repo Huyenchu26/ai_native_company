@@ -1,0 +1,81 @@
+{
+  "name": "vibe-eu-opc-prd-orchestrator",
+  "version": "1.0",
+  "description": "Manager điều phối Product Studio DAKOfits: chuỗi niche -> AOP design -> IP/TM clearance -> handoff Merch (đăng ShopBase), theo SOP-PRD-001..004, enforce gate no-clearance-no-listing, conservative REJECT khi nghi ngờ trademark.",
+  "phases": {
+    "receive": {
+      "inputs": ["user_request", "niche_seed_batch"],
+      "outputs": ["classified_intent"],
+      "min_confidence": 0.7,
+      "evidence_required": true
+    },
+    "route-research": {
+      "inputs": ["classified_intent", "niche_pool"],
+      "outputs": ["validated_niche_list", "seasonal_calendar"],
+      "schema": "schema/product-pipeline-plan.schema.json",
+      "min_confidence": 0.7,
+      "evidence_required": true
+    },
+    "route-design": {
+      "inputs": ["validated_niche_list", "seasonal_calendar"],
+      "outputs": ["aop_design_print_ready"],
+      "schema": "schema/product-pipeline-plan.schema.json",
+      "min_confidence": 0.7,
+      "evidence_required": true
+    },
+    "enforce-ip-gate": {
+      "inputs": ["aop_design_print_ready", "ip_clearance_log"],
+      "outputs": ["cleared_designs", "gate_checks"],
+      "schema": "schema/product-pipeline-plan.schema.json",
+      "min_confidence": 0.7,
+      "evidence_required": true
+    },
+    "handoff-merch": {
+      "inputs": ["cleared_designs", "ip_clearance_log"],
+      "outputs": ["product_pipeline_plan", "merch_handoff_package"],
+      "schema": "schema/product-pipeline-plan.schema.json",
+      "min_confidence": 0.7,
+      "evidence_required": true
+    }
+  },
+  "dependencies": {
+    "upstream": ["vibe-company-orchestrator"],
+    "downstream": [
+      "vibe-eu-opc-prd-niche-research",
+      "vibe-eu-opc-prd-design",
+      "vibe-eu-opc-mer-orchestrator"
+    ]
+  },
+  "quality_gates": [
+    {
+      "step": "enforce-ip-gate",
+      "min_confidence": 0.7,
+      "schema_required": true,
+      "evidence_required": true
+    },
+    {
+      "step": "handoff-merch",
+      "min_confidence": 0.7,
+      "schema_required": true,
+      "evidence_required": true
+    }
+  ],
+  "scripts": {
+    "validator": "script/validator.py",
+    "anonymizer": "script/anonymizer.py",
+    "install_hooks": "script/install_hooks.sh",
+    "log_helper": "script/log_helper.py",
+    "review_queue": "script/review_queue.py"
+  },
+  "hooks": {
+    "config": "hooks.json"
+  },
+  "folders": {
+    "kb": true,
+    "script": true,
+    "prompt": true,
+    "schema": true,
+    "test": true,
+    "synthetic_data": true
+  }
+}

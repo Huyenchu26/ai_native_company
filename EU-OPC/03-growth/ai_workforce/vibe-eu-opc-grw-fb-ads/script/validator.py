@@ -117,13 +117,13 @@ def validate_instance(instance: Any, schema: dict, path: str = "$") -> list[str]
 def validate_artifact(artifact_path: str, schema_path: str) -> dict:
     """Validate JSON artifact against schema. Returns {ok, errors, warnings}."""
     try:
-        with open(artifact_path) as f:
+        with open(artifact_path, encoding="utf-8") as f:
             instance = json.load(f)
     except Exception as e:
         return {"ok": False, "errors": [f"Cannot read artifact: {e}"], "warnings": []}
 
     try:
-        with open(schema_path) as f:
+        with open(schema_path, encoding="utf-8") as f:
             schema = json.load(f)
     except Exception as e:
         return {"ok": False, "errors": [f"Cannot read schema: {e}"], "warnings": []}
@@ -246,7 +246,7 @@ def run_all(artifact_path: str, schema_path: str | None = None,
 
     # Load artifact for downstream checks
     try:
-        with open(artifact_path) as f:
+        with open(artifact_path, encoding="utf-8") as f:
             artifact = json.load(f)
     except Exception as e:
         return {"ok": False, "errors": [f"Cannot read artifact: {e}"],

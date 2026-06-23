@@ -1,0 +1,110 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://vibe-aiworkforce/schema/niche-validation.schema.json",
+  "title": "Niche Validation Entry",
+  "description": "Một niche đã được research & chấm điểm cho DAKOfits (SOP-PRD-001/002). Mỗi entry trong validated niche list.",
+  "type": "object",
+  "required": [
+    "niche",
+    "demand_score",
+    "audience_size",
+    "competition_level",
+    "margin_fit",
+    "ip_risk_flag",
+    "seasonal_window",
+    "evidence",
+    "confidence_score",
+    "need_review"
+  ],
+  "properties": {
+    "niche": {
+      "type": "string",
+      "minLength": 2,
+      "description": "Tên niche (vd 'German Shepherd', 'Nurse', 'Pisces zodiac', 'Pickleball')"
+    },
+    "niche_category": {
+      "type": "string",
+      "enum": ["pet", "hobby", "profession", "zodiac", "sport", "faith", "family", "other"],
+      "description": "Nhóm niche đa-niche"
+    },
+    "demand_score": {
+      "type": "number",
+      "minimum": 0,
+      "maximum": 100,
+      "description": "Điểm tổng rubric demand40/competition25/margin-fit20/IP-risk15. Pass khi >= 70."
+    },
+    "score_breakdown": {
+      "type": "object",
+      "properties": {
+        "demand": {"type": "number", "minimum": 0, "maximum": 40},
+        "competition": {"type": "number", "minimum": 0, "maximum": 25},
+        "margin_fit": {"type": "number", "minimum": 0, "maximum": 20},
+        "ip_risk": {"type": "number", "minimum": 0, "maximum": 15}
+      }
+    },
+    "audience_size": {
+      "type": "integer",
+      "minimum": 0,
+      "description": "Meta Audience Insights ước tính US+EU interest stack. Pass khi >= 500000."
+    },
+    "competition_level": {
+      "type": "string",
+      "enum": ["low", "medium", "high"],
+      "description": "Mức cạnh tranh từ AdSpy/BigSpy ad-volume (ad-age < 90 ngày)"
+    },
+    "margin_fit": {
+      "type": "string",
+      "enum": ["good", "borderline", "poor"],
+      "description": "Khả năng đạt contribution margin cho AOP leggings (sau ad+fee+VAT)"
+    },
+    "ip_risk_flag": {
+      "type": "string",
+      "enum": ["CLEAR", "FLAG", "HIGH"],
+      "description": "IP/TM pre-flag. HIGH bắt buộc đẩy PRD-004 trước design."
+    },
+    "seasonal_window": {
+      "type": "object",
+      "required": ["type"],
+      "properties": {
+        "type": {"type": "string", "enum": ["evergreen", "seasonal"]},
+        "peak_event": {"type": "string", "description": "vd 'Christmas','Mother's Day','Halloween'"},
+        "peak_week": {"type": "string", "description": "ISO week hoặc YYYY-MM-DD peak"},
+        "design_deadline": {"type": "string", "description": "peak - lead-time, >= 6 tuần trước peak"},
+        "lead_time_weeks": {"type": "number", "minimum": 6}
+      }
+    },
+    "evidence": {
+      "type": "array",
+      "minItems": 1,
+      "description": "Nguồn chứng cứ — không có evidence thì không pass gate",
+      "items": {
+        "type": "object",
+        "required": ["source", "detail"],
+        "properties": {
+          "source": {
+            "type": "string",
+            "enum": ["AdSpy", "BigSpy", "Meta Audience Insights", "Google Trends", "ShopBase catalog", "other"]
+          },
+          "detail": {"type": "string"},
+          "value": {"type": ["string", "number"]},
+          "date": {"type": "string"}
+        }
+      }
+    },
+    "confidence_score": {
+      "type": "number",
+      "minimum": 0,
+      "maximum": 1,
+      "description": "Độ tin cậy 0-1. Gate cứng >= 0.7."
+    },
+    "need_review": {
+      "type": "boolean",
+      "description": "true khi data thiếu/Trends rỗng/niche quá mới/IP_risk_flag=HIGH/confidence < 0.7"
+    },
+    "decision": {
+      "type": "string",
+      "enum": ["validated", "watchlist", "rejected", "refresh-iterate"],
+      "description": "Kết luận pipeline"
+    }
+  }
+}

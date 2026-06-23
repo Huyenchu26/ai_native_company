@@ -1,0 +1,134 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://vibe-aiworkforce/schema/design-clearance.schema.json",
+  "title": "AOP Design + IP/TM Clearance Record",
+  "description": "Một record per design — kết quả AOP design print-ready (SOP-PRD-003) + IP/TM clearance (SOP-PRD-004). Ép gate cứng: chỉ PASS mới handoff_ready.",
+  "type": "object",
+  "required": [
+    "niche",
+    "design_type",
+    "dpi",
+    "qc_360_pass",
+    "ip_clearance_status",
+    "uspto_checked",
+    "euipo_checked",
+    "evidence",
+    "confidence_score",
+    "need_review"
+  ],
+  "properties": {
+    "niche": {
+      "type": "string",
+      "description": "Validated niche/breed term từ PRD-001"
+    },
+    "design_type": {
+      "type": "string",
+      "enum": ["tile", "watercolor", "funny", "mandala"],
+      "description": "1 trong 4 loại style chuẩn DAKOfits"
+    },
+    "dpi": {
+      "type": "integer",
+      "minimum": 300,
+      "description": "Mật độ điểm ảnh tại kích thước in thật, tối thiểu 300"
+    },
+    "qc_360_pass": {
+      "type": "boolean",
+      "description": "Pass QC 360° (no seam, seam/crotch/waistband align, bleed/canvas khớp provider)"
+    },
+    "ip_clearance_status": {
+      "type": "string",
+      "enum": ["PASS", "MODIFY", "REJECT"],
+      "description": "PASS=clear listing · MODIFY=sửa rồi re-clear · REJECT=loại bỏ"
+    },
+    "uspto_checked": {
+      "type": "boolean",
+      "description": "Đã tra USPTO TESS (thị trường US)"
+    },
+    "euipo_checked": {
+      "type": "boolean",
+      "description": "Đã tra EUIPO (thị trường EU)"
+    },
+    "provider": {
+      "type": "string",
+      "enum": ["printify-us", "printify-eu", "printbase-us", "printbase-eu"],
+      "description": "Provider + market profile cho canvas/bleed spec"
+    },
+    "bleed_ok": {
+      "type": "boolean",
+      "description": "Bleed ≥ spec provider VÀ canvas đúng template px thật"
+    },
+    "blocklist_checked": {
+      "type": "boolean",
+      "description": "Đã đối chiếu blocklist brand/celebrity/club"
+    },
+    "evidence": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": ["source", "detail"],
+        "properties": {
+          "source": {
+            "type": "string",
+            "description": "vd: file-metadata, qc-report, uspto-tess, euipo, blocklist"
+          },
+          "detail": { "type": "string" },
+          "url": { "type": "string" }
+        }
+      },
+      "description": "Bằng chứng DPI/canvas, QC 360°, kết quả USPTO+EUIPO, blocklist"
+    },
+    "confidence_score": {
+      "type": "number",
+      "minimum": 0,
+      "maximum": 1,
+      "description": "Độ tự tin; < 0.7 → need_review = true"
+    },
+    "need_review": {
+      "type": "boolean",
+      "description": "True khi HIGH-risk / uncertain / dưới confidence floor → human review"
+    },
+    "handoff_ready": {
+      "type": "boolean",
+      "description": "Chỉ true khi ip_clearance_status = PASS (gate cứng fail-closed)"
+    }
+  },
+  "allOf": [
+    {
+      "comment": "Gate cứng: handoff_ready=true CHỈ khi PASS",
+      "if": {
+        "properties": { "handoff_ready": { "const": true } },
+        "required": ["handoff_ready"]
+      },
+      "then": {
+        "properties": {
+          "ip_clearance_status": { "const": "PASS" },
+          "qc_360_pass": { "const": true },
+          "uspto_checked": { "const": true },
+          "euipo_checked": { "const": true }
+        }
+      }
+    },
+    {
+      "comment": "PASS bắt buộc dual lookup USPTO + EUIPO",
+      "if": {
+        "properties": { "ip_clearance_status": { "const": "PASS" } }
+      },
+      "then": {
+        "properties": {
+          "uspto_checked": { "const": true },
+          "euipo_checked": { "const": true }
+        }
+      }
+    },
+    {
+      "comment": "Conservative: confidence thấp thì phải need_review",
+      "if": {
+        "properties": { "confidence_score": { "exclusiveMaximum": 0.7 } }
+      },
+      "then": {
+        "properties": { "need_review": { "const": true } }
+      }
+    }
+  ]
+}
