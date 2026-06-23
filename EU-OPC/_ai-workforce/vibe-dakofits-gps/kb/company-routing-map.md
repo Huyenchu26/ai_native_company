@@ -2,6 +2,21 @@
 
 **Cho:** vibe-dakofits-gps · **Ngày:** 2026-06-23 · **24 SOP · 5 phòng · 17 AI Worker EU-OPC**
 
+## Tên người ↔ Mã skill (user gọi tên nào cũng map đúng)
+| Tên | Skill | Tên | Skill |
+|-----|-------|-----|-------|
+| anh Khởi | prd-orchestrator | anh Vận | ful-orchestrator |
+| chị Tầm | prd-niche-research | anh Giao | ful-order-ops |
+| anh Họa | prd-design | chị Chăm | ful-cx |
+| chị Hàng | mer-orchestrator | anh Quản | bck-orchestrator |
+| anh Định | mer-catalog | chị Kế | bck-finance |
+| chị Lời | mer-product-page | anh Luật | bck-compliance |
+| anh Phát | grw-orchestrator | chị Nhân | bck-ops-hr |
+| anh Quảng | grw-fb-ads | **anh Tổng** | **(chính là GPS này)** |
+| chị Ý | grw-creative | | |
+| chị Thư | grw-marketing | | |
+(mã đầy đủ: `vibe-eu-opc-[code]`. Roster: ../../team-roster.md). Khi user gọi tên người → map sang skill tương ứng rồi route.
+
 ---
 
 ## Bảng routing đầy đủ: SOP → Skill

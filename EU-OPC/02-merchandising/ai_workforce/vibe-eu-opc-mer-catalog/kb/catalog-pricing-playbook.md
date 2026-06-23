@@ -88,6 +88,25 @@ Target-profit ROAS = BE-ROAS / (1 − target_net_margin)
 
 **Pricing EU phải tính RIÊNG — KHÔNG dùng chung công thức/giá với US.**
 
+## 4b. Competitive pricing — định giá cạnh tranh theo giá đối thủ
+
+Input mới: **competitor price table** từ Product Studio **SOP-PRD-001 (chị Tầm)** — khoảng giá bán min–max của đối thủ + bundle/offer, theo niche & market (US/EU).
+
+**Logic:** đặt giá trong **vùng cạnh tranh thị trường** (so với đối thủ) NHƯNG sàn cứng vẫn là:
+- **contribution-margin floor** (sau ad+fee+VAT, §3), VÀ
+- **≥ break-even ROAS** (§4).
+
+Ghi lại vào pricing-decision: `competitor_price_ref {min,max,currency}` + `competitive_position` (`below_market` / `at_market` / `premium`).
+
+| Quan hệ giá ta vs vùng đối thủ | Hành động |
+|--------------------------------|-----------|
+| Floor của ta ≤ vùng đối thủ | Đặt `at_market` / `below_market` trong vùng, miễn ≥ floor |
+| Floor của ta cao hơn cận trên vùng đối thủ | `premium` + justify (AOP all-over, bundle), HOẶC đổi provider rẻ hơn |
+| **Vùng giá cạnh tranh < break-even của ta** | ⚠️ **flag** `below_breakeven_flag: true` + `need_review: true` |
+
+⚠️ **RULE — giá cạnh tranh < break-even → flag, KHÔNG phá floor.**
+Nếu giá đối thủ thấp hơn giá break-even của ta (rất hay gặp ở **EU** vì VAT đẩy BE-ROAS ~5.3) → niche này **KHÔNG viable** ở mức giá cạnh tranh. KHÔNG hạ giá xuống dưới contribution floor để đú đối thủ (sẽ scale vào vùng lỗ). Hành động: **bỏ niche** hoặc **tìm provider rẻ hơn** để kéo break-even xuống. Quyết định escalate OPC qua `need_review`.
+
 ## 5. FX USD→VND
 
 - **Nguồn cố định: Vietcombank, tỷ giá BÁN RA, ngày cuối kỳ.** Chốt 1 giá/kỳ, ghi rõ ngày + nguồn vào ledger pricing.
@@ -121,6 +140,7 @@ Diff field source (Printify/PrintBase) ↔ ShopBase, field lệch → re-sync:
 | Contribution % < floor sau ads | Đổi provider rẻ hơn / nâng giá / OPC quyết bỏ |
 | BE-ROAS > ngưỡng winner Growth | Nâng giá để BE-ROAS ≤ ngưỡng |
 | EU không lãi qua ads | Nâng giá €59–69, tính NET-of-VAT, hoặc EU retention/organic |
+| Giá cạnh tranh thị trường < break-even ta | Flag need_review (below_breakeven_flag) — bỏ niche / đổi provider rẻ hơn, KHÔNG phá floor |
 | Plus-size cost cao | Step-up giá giữ floor |
 | Design fail QC | Trả phòng 01 (vibe-opc-pod-product-design) |
 | SP EU thiếu GPSR | STOP, trả MER-001 / product-page |

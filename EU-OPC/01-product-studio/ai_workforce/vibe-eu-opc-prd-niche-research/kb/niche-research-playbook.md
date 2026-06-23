@@ -41,6 +41,35 @@ Cẩm nang chấm điểm & validate niche đa-niche cho POD AOP leggings/active
 
 Clearance chính thức (GPSR/IP-TM/Responsible Person) thuộc Backoffice compliance — ở đây CHỈ pre-flag.
 
+## 4b. Competitor price & offer (SOP-PRD-001, Bước 1.5)
+
+Cho mỗi niche validated, bắt giá bán & offer đối thủ để bàn giao anh Định (Merch **SOP-MER-003**) định giá cạnh tranh.
+
+**Nguồn:**
+
+| Nguồn | Dùng để | Lưu ý |
+|-------|---------|-------|
+| **Meta Ad Library** (free) | tìm ad đối thủ đang chạy, lấy ngày bắt đầu ad → ad longevity, mở landing page | Miễn phí, công khai; lọc theo từ khóa niche / tên shop |
+| **AdSpy / BigSpy** | bổ sung ad-volume, creative variant, landing page | Lọc ad-age < 90 ngày |
+
+**LẤY ĐƯỢC (từ landing page + ad):**
+- **Price range** (`competitor_price_range`): giá bán min/max của SP đối thủ trên landing page (currency = USD/EUR).
+- **Offers** (`competitor_offers`): bundle / discount / free-ship, vd "2-for-$80", "$10 off", "free shipping >$50".
+- **Ad longevity** (`competitor_ad_longevity_days`): số ngày creative/SP chạy lâu nhất (suy từ ngày bắt đầu ad trên Meta Ad Library). Chạy càng lâu = càng có khả năng winner.
+
+**KHÔNG lấy được (ghi rõ giới hạn):**
+- **Ad spend / CPM / bid thật** của đối thủ — Meta **KHÔNG công khai**. Chỉ **ước lượng tương đối**: ad longevity dài + nhiều creative variant → suy luận đối thủ đang đổ tiền (winner), nhưng KHÔNG có con số spend chính xác. **Tuyệt đối KHÔNG bịa** số spend → nếu cần ước lượng, ghi là estimate + hạ confidence.
+
+**Cách ước lượng "winner" (proxy thay cho spend):** ad longevity (ngày) × số creative variant đang chạy. Cao = đối thủ đang scale → niche có tiền thật.
+
+**Format bảng giá đối thủ (per niche):**
+
+| competitor | price_min | price_max | currency | offers | ad_longevity_days | source | capture_date |
+|------------|-----------|-----------|----------|--------|-------------------|--------|--------------|
+| Gearbunch | 49.99 | 59.99 | USD | 2-for-$80, free-ship >$50 | 120 | Meta Ad Library | 2026-06-22 |
+
+Output: competitor price table per niche → handoff **SOP-MER-003** (anh Định, variant-pricing).
+
 ## 5. Seasonal & lead-time (SOP-PRD-002)
 
 - Phân loại **evergreen vs seasonal** từ đường cong Google Trends 12–24 tháng.

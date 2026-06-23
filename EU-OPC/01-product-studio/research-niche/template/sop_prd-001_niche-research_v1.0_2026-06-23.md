@@ -17,7 +17,7 @@
 |------|-----|
 | **Input (I)** | AdSpy/BigSpy export, Meta Audience Insights, Google Trends CSV, danh mục niche pool (~3.200 SP hiện hữu + niche mới đề xuất), competitor list (Gearbunch + tương tự) |
 | **Control (C)** | Niche scoring rubric (demand 40 / competition 25 / margin-fit 20 / IP-risk 15), ngưỡng pass ≥ 70/100, IP/TM pre-flag rule (no clear-risk → pre-flag), thị trường target = US+EU |
-| **Output (O)** | **Validated niche list** (≥3 niche/tuần) với score + audience size + IP pre-flag; feed sang SOP-PRD-002 và SOP-PRD-003 |
+| **Output (O)** | **Validated niche list** (≥3 niche/tuần) với score + audience size + IP pre-flag + **competitor price table per niche** (price range + offer/bundle + ad longevity); feed sang SOP-PRD-002 và SOP-PRD-003; bàn giao competitor price → Merch **SOP-MER-003** (anh Định định giá cạnh tranh) |
 | **Mechanism (M)** | AI Worker `niche-research` + AdSpy/BigSpy + Meta Audience Insights + Google Trends; human review tại `processing/human-review` |
 
 **Upstream:** 00-company Strategy (niche pool direction, Company OKR O3) → SOP-PRD-001
@@ -64,6 +64,23 @@
 | 1.2 | Pull search trend 12 tháng | Google Trends | AI |
 | 1.3 | Pull audience size interest stack US+EU | Meta Audience Insights | AI |
 
+### Bước 1.5 — Competitor Price & Offer Capture
+Cho mỗi niche được validate (hoặc shortlist), bắt **giá bán & offer của đối thủ** để bàn giao anh Định (Merch SOP-MER-003) định giá cạnh tranh.
+
+| I | C | O | M |
+|---|---|---|---|
+| Validated/shortlist niche + competitor list (Gearbunch + tương tự) | Source whitelist (Meta Ad Library free + AdSpy/BigSpy) | Competitor price table per niche | AI niche-research |
+
+| # | Hành động | Công cụ | Owner |
+|---|-----------|---------|-------|
+| 1.5.1 | Pull competitor list cho niche (Gearbunch + shop AOP legging tương tự đang chạy ad) | Meta Ad Library / AdSpy | AI |
+| 1.5.2 | Mở landing page từ ad → ghi **price range** (min/max giá bán SP đối thủ) | Landing page đối thủ | AI |
+| 1.5.3 | Ghi **bundle/offer/discount** (vd 2-for-$80, free-ship, %off) | Landing page + ad copy | AI |
+| 1.5.4 | Ghi **ad longevity** (SP/creative chạy lâu nhất = winner) qua ngày bắt đầu ad trên Meta Ad Library | Meta Ad Library | AI |
+| 1.5.5 | Tổng hợp `competitor price table per niche`, kèm evidence + ngày capture | — | AI |
+
+> **GIỚI HẠN (phải ghi rõ):** LẤY ĐƯỢC giá bán (landing page), bundle/offer/discount, ad longevity (qua Meta Ad Library free + AdSpy/BigSpy). **KHÔNG lấy được** ad spend / CPM / bid thật của đối thủ — Meta KHÔNG công khai → chỉ ước lượng tương đối (suy từ ad longevity + số creative), tuyệt đối KHÔNG bịa con số spend.
+
 ### Bước 2 — Scoring & ranking
 | I | C | O | M |
 |---|---|---|---|
@@ -106,6 +123,7 @@
 | Audience đủ lớn | % niche audience ≥ 500k | ≥ 90% | Meta export | ☐ |
 | Demand validity | % niche score ≥ 70 | 100% (đã lọc) | Scoring table | ☐ |
 | IP pre-flag coverage | % niche được pre-flag check | 100% | Pre-flag log | ☐ |
+| Competitor price captured | % niche validated có competitor price table | ≥ 80% | Competitor price table + evidence | ☐ |
 
 **Prevention Measures**
 
@@ -119,6 +137,7 @@
 
 - **Upstream:** [Company OKR O3](../../../00-company/okr_company-001_company-okr_v1.0_2026-06-23.md)
 - **Downstream:** [SOP-PRD-002](../../analyze-trend/template/sop_prd-002_trend-seasonal_v1.0_2026-06-23.md) · [SOP-PRD-003](../../design-aop/template/sop_prd-003_aop-design_v1.0_2026-06-23.md)
+- **Handoff Merch:** competitor price table per niche → **SOP-MER-003** (variant-pricing, anh Định) làm input định giá cạnh tranh (đặt giá trên contribution margin, tham chiếu price range đối thủ).
 - **AI Skill:** vibe-opc-pod-product-niche-research
 - **Rules:** [../../_rules/README.md](../../_rules/README.md)
 
@@ -127,3 +146,4 @@
 | Phiên bản | Ngày | Thay đổi | Tác giả |
 |-----------|------|----------|---------|
 | 1.0 | 2026-06-23 | Khởi tạo SOP | Company Architect |
+| 1.0 | 2026-06-23 | Bổ sung Bước 1.5 "Competitor Price & Offer Capture" (A: giá bán/bundle/offer; B: ad longevity) qua Meta Ad Library free + AdSpy; thêm output competitor price table + Quality Gate + handoff anh Định (SOP-MER-003) | Company Architect |

@@ -3,8 +3,8 @@ name: vibe-eu-opc-prd-niche-research
 type: skill
 description: >-
   [WHAT] Nghiên cứu & chấm điểm niche ĐA-NICHE (pet/dog breed, hobby, profession, zodiac, sport, faith…)
-  + audience sizing + competitor ad spy + seasonal opportunity calendar + IP/TM pre-flag cho POD AOP
-  leggings/activewear của DAKOfits theo SOP-PRD-001 (research-niche) và SOP-PRD-002 (analyze-trend);
+  + audience sizing + competitor ad spy + competitor price/offer intel + seasonal opportunity calendar
+  + IP/TM pre-flag cho POD AOP leggings/activewear của DAKOfits theo SOP-PRD-001 (research-niche) và SOP-PRD-002 (analyze-trend);
   output là validated niche list (score ≥70/100, audience ≥500k) + seasonal calendar mang
   evidence[]/confidence_score/need_review, sẵn bàn giao cho design (PRD-003).
   [TRIGGER] Thuật ngữ EN: 'niche research','demand scoring','audience sizing','AdSpy','BigSpy',
@@ -53,6 +53,13 @@ Tổng 100 điểm: **demand 40 / competition 25 / margin-fit 20 / IP-risk 15**.
 
 ## IP/TM pre-flag (chỉ pre-flag, KHÔNG clearance chính thức)
 `ip_risk_flag`: **CLEAR** (không thấy TM/brand) · **FLAG** (term mơ hồ, cần check) · **HIGH** (dính brand/club/character → bắt buộc đẩy thẳng PRD-004 trước khi design).
+
+## Competitor Price Capture (SOP-PRD-001, Bước 1.5)
+Cho mỗi niche validated, bắt **giá bán & offer đối thủ** để bàn giao anh Định (Merch SOP-MER-003) định giá cạnh tranh.
+- **Nguồn:** **Meta Ad Library (free)** + **AdSpy/BigSpy** → từ ad mở landing page đối thủ (Gearbunch + shop AOP legging tương tự).
+- **LẤY ĐƯỢC:** `competitor_price_range` (min/max giá bán trên landing page), `competitor_offers` (bundle/discount/free-ship, vd 2-for-$80), `competitor_ad_longevity_days` (SP/creative chạy lâu nhất = winner, suy từ ngày bắt đầu ad trên Meta Ad Library).
+- **KHÔNG lấy được:** ad spend / CPM / bid thật của đối thủ — Meta KHÔNG công khai. Chỉ ước lượng tương đối (suy từ ad longevity + số creative), KHÔNG bịa số spend → ghi rõ giới hạn này trong evidence.
+- Output: competitor price table per niche (kèm evidence + ngày capture) → handoff **SOP-MER-003**.
 
 ## Seasonal (SOP-PRD-002)
 - Phân loại evergreen vs seasonal theo đường cong Google Trends 12–24 tháng; map niche → holiday/event US+EU.

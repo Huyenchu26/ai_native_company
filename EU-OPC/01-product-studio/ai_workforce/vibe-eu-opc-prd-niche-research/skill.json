@@ -2,7 +2,7 @@
   "$schema": "./schema/skill-meta.schema.json",
   "name": "vibe-eu-opc-prd-niche-research",
   "version": "1.0",
-  "description": "Nghiên cứu & chấm điểm niche đa-niche + audience sizing + competitor ad spy + seasonal calendar + IP/TM pre-flag cho POD AOP leggings/activewear DAKOfits theo SOP-PRD-001/002. Output validated niche list (score >=70, audience >=500k) mang evidence/confidence/need_review.",
+  "description": "Nghiên cứu & chấm điểm niche đa-niche + audience sizing + competitor ad spy + competitor price/offer intel + seasonal calendar + IP/TM pre-flag cho POD AOP leggings/activewear DAKOfits theo SOP-PRD-001/002. Output validated niche list + competitor price table mang evidence/confidence/need_review.",
   "phases": {
     "score-niche": {
       "inputs": ["niche seed list", "AdSpy/BigSpy export", "Google Trends CSV"],
@@ -21,6 +21,13 @@
     "spy-competitor": {
       "inputs": ["niche", "AdSpy/BigSpy ad data"],
       "outputs": ["competition_level + active ad evidence"],
+      "schema": "schema/niche-validation.schema.json",
+      "min_confidence": 0.7,
+      "evidence_required": true
+    },
+    "competitor-price-capture": {
+      "inputs": ["validated niche", "competitor list (Gearbunch + tương tự)", "Meta Ad Library", "AdSpy/BigSpy ad data"],
+      "outputs": ["competitor price table per niche (price range + offers + ad longevity) -> handoff SOP-MER-003"],
       "schema": "schema/niche-validation.schema.json",
       "min_confidence": 0.7,
       "evidence_required": true

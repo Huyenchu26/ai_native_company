@@ -1,7 +1,7 @@
 {
   "name": "vibe-eu-opc-mer-catalog",
   "version": "1.0",
-  "description": "Catalog-Sync AI cho DAKOfits: setup product Printify/PrintBase (variant XS-3XL, provider US/EU), pricing theo contribution margin sau ad+fee+VAT, sync ShopBase QC >=99%. SOP-MER-002/003/004.",
+  "description": "Catalog-Sync AI cho DAKOfits: setup product Printify/PrintBase (variant XS-3XL, provider US/EU), pricing theo contribution margin sau ad+fee+VAT, dinh gia canh tranh theo gia doi thu (van tren floor), sync ShopBase QC >=99%. SOP-MER-002/003/004.",
   "phases": {
     "setup-product": {
       "inputs": ["cleared AOP design (300 DPI, 360 QC, IP cleared)", "mockup", "niche/batch info", "channel-config", "target market (US/EU)"],
@@ -16,6 +16,13 @@
       "min_confidence": 0.7,
       "evidence_required": true
     },
+    "competitor-benchmark": {
+      "inputs": ["gia de xuat (pass contribution floor + BE-ROAS)", "competitor price table (SOP-PRD-001 / chi Tam): khoang gia min-max doi thu + bundle/offer theo niche/market"],
+      "outputs": ["gia final competitive (van >= contribution floor + break-even)", "competitive_position (below/at/premium market)", "below_breakeven_flag + need_review neu vung doi thu < break-even"],
+      "schema": "schema/pricing-decision.schema.json",
+      "min_confidence": 0.7,
+      "evidence_required": true
+    },
     "sync-qc": {
       "inputs": ["blueprint (MER-002)", "pricing (MER-003)", "product page approved (MER-001)", "GPSR clearance ID (EU)"],
       "outputs": ["live product tren ShopBase", "sync accuracy report (>=99%)", "sync log"],
@@ -24,12 +31,13 @@
     }
   },
   "dependencies": {
-    "upstream": ["vibe-opc-pod-product-design", "vibe-eu-opc-bck-compliance"],
+    "upstream": ["vibe-opc-pod-product-design", "vibe-eu-opc-bck-compliance", "vibe-eu-opc-prd-niche-research"],
     "downstream": ["vibe-eu-opc-mer-product-page", "vibe-eu-opc-mer-orchestrator"]
   },
   "quality_gates": [
     {"step": "pre-sync-gpsr-gate", "min_confidence": 0.7, "schema_required": false, "evidence_required": true},
     {"step": "pricing-contribution-floor", "min_confidence": 0.7, "schema_required": true, "evidence_required": true},
+    {"step": "competitor-benchmark-above-floor", "min_confidence": 0.7, "schema_required": true, "evidence_required": true},
     {"step": "variant-coverage-xs-3xl", "min_confidence": 0.7, "schema_required": false, "evidence_required": true},
     {"step": "shopbase-sync-accuracy", "min_confidence": 0.7, "schema_required": false, "evidence_required": true}
   ],

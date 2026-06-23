@@ -20,10 +20,22 @@ Task input mẫu để smoke-test. Đặt ở `input/` khi chạy thật. Dữ l
 | 6 | Manchester United | sport/club | 200 ad sống | 9.000.000 | cao quanh mùa giải | không |
 | 7 | Halloween Cat | pet/seasonal | 60 ad sống (tăng từ T8) | 2.500.000 | peak rõ cuối T10 | không |
 
+## Competitor price & offer (seed, Bước 1.5)
+
+Bắt từ Meta Ad Library (free) + AdSpy → mở landing page đối thủ. KHÔNG có ad spend thật (Meta không công khai).
+
+| niche | competitor | price range | offer/bundle | ad longevity | source |
+|-------|-----------|-------------|--------------|--------------|--------|
+| #2 Nurse | Gearbunch | $49.99–$59.99 | 2-for-$80, free-ship >$50 | ~120 ngày (winner) | Meta Ad Library + AdSpy |
+| #1 German Shepherd | Pawz-style shop | $44.99–$54.99 | $10 off đơn đầu | ~75 ngày | Meta Ad Library |
+
+> Lưu ý: ad longevity = proxy cho winner; KHÔNG suy ra con số ad spend cụ thể.
+
 ## Ghi chú nguồn (evidence seed)
 - AdSpy export: `2026-06-22_adspy_w26.csv` (đã lọc ad-age < 90 ngày).
 - Meta Audience Insights: stack interest theo từng niche, geo = US+EU.
 - Google Trends: `2026-06-22_trends_12m.csv`, 12 tháng gần nhất.
+- Meta Ad Library: capture giá bán + offer + ad longevity đối thủ (Gearbunch + tương tự), ngày 2026-06-22.
 
 ## Kỳ vọng xử lý (để đối chiếu test)
 - **#2 Nurse, #1 German Shepherd, #7 Halloween Cat**: score cao + audience ≥500k.

@@ -83,7 +83,7 @@
         "properties": {
           "source": {
             "type": "string",
-            "enum": ["AdSpy", "BigSpy", "Meta Audience Insights", "Google Trends", "ShopBase catalog", "other"]
+            "enum": ["AdSpy", "BigSpy", "Meta Audience Insights", "Meta Ad Library", "Google Trends", "ShopBase catalog", "other"]
           },
           "detail": {"type": "string"},
           "value": {"type": ["string", "number"]},
@@ -105,6 +105,25 @@
       "type": "string",
       "enum": ["validated", "watchlist", "rejected", "refresh-iterate"],
       "description": "Kết luận pipeline"
+    },
+    "competitor_price_range": {
+      "type": "object",
+      "description": "Khoảng giá bán SP đối thủ trên landing page (Meta Ad Library + AdSpy). KHÔNG phải ad spend.",
+      "properties": {
+        "min": {"type": "number", "minimum": 0},
+        "max": {"type": "number", "minimum": 0},
+        "currency": {"type": "string", "enum": ["USD", "EUR", "GBP"]}
+      }
+    },
+    "competitor_offers": {
+      "type": "array",
+      "description": "Bundle/offer/discount đối thủ, vd '2-for-$80','free-ship >$50','$10 off'",
+      "items": {"type": "string"}
+    },
+    "competitor_ad_longevity_days": {
+      "type": "number",
+      "minimum": 0,
+      "description": "Số ngày SP/creative đối thủ chạy lâu nhất (ad longevity, suy từ ngày bắt đầu ad Meta Ad Library). Proxy cho winner — KHÔNG phải ad spend thật."
     }
   }
 }

@@ -9,7 +9,7 @@
 
 | | |
 |---|---|
-| **Input (I)** | Product blueprint (variant XS–3XL/color) từ MER-002; provider cost per variant; ship cost; giá tham chiếu (Gearbunch, thị trường); **CPA / BE-ROAS mục tiêu từ Growth (GRW-002)** |
+| **Input (I)** | Product blueprint (variant XS–3XL/color) từ MER-002; provider cost per variant; ship cost; giá tham chiếu (Gearbunch, thị trường); **competitor price table (từ SOP-PRD-001 / chị Tầm)** — khoảng giá bán đối thủ + bundle/offer; **CPA / BE-ROAS mục tiêu từ Growth (GRW-002)** |
 | **Control (C)** | **Pricing floor đặt trên Contribution Margin SAU ads** (xem §1.1), KHÔNG phải gross-on-base-cost; **break-even ROAS = 1/GM** đối chiếu ngưỡng winner Growth; psychological pricing; VAT note (EU, tính trên giá NET-of-VAT) |
 | **Output (O)** | Bảng giá variant XS–3XL/color đạt contribution floor; giá compare-at; bundle price; **BE-ROAS per SKU/market** |
 | **Mechanism (M)** | Catalog-Sync AI + OPC approve ngoài band |
@@ -124,7 +124,21 @@ Target-profit ROAS = BE-ROAS / (1 − target_net_margin)
 | EU: tính trên giá NET-of-VAT; nếu BE-ROAS quá cao (~5.3 ở €49.99) → nâng giá EU €59–69 hoặc tính riêng (phối 05) | AI |
 | Variant không đạt contribution floor → flag OPC / đổi provider | AI |
 
-### Bước 4 — Bundle pricing & approve
+### Bước 4 — Benchmark giá đối thủ (competitive pricing)
+| ICOM | Nội dung |
+|------|----------|
+| I | Giá đề xuất (đã pass contribution floor + BE-ROAS ở Bước 2–3); **competitor price table từ SOP-PRD-001 / chị Tầm** (khoảng giá min–max đối thủ + bundle/offer theo niche/market) |
+| C | Đặt giá trong **vùng cạnh tranh thị trường** NHƯNG **sàn cứng = contribution-margin floor (sau ad+fee+VAT) + ≥ break-even ROAS**. KHÔNG hạ giá xuống dưới floor để đú đối thủ |
+| O | Giá final competitive + `competitive_position` (below/at/premium market) + flag `need_review` nếu vùng giá đối thủ < break-even |
+| M | Catalog-Sync AI + OPC nếu flag |
+
+| Hành động | Ai |
+|-----------|-----|
+| Nhận competitor price table từ SOP-PRD-001 (chị Tầm); đối chiếu giá đề xuất với vùng giá min–max đối thủ theo niche/market | AI `[AI WORKFORCE]` |
+| Đặt giá **competitive** (trong vùng thị trường) nhưng **≥ contribution floor + ≥ break-even ROAS**; ghi `competitive_position` (below_market / at_market / premium) | AI `[AI WORKFORCE]` |
+| **CẢNH BÁO:** nếu giá cạnh tranh thị trường < giá break-even của ta (đặc biệt EU — VAT đẩy BE-ROAS ~5.3) → niche KHÔNG viable ở mức giá cạnh tranh → **flag `need_review`**, đề xuất **bỏ niche hoặc tìm provider rẻ hơn**. **KHÔNG phá floor để đú đối thủ** | AI `[AI WORKFORCE]` |
+
+### Bước 5 — Bundle pricing & approve
 | ICOM | Nội dung |
 |------|----------|
 | I | Giá variant + sports-bra cost |
@@ -145,6 +159,8 @@ Target-profit ROAS = BE-ROAS / (1 − target_net_margin)
 | BE-ROAS > ngưỡng winner Growth | Nâng giá để BE-ROAS ≤ ngưỡng (đảm bảo lãi ở ROAS mục tiêu) |
 | Plus-size cost cao | Step-up giá giữ floor |
 | Provider EU cost cao / EU không lãi qua ads | Nâng giá EU €59–69, tính trên giá NET-of-VAT, hoặc coi EU retention/organic |
+| Giá đề xuất CAO HƠN vùng đối thủ nhưng vẫn ≥ floor | Cân nhắc hạ về `at_market` NHƯNG không xuống dưới floor; hoặc giữ `premium` + justify bằng AOP/bundle |
+| **Giá cạnh tranh thị trường < break-even của ta** (đặc biệt EU VAT) | **Flag `need_review`** — bỏ niche hoặc tìm provider rẻ hơn; **KHÔNG hạ giá dưới floor để đú đối thủ** |
 | Promo/bundle | Discount nhưng không phá floor |
 
 ## 5. Checklist
@@ -155,6 +171,7 @@ Target-profit ROAS = BE-ROAS / (1 − target_net_margin)
 | Contribution % per variant (sau ad+fee+VAT) | ≥ floor (15% sau CPA), 100% SP | (giá_net − base − ship − fee − CPA)/giá |
 | BE-ROAS per SKU/market ≤ ngưỡng winner Growth | 100% SP | 1/GM đối chiếu GRW-002 |
 | Gross margin trước ads (tham chiếu) | trong band 45–55% | (giá_net − COGS_non_ad)/giá_net |
+| Pricing có đối chiếu competitor + vẫn ≥ contribution floor | 100% SP | giá final nằm trong/quanh vùng đối thủ AND contribution_pct ≥ floor; vùng đối thủ < break-even → flag need_review |
 | Compare-at set | 100% SP | check |
 
 **Prevention**
@@ -164,12 +181,14 @@ Target-profit ROAS = BE-ROAS / (1 − target_net_margin)
 | Scale vào vùng lỗ | Đối chiếu BE-ROAS=1/GM với ngưỡng winner Growth trước publish |
 | Quên cost ship/fee/CPA/VAT | Cost base gồm ship+fee; trừ CPA; EU tính trên giá NET-of-VAT |
 | Plus-size lỗ margin | Step-up pricing giữ contribution floor |
+| Đú giá đối thủ → phá floor (bán lỗ) | Sàn cứng = contribution floor + break-even; vùng đối thủ < break-even → flag need_review, KHÔNG hạ dưới floor |
 
 ## 6. Tài Nguyên & Links
 
 - **Định nghĩa chuẩn: [unit-economics](../../../_shared/unit-economics.md)** (canonical — platform vs blended ROAS, BE-ROAS, contribution margin, FX Vietcombank)
 - Template: `set-pricing/template/`
 - Upstream: [SOP-MER-002](../../setup-printify/template/sop_mer-002_printify-setup_v1.0_2026-06-23.md)
+- **Competitor price table: nhận từ Product Studio [SOP-PRD-001] (chị Tầm)** — khoảng giá bán đối thủ + bundle/offer theo niche/market, dùng làm input benchmark giá ở Bước 4
 - CPA / ngưỡng winner ROAS: Growth [SOP-GRW-002]
 - VAT: phòng 05-backoffice (finance)
 - Downstream: [SOP-MER-001](../../write-product-page/template/sop_mer-001_product-page_v1.0_2026-06-23.md)
@@ -181,3 +200,4 @@ Target-profit ROAS = BE-ROAS / (1 − target_net_margin)
 |---------|------|----------|
 | v1.0 | 2026-06-23 | Khởi tạo SOP variant pricing |
 | v1.1 | 2026-06-23 | Sửa floor sang Contribution Margin sau ads (bỏ `giá=cost/(1−margin)`); thêm BE-ROAS=1/GM per SKU đối chiếu winner Growth; EU tính trên giá NET-of-VAT + nâng giá €59–69; điền Control Bước 1 (provider cost + FX Vietcombank); ghi giả định ship per-order; link unit-economics |
+| v1.0 | 2026-06-23 | Bổ sung benchmark giá đối thủ (Bước 4 mới: nhận competitor price table từ SOP-PRD-001/chị Tầm, đặt giá competitive nhưng ≥ contribution floor + break-even; vùng đối thủ < break-even → flag need_review, không phá floor); thêm input §0, Quality Gate, phân nhánh, prevention; input từ SOP-PRD-001 (A+B) |

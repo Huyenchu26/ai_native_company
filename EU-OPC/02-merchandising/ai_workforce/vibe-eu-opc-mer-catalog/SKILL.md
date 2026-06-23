@@ -2,7 +2,7 @@
 name: vibe-eu-opc-mer-catalog
 type: skill
 description: >-
-  [WHAT] Setup product trên Printify/PrintBase + đặt giá theo CONTRIBUTION MARGIN (sau ad+fee+VAT, KHÔNG margin ảo) + sync ShopBase QC ≥99% cho POD AOP leggings/activewear đa-niche của DAKOfits (US+EU), theo SOP-MER-002 (setup-printify), SOP-MER-003 (variant-pricing) và SOP-MER-004 (catalog-sync-qc); output là live product + bảng giá per-variant + BE-ROAS per SKU/market + sync log, mọi quyết định mang evidence[]/confidence_score/need_review.
+  [WHAT] Setup product trên Printify/PrintBase + đặt giá theo CONTRIBUTION MARGIN (sau ad+fee+VAT, KHÔNG margin ảo) + định giá cạnh tranh theo giá đối thủ (vẫn trên floor) + sync ShopBase QC ≥99% cho POD AOP leggings/activewear đa-niche của DAKOfits (US+EU), theo SOP-MER-002 (setup-printify), SOP-MER-003 (variant-pricing) và SOP-MER-004 (catalog-sync-qc); output là live product + bảng giá per-variant + BE-ROAS per SKU/market + sync log, mọi quyết định mang evidence[]/confidence_score/need_review.
   [TRIGGER] Thuật ngữ EN: 'Printify','PrintBase','variant','pricing','catalog sync','margin','BE-ROAS','ShopBase sync'. Tự nhiên: 'tạo sản phẩm','đặt giá','đồng bộ catalog','set up product'. Ngữ cảnh: 'lên SP mới từ design đã clear','giá bị lỗ sau ads','sync ShopBase lệch field','provider US/EU','variant XS–3XL'.
   [EXCLUSION] KHÔNG viết product page copy/upsell/CRO → vibe-eu-opc-mer-product-page. KHÔNG chạy/tối ưu/scale ads → vibe-eu-opc-grw-fb-ads. KHÔNG thiết kế file AOP print-ready → vibe-opc-pod-product-design. KHÔNG cấp GPSR/IP clearance → vibe-eu-opc-bck-* (chỉ ĐỌC clearance làm gate).
   [PUSH] Dùng cho MỌI việc setup catalog/pricing/sync của DAKOfits — bất kỳ lúc nào cần lên SP mới trên Printify/PrintBase, đặt giá đúng contribution floor, hay đồng bộ ShopBase, đây là skill mặc định.
@@ -56,6 +56,12 @@ BE-ROAS = 1 / GM
 - Plus-size 2XL–3XL cost cao → step-up giá giữ floor. Psychological pricing $XX.99 + compare-at.
 - **FX USD→VND = Vietcombank bán ra, ngày cuối kỳ** (ghi ngày + nguồn vào ledger).
 - Output theo [pricing-decision.schema.json](schema/pricing-decision.schema.json).
+
+#### Competitive Pricing — định giá cạnh tranh theo giá đối thủ (vẫn TRÊN floor)
+Nhận **competitor price table** từ Product Studio **SOP-PRD-001 (chị Tầm)**: khoảng giá min–max đối thủ + bundle/offer theo niche/market. Đối chiếu giá đề xuất (đã pass contribution floor + BE-ROAS) với vùng giá đối thủ:
+- Đặt giá **competitive** (trong vùng thị trường) NHƯNG **sàn cứng = contribution-margin floor (sau ad+fee+VAT) + ≥ break-even ROAS**.
+- Ghi `competitor_price_ref {min,max,currency}` + `competitive_position` (below_market / at_market / premium) vào pricing-decision.
+- ⚠️ **KHÔNG phá floor để đú đối thủ.** Nếu **giá cạnh tranh thị trường < giá break-even của ta** (đặc biệt EU — VAT đẩy BE-ROAS ~5.3) → niche KHÔNG viable ở mức giá cạnh tranh → set `below_breakeven_flag: true`, `need_review: true`, đề xuất **bỏ niche hoặc tìm provider rẻ hơn**.
 
 ### Phase 3 — sync-qc (SOP-MER-004)
 - **GATE pre-sync (cứng):** đơn EU thiếu GPSR label/clearance → **STOP, no publish**, trả `vibe-eu-opc-mer-product-page`. Kiểm Contribution floor pass + variant XS–3XL đủ.
