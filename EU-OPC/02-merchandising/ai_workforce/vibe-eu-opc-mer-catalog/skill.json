@@ -1,0 +1,54 @@
+{
+  "name": "vibe-eu-opc-mer-catalog",
+  "version": "1.0",
+  "description": "Catalog-Sync AI cho DAKOfits: setup product Printify/PrintBase (variant XS-3XL, provider US/EU), pricing theo contribution margin sau ad+fee+VAT, sync ShopBase QC >=99%. SOP-MER-002/003/004.",
+  "phases": {
+    "setup-product": {
+      "inputs": ["cleared AOP design (300 DPI, 360 QC, IP cleared)", "mockup", "niche/batch info", "channel-config", "target market (US/EU)"],
+      "outputs": ["product blueprint (provider US/EU)", "variant set XS-3XL x color", "mockup render"],
+      "min_confidence": 0.7,
+      "evidence_required": true
+    },
+    "set-pricing": {
+      "inputs": ["product blueprint", "provider cost per variant", "shipping cost", "reference price", "CPA / winner BE-ROAS target (GRW-002)", "FX Vietcombank ngay cuoi ky"],
+      "outputs": ["bang gia variant XS-3XL/color (contribution floor)", "compare-at price", "bundle price", "BE-ROAS per SKU/market"],
+      "schema": "schema/pricing-decision.schema.json",
+      "min_confidence": 0.7,
+      "evidence_required": true
+    },
+    "sync-qc": {
+      "inputs": ["blueprint (MER-002)", "pricing (MER-003)", "product page approved (MER-001)", "GPSR clearance ID (EU)"],
+      "outputs": ["live product tren ShopBase", "sync accuracy report (>=99%)", "sync log"],
+      "min_confidence": 0.7,
+      "evidence_required": true
+    }
+  },
+  "dependencies": {
+    "upstream": ["vibe-opc-pod-product-design", "vibe-eu-opc-bck-compliance"],
+    "downstream": ["vibe-eu-opc-mer-product-page", "vibe-eu-opc-mer-orchestrator"]
+  },
+  "quality_gates": [
+    {"step": "pre-sync-gpsr-gate", "min_confidence": 0.7, "schema_required": false, "evidence_required": true},
+    {"step": "pricing-contribution-floor", "min_confidence": 0.7, "schema_required": true, "evidence_required": true},
+    {"step": "variant-coverage-xs-3xl", "min_confidence": 0.7, "schema_required": false, "evidence_required": true},
+    {"step": "shopbase-sync-accuracy", "min_confidence": 0.7, "schema_required": false, "evidence_required": true}
+  ],
+  "scripts": {
+    "validator": "script/validator.py",
+    "anonymizer": "script/anonymizer.py",
+    "install_hooks": "script/install_hooks.sh",
+    "log_helper": "script/log_helper.py",
+    "review_queue": "script/review_queue.py"
+  },
+  "hooks": {
+    "config": "hooks.json"
+  },
+  "folders": {
+    "kb": true,
+    "script": true,
+    "prompt": true,
+    "schema": true,
+    "test": true,
+    "synthetic_data": true
+  }
+}
