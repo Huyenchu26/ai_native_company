@@ -1,0 +1,35 @@
+{
+  "name": "vibe-dakofits-gps",
+  "version": "1.0.0",
+  "description": "AI Chief of Staff cho DAKOfits (POD AOP leggings, shop ShopBase domain riêng, US+EU). Nhận task tự nhiên -> classify -> route đến đúng phòng/skill (17 AI Worker, 5 phòng) -> enforce gate cứng (IP/GPSR/Meta/refund) -> report. Điều phối theo operating-flow ShopBase-first, không execute trực tiếp.",
+  "phases": {
+    "receive": {"inputs": ["task tu nhien"], "outputs": ["parsed-task"], "min_confidence": 0.7, "evidence_required": true},
+    "classify": {"inputs": ["parsed-task"], "outputs": ["dept-sop-skill mapping"], "min_confidence": 0.7, "evidence_required": true},
+    "route": {"inputs": ["mapping"], "outputs": ["output/routing-plan.json"], "schema": "schema/task-routing.schema.json", "min_confidence": 0.7, "evidence_required": true},
+    "enforce-gate": {"inputs": ["routing-plan"], "outputs": ["gate-status"], "min_confidence": 0.8, "evidence_required": true},
+    "report": {"inputs": ["results"], "outputs": ["company-report"], "min_confidence": 0.7, "evidence_required": true}
+  },
+  "dependencies": {
+    "upstream": [],
+    "downstream": [
+      "vibe-eu-opc-prd-orchestrator",
+      "vibe-eu-opc-mer-orchestrator",
+      "vibe-eu-opc-grw-orchestrator",
+      "vibe-eu-opc-ful-orchestrator",
+      "vibe-eu-opc-bck-orchestrator"
+    ]
+  },
+  "quality_gates": [
+    {"step": "route", "min_confidence": 0.7, "schema_required": true, "evidence_required": true},
+    {"step": "enforce-gate", "min_confidence": 0.8, "schema_required": false, "evidence_required": true}
+  ],
+  "scripts": {
+    "validator": "script/validator.py",
+    "anonymizer": "script/anonymizer.py",
+    "install_hooks": "script/install_hooks.sh",
+    "log_helper": "script/log_helper.py",
+    "review_queue": "script/review_queue.py"
+  },
+  "hooks": {"config": "hooks.json"},
+  "folders": {"kb": true, "script": true, "prompt": true, "schema": true, "test": true, "synthetic_data": true}
+}

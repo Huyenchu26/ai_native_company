@@ -1,0 +1,50 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Task Routing Plan (Company GPS)",
+  "type": "object",
+  "required": ["task", "scope", "routing", "gate_checks", "evidence", "confidence_score", "need_review"],
+  "properties": {
+    "task": {"type": "string", "description": "Task tự nhiên nhận từ user"},
+    "scope": {"type": "string", "enum": ["single-dept", "multi-dept", "full-chain"]},
+    "market": {"type": "string", "enum": ["US", "EU", "US+EU"]},
+    "routing": {
+      "type": "array",
+      "description": "Chuỗi mắt xích theo thứ tự operating-flow",
+      "items": {
+        "type": "object",
+        "required": ["step", "department", "skill", "sop"],
+        "properties": {
+          "step": {"type": "integer"},
+          "department": {"type": "string"},
+          "skill": {"type": "string", "pattern": "^vibe-eu-opc-[a-z-]+$"},
+          "sop": {"type": "string"},
+          "depends_on_gate": {"type": "string"}
+        }
+      }
+    },
+    "gate_checks": {
+      "type": "object",
+      "properties": {
+        "ip_tm_clearance": {"type": "boolean"},
+        "gpsr_clearance": {"type": "boolean"},
+        "shopbase_live_before_ads": {"type": "boolean"},
+        "meta_ad_policy": {"type": "boolean"},
+        "refund_threshold": {"type": "boolean"}
+      }
+    },
+    "evidence": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["claim", "verbatim_quote", "source"],
+        "properties": {
+          "claim": {"type": "string"},
+          "verbatim_quote": {"type": "string", "minLength": 1},
+          "source": {"type": "string"}
+        }
+      }
+    },
+    "confidence_score": {"type": "number", "minimum": 0, "maximum": 1},
+    "need_review": {"type": "boolean"}
+  }
+}

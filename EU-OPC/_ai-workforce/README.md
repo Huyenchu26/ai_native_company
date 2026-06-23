@@ -20,5 +20,8 @@ Human Layer (SOP = ground truth) + AI Layer (12 worker vận hành theo đúng S
 | 04 Fulfillment & CX | **vibe-eu-opc-ful-** orchestrator/order-ops/cx | 🟢 **ACTIVATED** (8-comp, bám SOP) |
 | 05 Backoffice | **vibe-eu-opc-bck-** orchestrator/finance/compliance/ops-hr | 🟢 **ACTIVATED** (8-comp, bám SOP) |
 
-## Company GPS (chưa tạo)
-Muốn có "AI Chief of Staff" route task → đúng phòng: chạy Phase 6.2 (`/vibe-company-orchestrator` → "Tạo company GPS"). Sẽ sinh `vibe-dakofits-gps`.
+## Company GPS — 🟢 vibe-dakofits-gps (ACTIVATED 2026-06-23)
+**AI Chief of Staff** — nhận task tự nhiên → route đến đúng phòng/skill (5 orchestrator), enforce gate cứng, báo cáo. PRIMARY: `_ai-workforce/vibe-dakofits-gps/` · installed `~/.claude/skills/`.
+- Gọi: `/vibe-dakofits-gps` ("làm 10 SP niche Corgi US+EU bán tuần sau")
+- Routing map: [vibe-dakofits-gps/kb/company-routing-map.md](./vibe-dakofits-gps/kb/company-routing-map.md)
+- Điều phối theo operating-flow ShopBase-first; KHÔNG execute trực tiếp.
