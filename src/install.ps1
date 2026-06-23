@@ -1,4 +1,4 @@
-# install.ps1 — Cài đặt tự động AI Native Company skills trên Windows
+﻿# install.ps1 — Cài đặt tự động AI Native Company skills trên Windows
 # Hỗ trợ: Claude Code, Antigravity, OpenClaw, Codex, Hermes
 # Sử dụng: powershell -ExecutionPolicy Bypass -File src\install.ps1 [-App <tên-ứng-dụng>]
 
@@ -106,7 +106,7 @@ function Install-Skills {
         Write-Host "  OK: $skill" -ForegroundColor Green
     }
 
-    Write-Host "→ $AppName: Hoàn tất" -ForegroundColor Green
+    Write-Host "→ ${AppName}: Hoàn tất" -ForegroundColor Green
 }
 
 # Execute installation
@@ -139,7 +139,7 @@ $AllOk = $true
 foreach ($appName in $VerifyApps) {
     $destDir = $AppDirs[$appName]
     Write-Host ""
-    Write-Host "  $appName:"
+    Write-Host "  ${appName}:"
     foreach ($skill in $FoundSkills) {
         $skillMd = Join-Path $destDir "$skill\SKILL.md"
         if (Test-Path $skillMd) {
