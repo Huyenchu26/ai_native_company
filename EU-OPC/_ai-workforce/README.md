@@ -17,8 +17,8 @@ Human Layer (SOP = ground truth) + AI Layer (12 worker vận hành theo đúng S
 | 01 Product Studio | **vibe-eu-opc-prd-** orchestrator/niche-research/design | 🟢 **ACTIVATED** (8-comp, bám SOP) |
 | 02 Merchandising | **vibe-eu-opc-mer-** orchestrator/catalog/product-page | 🟢 **ACTIVATED** (8-comp, bám SOP) |
 | 03 Growth | **vibe-eu-opc-grw-** orchestrator/fb-ads/creative/marketing | 🟢 **ACTIVATED** (8-comp, bám SOP) |
-| 04 Fulfillment & CX | order-ops, cx | 🟢 skill có sẵn |
-| 05 Backoffice | finance, compliance, ops-hr | 🟢 skill có sẵn |
+| 04 Fulfillment & CX | **vibe-eu-opc-ful-** orchestrator/order-ops/cx | 🟢 **ACTIVATED** (8-comp, bám SOP) |
+| 05 Backoffice | **vibe-eu-opc-bck-** orchestrator/finance/compliance/ops-hr | 🟢 **ACTIVATED** (8-comp, bám SOP) |
 
 ## Company GPS (chưa tạo)
 Muốn có "AI Chief of Staff" route task → đúng phòng: chạy Phase 6.2 (`/vibe-company-orchestrator` → "Tạo company GPS"). Sẽ sinh `vibe-dakofits-gps`.

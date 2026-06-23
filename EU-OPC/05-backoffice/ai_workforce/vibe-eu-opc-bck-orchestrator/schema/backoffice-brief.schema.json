@@ -1,0 +1,147 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://vibe-aiworkforce/schema/backoffice-brief.schema.json",
+  "title": "Backoffice CEO Brief",
+  "description": "CEO brief 1 kỳ do vibe-eu-opc-bck-orchestrator tổng hợp (fan-out finance + compliance + ops-hr). Manager dùng để trình Owner: finance_summary + compliance_status + workforce_health + gate_checks legal, mọi quyết định mang evidence + confidence_score + need_review.",
+  "type": "object",
+  "required": [
+    "period",
+    "finance_summary",
+    "compliance_status",
+    "workforce_health",
+    "gate_checks",
+    "evidence",
+    "confidence_score",
+    "need_review"
+  ],
+  "properties": {
+    "period": {
+      "type": "string",
+      "description": "Kỳ báo cáo, vd 2026-06 hoặc 2026-Q2 hoặc 2026-06-W26",
+      "pattern": "^\\d{4}(-(0[1-9]|1[0-2])(-W\\d{1,2})?|-Q[1-4])$"
+    },
+    "created_at": {
+      "type": "string",
+      "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}Z$"
+    },
+    "prepared_for": {
+      "type": "string",
+      "description": "Người nhận brief (Accountable)",
+      "default": "Owner"
+    },
+    "finance_summary": {
+      "type": "object",
+      "description": "Tổng hợp từ vibe-eu-opc-bck-finance (BCK-001/002/003)",
+      "required": ["revenue", "net_profit"],
+      "properties": {
+        "currency": {"type": "string", "default": "USD"},
+        "revenue": {"type": "number"},
+        "ad_spend": {"type": "number"},
+        "cogs": {"type": "number"},
+        "net_profit": {"type": "number"},
+        "net_margin_pct": {"type": "number", "description": "Target ≥ 20%"},
+        "blended_roas": {"type": "number"},
+        "revenue_vnd": {"type": "number", "description": "Quy đổi USD→VND theo FX có nguồn (target ~200tr)"},
+        "fx_rate_source": {"type": "string", "description": "Nguồn tỷ giá (R6: no fabricated FX)"},
+        "top_skus": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "sku": {"type": "string"},
+              "profit": {"type": "number"},
+              "decision": {"type": "string", "enum": ["SCALE", "KILL", "HOLD", "KEEP"]}
+            }
+          }
+        }
+      }
+    },
+    "compliance_status": {
+      "type": "string",
+      "description": "Trạng thái tổng tuân thủ phòng (legal SLO=100%). BLOCKED nếu bất kỳ gate cứng FAIL.",
+      "enum": ["CLEAR", "BLOCKED"]
+    },
+    "workforce_health": {
+      "type": "object",
+      "description": "Tổng hợp từ vibe-eu-opc-bck-ops-hr (BCK-006)",
+      "required": ["uptime_pct"],
+      "properties": {
+        "worker_count": {"type": "integer"},
+        "uptime_pct": {"type": "number", "description": "Target ≥ 99%"},
+        "cost_usd": {"type": "number"},
+        "quality_flag": {"type": "string", "enum": ["green", "amber", "red"]},
+        "capacity_note": {"type": "string"},
+        "escalations": {"type": "array", "items": {"type": "string"}}
+      }
+    },
+    "gate_checks": {
+      "type": "object",
+      "description": "4 gate cứng legal/compliance — error budget 0%",
+      "required": ["gpsr", "meta_policy", "vat_ontime", "breach"],
+      "properties": {
+        "gpsr": {
+          "type": "object",
+          "required": ["status"],
+          "properties": {
+            "status": {"type": "string", "enum": ["pass", "pending", "fail"]},
+            "items_pending": {"type": "integer", "description": "SP chờ EU publish chưa clear"},
+            "note": {"type": "string", "description": "no GPSR → no publish (R1)"}
+          }
+        },
+        "meta_policy": {
+          "type": "object",
+          "required": ["status"],
+          "properties": {
+            "status": {"type": "string", "enum": ["pass", "pending", "fail"]},
+            "note": {"type": "string", "description": "no Meta Ad Policy → no ads (R2)"}
+          }
+        },
+        "vat_ontime": {
+          "type": "object",
+          "required": ["status"],
+          "properties": {
+            "status": {"type": "string", "enum": ["on-time", "due", "late"]},
+            "deadline": {"type": "string"},
+            "note": {"type": "string", "description": "VAT filing 100% on-time (R5)"}
+          }
+        },
+        "breach": {
+          "type": "object",
+          "required": ["status"],
+          "properties": {
+            "status": {"type": "string", "enum": ["none", "open", "notified", "overdue"]},
+            "detected_at": {"type": "string"},
+            "deadline_72h": {"type": "string", "description": "GDPR breach notify ≤ 72h (R4)"},
+            "note": {"type": "string"}
+          }
+        }
+      }
+    },
+    "evidence": {
+      "type": "array",
+      "description": "Link ledger/clearance log/breach log/run log làm bằng chứng (R6: no fabricated figures)",
+      "minItems": 1,
+      "items": {"type": "string"}
+    },
+    "confidence_score": {
+      "type": "number",
+      "minimum": 0,
+      "maximum": 1
+    },
+    "need_review": {
+      "type": "boolean",
+      "description": "true khi: bất kỳ gate cứng fail / breach open / VAT due-late / số liệu thiếu nguồn / confidence < 0.7 / task mơ hồ"
+    },
+    "escalation": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "trigger": {"type": "string"},
+          "escalate_to": {"type": "string", "description": "Owner / 05-compliance / 05-finance / 05-ops-hr"},
+          "deadline": {"type": "string"}
+        }
+      }
+    }
+  }
+}

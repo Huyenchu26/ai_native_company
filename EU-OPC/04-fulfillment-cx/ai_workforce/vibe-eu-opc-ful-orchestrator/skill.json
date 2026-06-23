@@ -1,0 +1,87 @@
+{
+  "$schema": "../schema/skill-meta.schema.json",
+  "name": "vibe-eu-opc-ful-orchestrator",
+  "version": "1.0",
+  "description": "Manager điều phối toàn bộ phòng Fulfillment & CX DAKOfits: route đơn & ticket sang đúng specialist theo SOP-FUL-001..004, enforce gate cứng (route ≤24h SLO 18h, refund AI ≤$30/>$30 OPC, GDPR data minimization, fraud-hold), bàn giao cost/refund data sang 05-backoffice. KHÔNG execute trực tiếp.",
+  "phases": {
+    "receive": {
+      "inputs": ["batch đơn paid từ 03-growth (FB Ads checkout)", "customer tickets (support/refund)", "context: README/_rules/_workflow"],
+      "outputs": ["batch được hiểu (đơn lẻ vs batch dispatch)"],
+      "min_confidence": 0.7,
+      "evidence_required": true
+    },
+    "classify": {
+      "inputs": ["batch đã nhận"],
+      "outputs": ["mapping item → worker → SOP (đơn → order-ops; ticket → cx; hoặc escalate phòng khác)"],
+      "min_confidence": 0.7,
+      "evidence_required": true
+    },
+    "route": {
+      "inputs": ["classified batch", "order_id/market/paid_at/provider vùng", "ticket type/refund amount/customer market"],
+      "outputs": ["delegation tới ful-order-ops / ful-cx", "fulfillment-dispatch plan"],
+      "schema": "schema/fulfillment-dispatch.schema.json",
+      "min_confidence": 0.7,
+      "evidence_required": true
+    },
+    "enforce-sla": {
+      "inputs": ["routing decision", "paid_at vs route time (≤24h/SLO 18h)", "refund amount vs $30", "GDPR data scope", "fraud-hold flags"],
+      "outputs": ["PASS → cho specialist hành động / HOLD → need_review + escalate OPC"],
+      "min_confidence": 0.7,
+      "evidence_required": true
+    }
+  },
+  "dependencies": {
+    "upstream": ["vibe-eu-opc-grw-orchestrator"],
+    "downstream": ["vibe-eu-opc-ful-order-ops", "vibe-eu-opc-ful-cx", "vibe-eu-opc-bck-orchestrator"]
+  },
+  "scripts": {
+    "validator": "script/validator.py",
+    "anonymizer": "script/anonymizer.py",
+    "install_hooks": "script/install_hooks.sh",
+    "log_helper": "script/log_helper.py",
+    "review_queue": "script/review_queue.py"
+  },
+  "folders": {
+    "kb": true,
+    "script": true,
+    "prompt": true,
+    "schema": true,
+    "test": true,
+    "synthetic_data": true
+  },
+  "hooks": {
+    "config": "hooks.json"
+  },
+  "quality_gates": [
+    {
+      "step": "enforce-sla:route-24h",
+      "min_confidence": 0.7,
+      "schema_required": false,
+      "evidence_required": true
+    },
+    {
+      "step": "enforce-sla:refund-threshold-30",
+      "min_confidence": 0.7,
+      "schema_required": false,
+      "evidence_required": true
+    },
+    {
+      "step": "enforce-sla:gdpr-data-minimization",
+      "min_confidence": 0.7,
+      "schema_required": false,
+      "evidence_required": true
+    },
+    {
+      "step": "enforce-sla:fraud-hold",
+      "min_confidence": 0.7,
+      "schema_required": false,
+      "evidence_required": true
+    },
+    {
+      "step": "route:fulfillment-dispatch",
+      "min_confidence": 0.7,
+      "schema_required": true,
+      "evidence_required": true
+    }
+  ]
+}

@@ -1,0 +1,114 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://vibe-aiworkforce/schema/workforce-review.schema.json",
+  "title": "Workforce Review (weekly AI Workforce report)",
+  "description": "Output cua vibe-eu-opc-bck-ops-hr theo SOP-BCK-006: uptime/cost/quality/capacity cua roster AI Worker DAKOfits.",
+  "type": "object",
+  "required": [
+    "period",
+    "total_workers",
+    "uptime_pct",
+    "avg_reject_rate",
+    "cost_summary",
+    "capacity_status",
+    "actions",
+    "evidence",
+    "confidence_score",
+    "need_review"
+  ],
+  "properties": {
+    "period": {
+      "type": "string",
+      "description": "Ky bao cao, ISO week hoac date range, vd '2026-W25' hoac '2026-06-16..2026-06-22'"
+    },
+    "total_workers": {
+      "type": "integer",
+      "minimum": 1,
+      "description": "So worker active THAT, dem tu workforce-map + folder EU-OPC SKILL.md (KHONG hard-code). Ghi phuong phap dem vao evidence[]."
+    },
+    "uptime_pct": {
+      "type": "number",
+      "minimum": 0,
+      "maximum": 100,
+      "description": "Uptime trung binh roster (%). SLO >= 99."
+    },
+    "avg_reject_rate": {
+      "type": "number",
+      "minimum": 0,
+      "maximum": 1,
+      "description": "Reject rate trung binh (0-1). SLO < 0.10."
+    },
+    "cost_summary": {
+      "type": "object",
+      "description": "Tong hop token/API cost de FEED finance (SOP-BCK-001/002).",
+      "required": ["total_cost_usd", "currency"],
+      "properties": {
+        "total_cost_usd": {"type": "number", "minimum": 0},
+        "currency": {"type": "string", "enum": ["USD"]},
+        "delta_vs_prev_pct": {"type": "number", "description": "Thay doi % vs ky truoc; >20 -> canh bao finance"},
+        "per_worker": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["worker", "cost_usd"],
+            "properties": {
+              "worker": {"type": "string"},
+              "cost_usd": {"type": "number", "minimum": 0}
+            }
+          }
+        }
+      }
+    },
+    "capacity_status": {
+      "type": "string",
+      "enum": ["OK", "STRAINED", "OVER"],
+      "description": "OK=du; STRAINED=gan tran/batch don; OVER=thieu, miss deadline -> bat buoc co action."
+    },
+    "per_worker_review": {
+      "type": "array",
+      "description": "Review chi tiet tung worker (tuy chon).",
+      "items": {
+        "type": "object",
+        "required": ["worker", "layer", "uptime_pct", "reject_rate"],
+        "properties": {
+          "worker": {"type": "string"},
+          "layer": {"type": "string", "enum": ["legacy", "eu-opc-specific"]},
+          "uptime_pct": {"type": "number", "minimum": 0, "maximum": 100},
+          "reject_rate": {"type": "number", "minimum": 0, "maximum": 1},
+          "status": {"type": "string", "enum": ["healthy", "watch", "degraded"]}
+        }
+      }
+    },
+    "actions": {
+      "type": "array",
+      "minItems": 0,
+      "description": "Hanh dong/escalation: them worker, doi cron, bump skill/SOP version, retrain.",
+      "items": {
+        "type": "object",
+        "required": ["type", "target", "detail"],
+        "properties": {
+          "type": {"type": "string", "enum": ["escalate", "skill-update", "sop-bump", "scale-worker", "cron-reschedule", "retrain", "cost-alert"]},
+          "target": {"type": "string", "description": "Worker/skill/SOP lien quan"},
+          "detail": {"type": "string"}
+        }
+      }
+    },
+    "evidence": {
+      "type": "array",
+      "minItems": 1,
+      "description": "Nguon: run log, reject log, cost report, workforce-map, folder count, SOP version.",
+      "items": {"type": "string"}
+    },
+    "confidence_score": {
+      "type": "number",
+      "minimum": 0,
+      "maximum": 1,
+      "description": "Do tin cay; < 0.7 -> need_review = true."
+    },
+    "need_review": {
+      "type": "boolean",
+      "description": "true khi thieu log, uptime<95%, reject>10%, cost spike>20%, capacity OVER, hoac roster count khong khop."
+    }
+  },
+  "additionalProperties": false
+}

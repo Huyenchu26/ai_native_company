@@ -1,0 +1,77 @@
+{
+  "name": "vibe-eu-opc-bck-finance",
+  "version": "1.0",
+  "description": "Finance AI của DAKOfits (POD AOP đa-niche, US+EU): bookkeeping + fee reconciliation (ShopBase/Printify/Meta/gateway), profit-per-SKU đầy đủ (base+ship+fee+ad+VAT+fx), true/blended ROAS + break-even=1/GM, P&L, FX Vietcombank, VAT OSS/IOSS + US nexus, CEO brief theo SOP-BCK-001/002/003.",
+  "phases": {
+    "bookkeeping": {
+      "inputs": ["shopbase-payout", "printify-invoice", "meta-billing", "gateway-statement", "bank-usd-statement"],
+      "outputs": ["ledger", "reconciliation-log", "discrepancy-list"],
+      "min_confidence": 0.7,
+      "evidence_required": true
+    },
+    "profit-roas": {
+      "inputs": ["ledger", "ad-spend-per-sku", "cogs-print-ship", "fx-rate"],
+      "outputs": ["profit-per-sku-table", "blended-roas-report", "pnl"],
+      "schema": "schema/profit-report.schema.json",
+      "min_confidence": 0.7,
+      "evidence_required": true
+    },
+    "vat": {
+      "inputs": ["order-export-by-country", "ioss-threshold-150eur", "vat-rate-table", "ledger"],
+      "outputs": ["vat-return-draft-oss", "vat-return-draft-ioss", "us-nexus-note"],
+      "min_confidence": 0.7,
+      "evidence_required": true
+    },
+    "ceo-brief": {
+      "inputs": ["pnl", "profit-per-sku-table", "blended-roas-report", "target-500tr-20k"],
+      "outputs": ["ceo-brief"],
+      "min_confidence": 0.7,
+      "evidence_required": true
+    }
+  },
+  "dependencies": {
+    "upstream": ["vibe-eu-opc-ful-orchestrator", "vibe-eu-opc-grw-fb-ads"],
+    "downstream": ["vibe-eu-opc-bck-orchestrator"]
+  },
+  "scripts": {
+    "validator": "script/validator.py",
+    "anonymizer": "script/anonymizer.py",
+    "install_hooks": "script/install_hooks.sh",
+    "log_helper": "script/log_helper.py",
+    "review_queue": "script/review_queue.py"
+  },
+  "folders": {
+    "kb": true,
+    "script": true,
+    "prompt": true,
+    "schema": true,
+    "test": true,
+    "synthetic_data": true
+  },
+  "quality_gates": [
+    {
+      "step": "bookkeeping",
+      "min_confidence": 0.7,
+      "schema_required": false,
+      "evidence_required": true
+    },
+    {
+      "step": "profit-roas",
+      "min_confidence": 0.7,
+      "schema_required": true,
+      "evidence_required": true
+    },
+    {
+      "step": "vat",
+      "min_confidence": 0.7,
+      "schema_required": false,
+      "evidence_required": true
+    },
+    {
+      "step": "ceo-brief",
+      "min_confidence": 0.7,
+      "schema_required": false,
+      "evidence_required": true
+    }
+  ]
+}

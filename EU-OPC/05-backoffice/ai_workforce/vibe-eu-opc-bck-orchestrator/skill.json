@@ -1,0 +1,93 @@
+{
+  "$schema": "../schema/skill-meta.schema.json",
+  "name": "vibe-eu-opc-bck-orchestrator",
+  "version": "1.0",
+  "description": "Manager điều phối toàn bộ phòng Backoffice (L3) DAKOfits: route task tài chính/compliance/workforce sang đúng specialist theo SOP-BCK-001..006, enforce gate cứng legal (GPSR/Meta policy/GDPR/VAT), tổng hợp CEO brief cho Owner. KHÔNG execute trực tiếp.",
+  "phases": {
+    "receive": {
+      "inputs": ["backoffice task", "data cuối kỳ từ tất cả phòng L2 + run log worker", "context: README/_rules/unit-economics"],
+      "outputs": ["task được hiểu (đơn lẻ vs chốt kỳ CEO brief)"],
+      "min_confidence": 0.7,
+      "evidence_required": true
+    },
+    "classify": {
+      "inputs": ["task đã nhận"],
+      "outputs": ["mapping task → worker → SOP (hoặc escalate phòng khác)"],
+      "min_confidence": 0.7,
+      "evidence_required": true
+    },
+    "route": {
+      "inputs": ["classified task", "kỳ báo cáo", "cost/fee data", "SP chờ EU publish + niche", "run log worker"],
+      "outputs": ["delegation tới finance / compliance / ops-hr"],
+      "min_confidence": 0.7,
+      "evidence_required": true
+    },
+    "enforce-gate": {
+      "inputs": ["GPSR clearance status", "Meta Ad Policy status", "GDPR breach/DSAR", "VAT deadline kỳ"],
+      "outputs": ["compliance_status CLEAR/BLOCKED", "PASS → cho publish/ads / BLOCKED → need_review + escalate Owner"],
+      "min_confidence": 0.7,
+      "evidence_required": true
+    },
+    "ceo-brief": {
+      "inputs": ["finance_summary", "compliance_status", "workforce_health", "gate_checks"],
+      "outputs": ["CEO brief 1 kỳ cho Owner", "decision: scale/kill từ profit, escalate"],
+      "schema": "schema/backoffice-brief.schema.json",
+      "min_confidence": 0.7,
+      "evidence_required": true
+    }
+  },
+  "dependencies": {
+    "upstream": ["vibe-eu-opc-ful-orchestrator", "vibe-eu-opc-grw-orchestrator"],
+    "downstream": ["vibe-eu-opc-bck-finance", "vibe-eu-opc-bck-compliance", "vibe-eu-opc-bck-ops-hr"]
+  },
+  "scripts": {
+    "validator": "script/validator.py",
+    "anonymizer": "script/anonymizer.py",
+    "install_hooks": "script/install_hooks.sh",
+    "log_helper": "script/log_helper.py",
+    "review_queue": "script/review_queue.py"
+  },
+  "folders": {
+    "kb": true,
+    "script": true,
+    "prompt": true,
+    "schema": true,
+    "test": true,
+    "synthetic_data": true
+  },
+  "hooks": {
+    "config": "hooks.json"
+  },
+  "quality_gates": [
+    {
+      "step": "enforce-gate:gpsr-no-publish",
+      "min_confidence": 0.7,
+      "schema_required": false,
+      "evidence_required": true
+    },
+    {
+      "step": "enforce-gate:meta-policy-no-ads",
+      "min_confidence": 0.7,
+      "schema_required": false,
+      "evidence_required": true
+    },
+    {
+      "step": "enforce-gate:gdpr-breach-72h",
+      "min_confidence": 0.7,
+      "schema_required": false,
+      "evidence_required": true
+    },
+    {
+      "step": "enforce-gate:vat-ontime-100",
+      "min_confidence": 0.7,
+      "schema_required": false,
+      "evidence_required": true
+    },
+    {
+      "step": "ceo-brief:backoffice-brief",
+      "min_confidence": 0.7,
+      "schema_required": true,
+      "evidence_required": true
+    }
+  ]
+}
