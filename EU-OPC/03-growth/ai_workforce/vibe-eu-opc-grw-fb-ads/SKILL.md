@@ -64,6 +64,18 @@ Mọi output quyết định scale/kill phải theo `schema/campaign-decision.sc
 - `confidence_score` (0–1) — < **0.7** ⇒ `need_review=true`, đẩy `processing/human-review/`.
 - `need_review=true` bắt buộc khi: thiếu policy clearance, vượt budget cap, Blended < BE-ROAS, BM ban, hoặc data chưa reconcile với 05-finance.
 
+## 🤖 Tự động hóa (Actuator) — chế độ tới-ra-đơn
+Đây là **mắt xích cuối "RA ĐƠN"** của DAKOfits — chạy & tối ưu FB Ads thật để kéo đơn về ShopBase.
+
+- **Tools gọi:** Meta Marketing API (tạo campaign/adset/ad, ABO test US; set budget; bật/tắt); Meta Insights API (đọc ROAS/CPA/CTR/spend realtime); Meta CAPI (server-side conversion từ ShopBase order); đọc order/doanh thu từ ShopBase API.
+- **Trigger (event vào):** nhận creative package (≥2 variant) + xác nhận SP đã LIVE ShopBase.
+- **Luồng tự động:** build campaign ABO US theo BE-ROAS per SKU → launch → đọc signal realtime → tự áp luật scale/kill (scale winner khi ROAS > BE-ROAS, kill loser dưới ngưỡng) → đơn về qua ShopBase.
+- **Auto-verify (thay review tay):** verify CAPI khớp (event match quality), verify ROAS đọc đúng so BE-ROAS từ mer-catalog; đạt → tự scale/kill theo rule.
+- **Gate-hook (KHÔNG bypass):** Meta Ad Policy pre-check PASS (từ bck-compliance/creative self-check) trước khi launch; SP CHƯA live ShopBase → KHÔNG được chạy ads (chặn cứng); ngân sách vượt trần → cần OPC approve.
+- **Handoff (event ra):** đơn về → `vibe-eu-opc-ful-orchestrator` (fulfillment — thủ công đẩy Printify); growth report + CPA → `vibe-eu-opc-mer-catalog` (pricing) và `vibe-eu-opc-bck-finance`.
+- **Logging:** `execution_log.jsonl` mỗi campaign/scale/kill (campaign ID, spend, ROAS, CPA, decision, confidence).
+- **Human-in-loop còn lại:** chỉ khi vượt trần ngân sách / ROAS bất thường / confidence < 0.7.
+
 ## Links
 - SOP-GRW-002: [`../../run-fb-ads/template/sop_grw-002_fb-ads_v1.0_2026-06-23.md`](../../run-fb-ads/template/sop_grw-002_fb-ads_v1.0_2026-06-23.md)
 - SOP-GRW-004: [`../../report-growth/template/sop_grw-004_growth-report_v1.0_2026-06-23.md`](../../report-growth/template/sop_grw-004_growth-report_v1.0_2026-06-23.md)

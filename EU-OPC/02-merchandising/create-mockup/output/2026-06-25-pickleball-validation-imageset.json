@@ -1,0 +1,22 @@
+{
+  "sku_concept": "DAKO-PICKLE-LEG-001 (validation)",
+  "niche": "Pickleball",
+  "phase": "validation",
+  "generated_at": "2026-06-25",
+  "tool": "Canva MCP (concept images — KHONG phai file in, hoa tiet khong dong nhat)",
+  "visual_direction": "Chosen mau 2 + mau 4 (teal/coral/white tren navy, pickleball paddle+ball+court AOP)",
+  "local_dir": "EU-OPC/02-merchandising/create-mockup/output/images/",
+  "images": [
+    {"n": 1, "type": "hero_front_onmodel", "channel": "shop+fb_feed", "ratio": "4:5", "canva_design_id": "DAHNik2dXiA", "source": "mau 2", "local_file": "images/01-hero-front.png"},
+    {"n": 2, "type": "hero_alt_oncourt", "channel": "shop+fb_feed", "ratio": "4:5", "canva_design_id": "DAHNih_9BfU", "source": "mau 4", "local_file": "images/02-hero-altcourt.png"},
+    {"n": 3, "type": "detail_closeup_pattern", "channel": "shop", "ratio": "4:5", "canva_design_id": "DAHNiotHrz4", "local_file": "images/04-detail-closeup.png"},
+    {"n": 4, "type": "size_guide_xs_3xl", "channel": "shop", "ratio": "4:5", "canva_design_id": "DAHNiiGb-tw", "local_file": "images/05-size-guide.png"},
+    {"n": 5, "type": "story_reel_ad", "channel": "fb_ig_story", "ratio": "9:16", "canva_design_id": "DAHNiiWAQNk", "local_file": "images/06-story-reel-9x16.png"},
+    {"n": 6, "type": "flatlay_product_only", "channel": "shop", "ratio": "4:5", "canva_design_id": "DAHNilNMWas", "local_file": "images/03-flatlay.png"}
+  ],
+  "coverage": {"shop": ">=4 OK (hero, alt, detail, flatlay, size-guide)", "fb": ">=2 OK (feed hero + story)"},
+  "next": "Owner duyet huong hinh -> mer-product-page viet copy + mer-catalog list (validation) -> grw chay ads test demand. Co don -> Production: lam file AOP that + Printify mockup.",
+  "caveat": "Concept images. Hoa tiet khong dong nhat giua anh. Phai lam AOP that truoc khi fulfill don.",
+  "confidence_score": 0.75,
+  "need_review": true
+}

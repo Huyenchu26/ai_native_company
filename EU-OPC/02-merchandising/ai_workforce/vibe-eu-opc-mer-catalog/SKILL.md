@@ -77,7 +77,28 @@ Nhận **competitor price table** từ Product Studio **SOP-PRD-001 (chị Tầm
 Mọi output mang:
 - **evidence[]** — nguồn cụ thể: provider cost API (Printify/PrintBase US/EU), CPA từ GRW-002, FX Vietcombank (ngày), GPSR clearance ID, ShopBase diff report. KHÔNG có evidence → KHÔNG khẳng định số.
 - **confidence_score** (0–1) — `min_confidence 0.7`; dưới ngưỡng → `need_review: true`.
-- **need_review** — true khi: giá ngoài band, BE-ROAS > winner, GPSR thiếu, sync accuracy < 99%, plus-size step-up vượt khung.
+- **need_review** — true khi: giá ngoài band, BE-ROAS > winner, GPSR thiếu, sync accuracy < 99%, plus-size step-up vượt khung. Ở **chế độ actuator**, chỉ các trường hợp này (hoặc confidence < 0.7) mới dừng cho người duyệt — còn lại skill tự thực thi tới khi SP live.
+
+## 🤖 Tự động hóa (Actuator) — chế độ tới-ra-đơn
+Skill này là **mắt xích publish quan trọng nhất** của cả công ty: setup Printify + pricing + sync ShopBase → **ĐĂNG SP LIVE**. Không có bước này thì không có SP để ra đơn. Ở chế độ actuator, skill **thực thi** chứ không chỉ ra draft.
+
+⚠️ **Bridge bắt buộc:** Printify **KHÔNG native** với ShopBase → cần **custom bridge Printify API ↔ ShopBase API** (tạo product trên Printify → đọc base cost + shipping → push product/variant/giá/ảnh sang ShopBase). Không có connector sẵn — bridge là code/integration tự xây, mọi field map phải verify ≥99%.
+
+- **Tools gọi:**
+  - **Printify API** — `createProduct`, set variant XS–3XL × color, đọc base cost + shipping.
+  - **ShopBase API** — `createProduct` / `publishProduct`, đọc/ghi field, đọc order (dùng về sau).
+  - **FX Vietcombank** — giá bán ra ngày cuối kỳ (quy đổi USD→VND ghi ledger).
+  - **CPA từ Growth GRW-002** — để tính contribution margin per SKU/đợt.
+- **Trigger (event vào):** nhận **cleared design + bộ 6 ảnh + page draft**.
+- **Luồng tự động:** tạo product Printify (variant đầy đủ) → tính pricing theo **contribution margin + BE-ROAS per market** (US trước; EU net-of-VAT) → **push product+variant+giá+ảnh+page+nhãn GPSR** lên ShopBase qua bridge → **publish LIVE**.
+- **Auto-verify (thay review tay):** **sync accuracy ≥99%** (diff field Printify↔ShopBase) chạy **tự động**; lệch → **re-sync**; đạt → **auto-publish**.
+- **Gate-hook (KHÔNG bypass):**
+  1. Đơn EU **thiếu GPSR clearance ID** → **STOP, no publish**.
+  2. **Contribution% < 15%** sau CPA **hoặc BE-ROAS > ngưỡng winner** → **block**, đề xuất nâng giá / đổi provider.
+  3. **Thiếu variant XS–3XL** → **đổi blueprint**.
+- **Handoff (event ra):** SP LIVE trên ShopBase tự phát event **`shopbase_live=true`** → **kích hoạt `vibe-eu-opc-grw-orchestrator`** (CHỈ KHI live mới được chạy ads).
+- **Logging:** `execution_log.jsonl` — Printify product ID, ShopBase product ID, pricing decision, sync accuracy %, GPSR ID, confidence.
+- **Human-in-loop còn lại:** chỉ khi **confidence < 0.7** / **need_review** / **gate fail** (giá ngoài band, GPSR thiếu, sync < 99%) — còn lại chạy tự động tới khi SP live.
 
 ## Links
 - SOP-MER-002: [setup-printify](../../setup-printify/template/sop_mer-002_printify-setup_v1.0_2026-06-23.md)

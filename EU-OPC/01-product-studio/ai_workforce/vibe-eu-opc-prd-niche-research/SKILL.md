@@ -41,7 +41,7 @@ Trước mỗi task: ĐỌC template SOP tương ứng để bám rubric, ngư�
 1. **template/** — đọc SOP để nạp rubric & ngưỡng hiện hành.
 2. **input/** — nhận task input (niche seed list, AdSpy/BigSpy export, Meta Audience Insights, Google Trends CSV).
 3. **processing/ai-draft/** — sinh bản nháp scored niche table / calendar (mang evidence + confidence).
-4. **processing/human-review/** — đẩy sang human review (sample ≥20%, hoặc 100% khi `need_review=true` / IP-risk HIGH).
+4. **processing/human-review/** — **auto-pass khi auto-verify đạt** (không sampling % định kỳ); CHỈ đẩy sang human review khi `confidence_score < 0.7` / `need_review=true` / IP-risk HIGH / gate fail.
 5. **output/** — ghi **validated niche list** (+ seasonal calendar) đã duyệt, validate qua `schema/niche-validation.schema.json`.
 6. **archive/** — auto-archive task đã đóng; ghi audit qua `execution_log.jsonl`.
 
@@ -72,6 +72,18 @@ Mọi quyết định mang **`evidence[]`** (nguồn: AdSpy/BigSpy ad-volume+ad-
 ## Output & handoff
 - **Output chính:** `validated_niche_list` (schema-validated) + `seasonal_opportunity_calendar`.
 - **Handoff xuống:** **vibe-eu-opc-prd-design** (PRD-003 — biến validated niche thành AOP print-ready) và **vibe-eu-opc-prd-orchestrator** (điều phối backlog). Nhắc lại: SP phải LIVE trên ShopBase (qua Merchandising) TRƯỚC khi Growth tạo content/ads.
+
+## Tự động hóa (Actuator) — chế độ tới-ra-đơn
+Skill chạy **actuator**: nhận event → tự kéo data live → chấm → verify → handoff, KHÔNG chờ thao tác tay (trừ ngoại lệ dưới).
+
+- **Tools gọi:** **Meta Ad Library API** (free, official — ad volume + ad age + landing price), **Google Trends** qua **pytrends** (interest 12–24 tháng), **AdSpy/BigSpy API** (optional, trả phí).
+- **Trigger (event vào):** orchestrator yêu cầu "đề xuất/chấm niche" hoặc lịch **rolling-horizon**.
+- **Luồng tự động:** kéo data live từ các API → tính **demand / competition / margin-fit / IP-risk** theo rubric 100đ → lọc **ad-age < 90 ngày**, dedupe vs catalog → sinh **validated_niche_list + seasonal calendar** (schema-validated).
+- **Auto-verify (thay review tay):** **pass** khi `demand_score ≥ 70` **VÀ** `audience_size ≥ 500.000` **VÀ** có evidence đủ; đạt → **auto-pass sang design**; không đạt → human-review.
+- **Gate-hook (KHÔNG bypass):** IP pre-flag = **HIGH** → tự **escalate thẳng PRD-004/compliance TRƯỚC** khi cho design; data rỗng / thiếu nguồn → `need_review`.
+- **Handoff (event ra):** validated niche (**CLEAR/FLAG**) tự kích hoạt **vibe-eu-opc-prd-design**.
+- **Logging:** mỗi API call + score ghi `execution_log.jsonl` (action, nguồn data, số liệu, evidence, confidence).
+- **Human-in-loop còn lại:** chỉ khi `confidence_score < 0.7` / `need_review=true` / IP HIGH.
 
 ## Links
 - SOP-PRD-001: `../../research-niche/template/sop_prd-001_niche-research_v1.0_2026-06-23.md`

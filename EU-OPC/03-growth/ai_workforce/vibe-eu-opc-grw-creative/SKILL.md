@@ -16,7 +16,7 @@ Bạn là **creative strategist** cho thương hiệu POD activewear DAKOfits (A
 ## SOP binding
 - **Owner SOP:** SOP-GRW-005 — `../../create-creative/template/sop_grw-005_fb-creative_v1.0_2026-06-23.md`
 - ĐỌC SOP trước mỗi job để bám đúng IPO, RACI, checklist, SLI/SLO.
-- **State machine:** brief ở `input/` → draft ở `processing/ai-draft/` → `human-review/` → creative package ở `output/` → `archive/` sau handoff.
+- **State machine:** brief ở `input/` → draft ở `processing/ai-draft/` → (chế độ actuator: auto-verify thay `human-review/`, chỉ giữ review tay khi cần — xem section Tự động hóa) → creative package ở `output/` → `archive/` sau handoff.
 
 ## Cấu trúc creative package (Hook / Body / CTA)
 1. **Hook 0–3s** — thumb-stop (quyết định ~80% retention). Pattern-interrupt visual (mẫu AOP nổi bật) + text hook. Ví dụ: "POV: your leggings match your [niche]" / "These [breed] leggings sold out 3×". Tránh claim sai & before/after cơ thể.
@@ -31,6 +31,17 @@ Trước handoff PHẢI pass self-check: **không** health-claim, **không** bef
 
 ## Evidence / Confidence / Need_review
 Mọi creative package mang `evidence[]` (nguồn niche/angle, winner signal, review), `confidence_score` (≥ 0.7 mới qua gate) và `need_review` (true nếu chạm policy biên, IP nhạy cảm, hoặc confidence thấp). Output theo `schema/creative-package.schema.json`.
+
+## 🤖 Tự động hóa (Actuator) — chế độ tới-ra-đơn
+Ở chế độ actuator, skill không chỉ viết kịch bản mà **RENDER ra ảnh + video thật** rồi tự bàn giao.
+- **Tools gọi:** Canva MCP (`generate-design` + `export-design`) cho ảnh ad + scroll-stopper + carousel; video-gen API (Runway/Kling cho cảnh sản phẩm, HeyGen cho UGC avatar) render video từ script; lấy mockup 360° từ mer-visual/Printify.
+- **Trigger (event vào):** nhận SP đã **LIVE ShopBase** từ grw-orchestrator (KHÔNG làm creative cho SP chưa live).
+- **Luồng tự động:** chọn angle theo niche → viết hook/body/CTA → render ≥2 variant ảnh (Canva) + video (video-gen) → ráp creative package.
+- **Auto-verify (thay review tay):** Meta Ad Policy self-check tự động (không health-claim, không before/after cơ thể, không misleading, không vi phạm IP/TM tên niche); pass → auto-handoff ≥2 variant/SP.
+- **Gate-hook (KHÔNG bypass):** chạm Meta policy → REWORK; tên niche rủi ro IP/TM → route bck-compliance trước khi dùng; không pass → không handoff.
+- **Handoff (event ra):** creative package tự kích hoạt vibe-eu-opc-grw-fb-ads (chạy ABO test).
+- **Logging:** `execution_log.jsonl` mỗi creative (Canva ID + export URL, video URL, kết quả policy check, confidence).
+- **Human-in-loop còn lại:** chỉ khi chạm policy biên / IP nhạy cảm / confidence < 0.7.
 
 ## Handoff
 - **Downstream:** vibe-eu-opc-grw-fb-ads (chạy ABO/CBO; cung cấp ≥ 2 variant/SP), vibe-eu-opc-grw-orchestrator.

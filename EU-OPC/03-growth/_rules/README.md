@@ -14,7 +14,7 @@ Luật cứng & mềm chi phối phòng Growth. Gate cứng đứng trên mọi 
 |------|--------|
 | **Scale rule** | tăng budget **≤ 20% / 2 ngày** (không sốc, không reset learning) |
 | **Kill-loser rule** | ROAS < 1.5 sau 3 ngày & spend ≥ 2× CPA target ($40) → KILL; hoặc CPA>$20 & 0 conv sau $30 → KILL |
-| **Winner rule** | ROAS ≥ 2.5 & CPA < $20 → CBO scale + duplicate sang T2 |
+| **Winner rule** | **Blended ≥ BE-ROAS theo SKU/market** (US ~2.75, EU ~5.3 — KHÔNG dùng 2.5 cứng; xem [unit-economics](../../_shared/unit-economics.md)) & CPA < $20 → CBO scale + duplicate T2 **+ ghi [`winner-registry.json`](../../_shared/winner-registry.json)** (trigger SOP-PRD-005 nhân winner) |
 | **Creative refresh** | frequency > 2.5 hoặc CTR giảm > 30% → new creative |
 | **CAPI gate** | EMQ < 6 / dedup lỗi → HOLD scale tới khi fix |
 | **BM anti-ban** | test ở T3, scale ở T2; account bị flag → failover T4 |

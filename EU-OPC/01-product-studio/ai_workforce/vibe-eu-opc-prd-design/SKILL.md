@@ -61,6 +61,19 @@ Mọi output (mỗi design) PHẢI mang:
 - **confidence_score** (0–1) — `min_confidence = 0.7`; dưới ngưỡng → `need_review = true`.
 - **need_review** — true khi HIGH-risk / uncertain / dưới confidence floor → đẩy `human-review/`.
 Validate mỗi design qua `schema/design-clearance.schema.json` (chống hallucination clearance).
+> **Chế độ actuator:** khi auto-verify (QC 360° + DPI + px) đạt VÀ IP/TM = CLEAR, design **auto-pass** thẳng sang handoff — KHÔNG cần review tay. Human-review **chỉ** khi `confidence_score < 0.7` / `need_review = true` / gate IP-TM fail hoặc uncertain.
+
+## 🤖 Tự động hóa (Actuator) — chế độ tới-ra-đơn
+Skill chạy như **actuator**: tự sinh file AOP print-ready + IP/TM clearance từ niche đã validate, không chờ thao tác tay trừ khi vướng gate hoặc thiếu tin cậy.
+
+- **Tools gọi:** image-gen API tạo pattern seamless (**Leonardo** chế độ Tiling, HOẶC **Replicate SDXL-tiling** — **KHÔNG dùng Midjourney** vì không có API chính thức); upscaler (**Real-ESRGAN / Topaz API**) lên **≥4000px / 300 DPI**; **Printify API `getBlueprintPrintArea(blueprint)`** để lấy px/DPI yêu cầu; (IP/TM clearance gọi sang **bck-compliance**: **USPTO TESS + EUIPO API**).
+- **Trigger (event vào):** nhận **validated niche (CLEAR/FLAG)** từ niche-research.
+- **Luồng tự động:** render **4 style** (tile / watercolor / funny / mandala) qua image-gen tiling → **upscale** → **auto-QC seamless** → **chọn winner** → render đúng **kích thước print-area Printify**.
+- **Auto-verify (thay review tay):** ghép **2×2** kiểm seam + **DPI ≥ 300** + **px khớp print-area**; đạt → **auto-pass**; lỗi seam → **re-render** hoặc human-review.
+- **Gate-hook (KHÔNG bypass):** chỉ design có **IP/TM status = CLEAR (dual-market USPTO + EUIPO)** mới qua; nghi ngờ TM → **conservative REJECT**; no clearance → **no handoff**.
+- **Handoff (event ra):** file design **PASS** + clearance log tự kích hoạt **vibe-eu-opc-mer-visual** (mockup) và **mer-catalog**.
+- **Logging:** mỗi render / upscale / QC / clearance ghi `execution_log.jsonl` (prompt, file URL, QC result, clearance ID, confidence).
+- **Human-in-loop còn lại:** chỉ khi `confidence < 0.7` / `need_review` / IP uncertain.
 
 ## Links
 - SOP-PRD-003: `../../design-aop/template/sop_prd-003_aop-design_v1.0_2026-06-23.md`

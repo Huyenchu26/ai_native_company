@@ -1,0 +1,94 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://vibe-aiworkforce/schema/mockup-set.schema.json",
+  "title": "Mockup Set (output của vibe-eu-opc-mer-visual)",
+  "description": "Bộ ảnh mockup chuẩn cho 1 SKU theo SOP-MER-005 + mockup-style-guide. Đây là SPEC+PROMPT+QC, không phải ảnh đã render.",
+  "type": "object",
+  "required": [
+    "sku",
+    "niche",
+    "images",
+    "print_accuracy_pass",
+    "min_images_met",
+    "evidence",
+    "confidence_score",
+    "need_review"
+  ],
+  "properties": {
+    "sku": {
+      "type": "string",
+      "description": "Mã SKU, vd DAKO-HUSKY-LEG-001"
+    },
+    "niche": {
+      "type": "string",
+      "description": "Niche của SP, vd 'Husky' / 'Nurse' / 'Zodiac-Leo'"
+    },
+    "images": {
+      "type": "array",
+      "minItems": 1,
+      "description": "Danh sách ảnh trong bộ; tối thiểu 3 (hero-front, hero-back, lifestyle), winner đủ 6.",
+      "items": {
+        "type": "object",
+        "required": ["type", "ratio", "prompt"],
+        "properties": {
+          "type": {
+            "type": "string",
+            "enum": ["hero-front", "hero-back", "lifestyle", "detail", "size", "ad"],
+            "description": "Loại ảnh trong bộ 6 chuẩn"
+          },
+          "ratio": {
+            "type": "string",
+            "enum": ["1:1", "4:5"],
+            "description": "Tỷ lệ: 1:1 catalog/feed, 4:5 lifestyle/ad"
+          },
+          "prompt": {
+            "type": "string",
+            "description": "Render-prompt sẵn-để-chạy cho tool ngoài (Botika/Photoroom/...)"
+          },
+          "tool": {
+            "type": "string",
+            "description": "Tool ngoài đề xuất render ảnh này"
+          },
+          "url": {
+            "type": "string",
+            "description": "URL ảnh đã render & host (điền sau khi chạy tool ngoài)"
+          }
+        }
+      }
+    },
+    "print_accuracy_pass": {
+      "type": "boolean",
+      "description": "Gate cứng: print khớp design gốc 100% (không méo/đổi hoạ tiết). false ⇒ need_review bắt buộc true."
+    },
+    "min_images_met": {
+      "type": "boolean",
+      "description": "Đủ ảnh tối thiểu (≥3 cho SP live, ≥6 cho winner)."
+    },
+    "evidence": {
+      "type": "array",
+      "minItems": 1,
+      "items": {"type": "string"},
+      "description": "Bằng chứng: link design PRD-003, base mockup, ảnh enhance, kết quả so sánh print."
+    },
+    "confidence_score": {
+      "type": "number",
+      "minimum": 0,
+      "maximum": 1,
+      "description": "Độ tự tin QC; min 0.7."
+    },
+    "need_review": {
+      "type": "boolean",
+      "description": "Cần OPC review (print fail / thiếu design gốc / confidence < 0.7)."
+    }
+  },
+  "allOf": [
+    {
+      "if": {
+        "properties": {"print_accuracy_pass": {"const": false}}
+      },
+      "then": {
+        "properties": {"need_review": {"const": true}}
+      }
+    }
+  ]
+}

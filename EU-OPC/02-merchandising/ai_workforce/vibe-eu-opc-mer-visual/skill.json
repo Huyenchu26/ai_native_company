@@ -1,0 +1,83 @@
+{
+  "name": "vibe-eu-opc-mer-visual",
+  "version": "1.0",
+  "description": "Tạo brief + render-prompt mockup + QC bộ 6 ảnh sản phẩm theo mockup-style-guide cho ShopBase DAKOfits (POD AOP leggings đa-niche) theo SOP-MER-005. Pipeline 2 bước giữ print 100%, gate print-accuracy cứng. Tạo SPEC+PROMPT, KHÔNG tự render ảnh.",
+  "phases": {
+    "base-mockup": {
+      "inputs": ["aop_design_print_ready", "sku", "niche", "legging_template"],
+      "outputs": ["base_mockup_spec", "base_mockup_prompt"],
+      "schema": "schema/mockup-set.schema.json",
+      "min_confidence": 0.7,
+      "evidence_required": true
+    },
+    "ai-enhance": {
+      "inputs": ["base_mockup_spec"],
+      "outputs": ["on_model_prompt", "lifestyle_prompt", "scroll_stopper_prompt"],
+      "schema": "schema/mockup-set.schema.json",
+      "min_confidence": 0.7,
+      "evidence_required": true
+    },
+    "qc": {
+      "inputs": ["rendered_image_set"],
+      "outputs": ["qc_report", "print_accuracy_pass", "min_images_met"],
+      "schema": "schema/mockup-set.schema.json",
+      "min_confidence": 0.7,
+      "evidence_required": true
+    },
+    "handoff": {
+      "inputs": ["qc_report", "hosted_image_urls"],
+      "outputs": ["mockup_set_package", "handoff_to_product_page"],
+      "schema": "schema/mockup-set.schema.json",
+      "min_confidence": 0.7,
+      "evidence_required": true
+    }
+  },
+  "dependencies": {
+    "upstream": ["vibe-eu-opc-prd-design"],
+    "downstream": ["vibe-eu-opc-mer-product-page", "vibe-eu-opc-mer-orchestrator"]
+  },
+  "scripts": {
+    "validator": "script/validator.py",
+    "anonymizer": "script/anonymizer.py",
+    "install_hooks": "script/install_hooks.sh",
+    "log_helper": "script/log_helper.py",
+    "review_queue": "script/review_queue.py"
+  },
+  "hooks": {
+    "config": "hooks.json"
+  },
+  "folders": {
+    "kb": true,
+    "script": true,
+    "prompt": true,
+    "schema": true,
+    "test": true,
+    "synthetic_data": true
+  },
+  "quality_gates": [
+    {
+      "step": "print-accuracy",
+      "min_confidence": 1.0,
+      "schema_required": true,
+      "evidence_required": true
+    },
+    {
+      "step": "min-images",
+      "min_confidence": 0.7,
+      "schema_required": true,
+      "evidence_required": true
+    },
+    {
+      "step": "style-conformance",
+      "min_confidence": 0.7,
+      "schema_required": true,
+      "evidence_required": true
+    },
+    {
+      "step": "handoff",
+      "min_confidence": 0.7,
+      "schema_required": true,
+      "evidence_required": true
+    }
+  ]
+}

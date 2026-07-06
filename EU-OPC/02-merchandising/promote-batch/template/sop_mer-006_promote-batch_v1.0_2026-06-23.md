@@ -10,7 +10,7 @@
 | | |
 |---|---|
 | **Input (I)** | Live products đã QC (MER-004); candidate niche/SP từ phòng 01; kết quả ROAS/CPA đợt trước từ Growth |
-| **Control (C)** | Chọn 5–10 SP/đợt; pricing floor & GPSR đã pass; ngân sách test ads; tiêu chí winner ROAS≥2.5 / CPA<$20 |
+| **Control (C)** | Chọn 5–10 SP/đợt; pricing floor & GPSR đã pass; ngân sách test ads; tiêu chí winner = blended ≥ BE-ROAS theo SKU/market & CPA<$20 (xem [unit-economics](../../../_shared/unit-economics.md)) |
 | **Output (O)** | Batch promote package (5–10 SP listing tối ưu) bàn giao Growth; quyết định scale winner / cut loser |
 | **Mechanism (M)** | OPC + cả 2 AI worker + feedback từ 03-growth |
 | **Upstream** | MER-004 (live product) |
@@ -79,7 +79,7 @@ Chu trình **promote theo đợt** (SOP-MER-006, tham chiếu memory SOP-MER-006
 | ICOM | Nội dung |
 |------|----------|
 | I | ROAS/CPA từ Growth |
-| C | Winner ROAS≥2.5 / CPA<$20 |
+| C | Winner = blended ≥ BE-ROAS theo SKU/market & CPA<$20 (unit-economics) |
 | O | Phân loại winner/loser |
 | M | OPC + Growth data |
 
@@ -98,17 +98,19 @@ Chu trình **promote theo đợt** (SOP-MER-006, tham chiếu memory SOP-MER-006
 
 | Hành động | Ai |
 |-----------|-----|
-| Winner → giữ live, đề xuất Growth scale +ngân sách, mở variant/niche lân cận | OPC |
+| Winner → giữ live, đề xuất Growth scale +ngân sách; xác nhận Growth đã ghi [`_shared/winner-registry.json`](../../../_shared/winner-registry.json); trigger **SOP-PRD-005** (nhân winner) phòng 01 | OPC |
 | Loser → cut ads, ẩn/archive hoặc tối ưu lại 1 vòng | OPC |
 | Ghi batch log → feed vào đợt sau | AI |
 
 ## 4. Phân Nhánh
 
+> **Ngưỡng chuẩn (KHÔNG dùng số cứng):** winner/borderline/loser theo `blended_roas` so với `break_even_roas` theo SKU/market — xem [unit-economics](../../../_shared/unit-economics.md).
+
 | Điều kiện | Nhánh |
 |-----------|-------|
-| Winner ROAS≥3 | Scale mạnh + nhân design lân cận (báo phòng 01) |
-| Borderline (ROAS 2–2.5) | Tối ưu listing/creative 1 vòng rồi test lại |
-| Loser ROAS<2 | Cut, archive |
+| **Winner** (blended ≥ BE-ROAS & CPA<$20) | Scale mạnh + **nhân winner qua [SOP-PRD-005](../../../01-product-studio/amplify-winner/template/sop_prd-005_amplify-winner_v1.0_2026-07-04.md)** (Growth ghi winner-registry → phòng 01 nhân bản) |
+| Borderline (blended 0.85–1.0× BE-ROAS) | Tối ưu listing/creative 1 vòng rồi test lại |
+| Loser (blended < 0.85× BE-ROAS sau spend ≥ $40) | Cut, archive |
 | Cả đợt loser | Review niche selection với phòng 01 |
 
 ## 5. Checklist
@@ -133,7 +135,8 @@ Chu trình **promote theo đợt** (SOP-MER-006, tham chiếu memory SOP-MER-006
 
 - Template: `promote-batch/template/`
 - Upstream: [SOP-MER-004](../../sync-catalog/template/sop_mer-004_catalog-sync-qc_v1.0_2026-06-23.md)
-- Downstream: phòng 03-growth (SOP-GRW-002 FB Ads)
+- Downstream: phòng 03-growth (SOP-GRW-002 FB Ads) → winner feed [SOP-PRD-005](../../../01-product-studio/amplify-winner/template/sop_prd-005_amplify-winner_v1.0_2026-07-04.md) (nhân winner)
+- Winner registry: [`_shared/winner-registry.json`](../../../_shared/winner-registry.json) · Economics: [unit-economics](../../../_shared/unit-economics.md)
 - Memory: SOP-MER-006 "Promote theo đợt" (chọn 5–10 SP → tối ưu → ads → scale winner)
 - Rules: [`_rules/README.md`](../../_rules/README.md)
 
@@ -142,3 +145,4 @@ Chu trình **promote theo đợt** (SOP-MER-006, tham chiếu memory SOP-MER-006
 | Version | Ngày | Thay đổi |
 |---------|------|----------|
 | v1.0 | 2026-06-23 | Khởi tạo SOP promote theo đợt |
+| v1.1 | 2026-07-04 | Khép vòng winner: ngưỡng theo BE-ROAS (bỏ số cứng 2.5/3); winner → ghi winner-registry + trigger SOP-PRD-005 nhân winner |

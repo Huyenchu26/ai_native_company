@@ -15,7 +15,7 @@
 | **Input** | Live product + product page (từ 02-merchandising); creative package (từ SOP-GRW-005); niche/targeting hint (từ 01-product-studio audience sizing); ad budget từ 05-backoffice; Meta Ad Policy clearance (từ 05-compliance) |
 | **Process** | Setup BM/ad account → build campaign ABO test → đọc signal → CBO scale winner / kill loser → verify CAPI → optimize ROAS/CPA → daily/weekly report |
 | **Control** | Meta Ad Policy gate, winner ≥ BE-ROAS theo SKU/market (KHÔNG hard-code 2.5), CPA<$20, scale rule +20%/2 ngày, BM 5-tier anti-ban, kill-loser rule, budget cap (test $10/ad set · scale cap $100/ngày · escalate >$150/ngày) |
-| **Output** | Campaign tối ưu đang chạy + đơn hàng (→ 04-fulfillment-cx); ad cost + ROAS/CPA data (→ 05-backoffice); growth signal (→ SOP-GRW-004) |
+| **Output** | Campaign tối ưu đang chạy + đơn hàng (→ 04-fulfillment-cx); ad cost + ROAS/CPA data (→ 05-backoffice); growth signal (→ SOP-GRW-004); **winner record → `_shared/winner-registry.json`** (→ 01-product-studio SOP-PRD-005 nhân winner) |
 | **Mechanism** | Meta Ads Manager, Business Manager, CAPI (ShopBase ↔ Meta), Pixel, vibe-opc-pod-growth-fb-ads |
 
 ---
@@ -85,6 +85,7 @@ Nguyên tắc:
 - **Attribution window chuẩn công ty: 7-day click / 1-day view** (chốt cố định để đọc nhất quán mọi ad set; xem [unit-economics](../../../_shared/unit-economics.md) §1).
 - **Đọc bằng Platform ROAS (real-time) nhưng hiệu chỉnh về Blended trước khi commit scale.** Ngưỡng winner: **Platform ROAS ≥ 3.0 ⇒ Blended ≈ 2.5**; và Blended phải ≥ **break-even ROAS theo SKU/market** (US ~2.75, EU ~5.3 — KHÔNG dùng 2.5 cứng).
 - **WINNER → chuyển sang CBO scale:** gom winning ad set vào CBO, scale **+20% budget mỗi 2 ngày** đến **scale cap $100/ngày**; vượt cap → escalate. LAL-expand + duplicate sang T2.
+- **WINNER → ghi Winner Registry:** khi Blended đã reconcile ≥ BE-ROAS (winner ổn định), **append/update record vào [`_shared/winner-registry.json`](../../../_shared/winner-registry.json)** (sku, niche, design_type, market, blended/BE-ROAS, cpa, batch_id, `status=WINNER`, evidence[]). Đây là trigger đóng vòng cho **SOP-PRD-005** (nhân winner) phòng 01. Data khớp schema `winner-registry.schema.json`.
 - **LOSER → kill:** xem §4 ngưỡng.
 - **Ngân sách rủi ro tối đa/đợt test:** mỗi ad set kill trước khi spend chạm **$40** (≈ 4 ngày × $10, = 2× CPA target). Một đợt test 5–10 SP × 3–5 ad set ⇒ trần rủi ro/đợt ≈ **$40 × số ad set** (vd 6 ad set ≈ $240); OPC duyệt tổng/đợt trước khi mở batch.
 
@@ -99,7 +100,7 @@ Nguyên tắc:
 | Điều kiện | Hành động |
 |----------|-----------|
 | Creative/page CHƯA pass Meta Ad Policy | **STOP** — không launch, trả về SOP-GRW-005 / 05-compliance |
-| Platform ROAS ≥ 3.0 (⇒ Blended ≈ 2.5) **và** Blended ≥ BE-ROAS theo SKU/market (US ~2.75, EU ~5.3) **và** CPA < $20 sau cửa sổ test | **WINNER** → CBO scale +20%/2 ngày, cap $100/ngày |
+| Platform ROAS ≥ 3.0 (⇒ Blended ≈ 2.5) **và** Blended ≥ BE-ROAS theo SKU/market (US ~2.75, EU ~5.3) **và** CPA < $20 sau cửa sổ test | **WINNER** → CBO scale +20%/2 ngày, cap $100/ngày; **ghi `_shared/winner-registry.json`** → trigger SOP-PRD-005 (nhân winner) |
 | Platform ROAS đạt 3.0 nhưng Blended < BE-ROAS của SKU (vd EU giá thấp) | **KHÔNG scale** — đây là lãi ảo; chuyển sang nâng giá/đổi provider (xem unit-economics §4) |
 | Platform ROAS ~1.8–3.0 (Blended dưới ngưỡng winner) | **OPTIMIZE** — đổi creative/audience, giữ test thêm 2 ngày |
 | Platform ROAS < 1.8 sau 3 ngày & spend ≥ 2× CPA target ($40) | **KILL** (kill-loser rule) |
@@ -159,3 +160,4 @@ Nguyên tắc:
 |---------|------|----------|-------|
 | v1.0 | 2026-06-23 | Khởi tạo SOP FB Ads (ABO→CBO, 4-layer, CAPI, BM 5-tier) | Company Architect |
 | v1.1 | 2026-06-23 | Tách Platform vs Blended ROAS; winner ≥ BE-ROAS theo SKU/market (US ~2.75/EU ~5.3, bỏ 2.5 cứng); budget cap test $10/scale $100/escalate $150; attribution 7d-click/1d-view; trỏ unit-economics; ngân sách rủi ro/đợt | 03-growth |
+| v1.2 | 2026-07-04 | Khép vòng winner: WINNER ổn định → ghi `_shared/winner-registry.json` → trigger SOP-PRD-005 (nhân winner) phòng 01 | 03-growth |

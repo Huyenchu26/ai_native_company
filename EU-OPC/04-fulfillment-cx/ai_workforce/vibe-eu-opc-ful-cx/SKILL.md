@@ -1,6 +1,7 @@
 ---
 name: vibe-eu-opc-ful-cx
 type: skill
+version: "1.0"
 description: >
   [WHAT] Customer support EN + returns/refund/exchange cho khách US/EU của DAKOfits (POD AOP
   leggings/activewear đa-niche ~3.200 SP) theo SOP-FUL-003 (support-customer) và SOP-FUL-004
@@ -75,3 +76,5 @@ Mọi resolution output theo `schema/ticket-resolution.schema.json`:
 - SOP-FUL-003: `../../support-customer/template/sop_ful-003_cx-support_v1.0_2026-06-23.md`
 - SOP-FUL-004: `../../handle-returns/template/sop_ful-004_returns-refunds_v1.0_2026-06-23.md`
 - Playbook: `kb/cx-returns-playbook.md` · Prompt: `prompt/handle-ticket-prompt.md`
+- Schema: `schema/ticket-resolution.schema.json` · `schema/execution-log-entry.schema.json` · `schema/skill-meta.schema.json`
+- Tests: `test/smoke-test.md` · `test/trigger-validation.md`

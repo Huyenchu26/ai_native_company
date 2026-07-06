@@ -50,6 +50,18 @@ Pre-check creative/landing trước khi Growth chạy ad (chống ban): claim sa
 ## Evidence / confidence / need_review
 Mọi clearance log mang `evidence[]` (link RP registry, TM search result, label QC), `confidence_score` (min 0.7) và `need_review` (true nếu confidence < 0.7 hoặc nghi trademark). Audit trail mọi quyết định trong `archive/` (immutable). Dùng `script/validator.py` validate, `script/review_queue.py` đẩy item cần human review.
 
+## 🤖 Tự động hóa (Actuator) — chế độ tới-ra-đơn
+Skill này là **GATE-ISSUER của cả công ty**: cấp IP/TM + GPSR clearance + Meta Ad Policy pre-check — mọi gate trước-khi-ra-đơn đều qua đây.
+
+- **Tools gọi:** USPTO TESS API + EUIPO API (tra trademark theo tên niche/breed); generator GPSR clearance (Responsible Person EU + nhãn an toàn) cấp clearance log ID; Meta Ad Policy checker (rule-based + LLM) pre-check creative/page; GDPR tooling (RoPA, DSAR, breach log).
+- **Trigger (event vào):** prd-design xin IP/TM clearance; mer xin GPSR (đơn EU); grw-creative/grw-fb-ads xin Meta policy pre-check.
+- **Luồng tự động:** nhận yêu cầu → tra API tương ứng → trả clearance log ID PASS/FAIL + evidence. Là gate mà các phòng verify TRƯỚC khi qua mắt xích kế.
+- **Auto-verify (thay review tay):** IP/TM không thấy match → auto-CLEAR; GPSR đủ Responsible Person + nhãn → auto-issue; Meta policy không chạm rule → auto-PASS.
+- **Gate-hook (KHÔNG bypass — đây là nơi PHÁT gate):** no IP/TM clear → no listing; no GPSR → no publish (EU); no Meta policy → no ads; nghi ngờ TM → conservative default REJECT + escalate OPC; GDPR breach ≤72h.
+- **Handoff (event ra):** clearance log ID PASS → mở khóa mắt xích downstream (prd-design/mer-catalog/grw-fb-ads).
+- **Logging:** `execution_log.jsonl` mỗi clearance (loại, query API, verdict PASS/FAIL, ID, evidence, confidence).
+- **Human-in-loop còn lại:** BẮT BUỘC review khi TM uncertain/match mờ, GPSR Responsible Person mới, Meta policy biên, hoặc confidence<0.7 (conservative — gate legal error budget 0%).
+
 ## Links
 - SOP-BCK-004: `../../clear-gpsr/template/sop_bck-004_gpsr-compliance_v1.0_2026-06-23.md`
 - SOP-BCK-005: `../../manage-gdpr/template/sop_bck-005_gdpr_v1.0_2026-06-23.md`

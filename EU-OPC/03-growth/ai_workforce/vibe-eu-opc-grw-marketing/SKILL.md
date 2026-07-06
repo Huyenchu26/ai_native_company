@@ -79,6 +79,18 @@ Mỗi output đều kèm `evidence[]` (nguồn/lý do), `confidence_score` (0–
 - `need_review = true` khi: confidence < 0.7, chạm gate compliance, discount ăn mòn margin,
   hoặc community flag → escalate OPC / 05-compliance / 05-finance.
 
+## 🤖 Tự động hóa (Actuator) — chế độ tới-ra-đơn
+Skill này gửi email Klaviyo + organic social — **kênh hỗ trợ ra đơn** (tăng LTV, thu hồi giỏ, hạ blended CAC). Ở chế độ actuator, skill tự dựng → schedule → gửi/đăng theo trigger hành vi, KHÔNG chờ duyệt tay từng bài.
+
+- **Tools gọi:** Klaviyo API (tạo + kích hoạt 4 flow: cart-abandon, post-purchase upsell, win-back, seasonal); social scheduler API (Buffer / Meta Graph API) đăng IG/TikTok/FB + UGC seeding; Canva MCP cho ảnh post organic.
+- **Trigger (event vào):** SP LIVE ShopBase (seasonal/launch) hoặc event hành vi khách (bỏ giỏ, mua xong) từ ShopBase/Klaviyo.
+- **Luồng tự động:** dựng nội dung email/post → schedule → gửi/đăng tự động theo trigger hành vi.
+- **Auto-verify (thay review tay):** kiểm opt-in status trước khi gửi; kiểm nội dung không vi phạm; đạt → auto-send.
+- **Gate-hook (KHÔNG bypass):** opt-in/GDPR consent bắt buộc; CAN-SPAM (unsubscribe link); không consent → **KHÔNG gửi**.
+- **Handoff (event ra):** traffic/đơn về ShopBase; report engagement → grw-orchestrator.
+- **Logging:** `execution_log.jsonl` mỗi flow/post (Klaviyo flow ID, post ID, consent check, confidence).
+- **Human-in-loop còn lại:** chỉ khi consent không rõ / nội dung nhạy cảm / `confidence < 0.7`.
+
 ## 7. Links
 - [SOP-GRW-003 — Email & Promotions](../../send-email/template/sop_grw-003_email-promotions_v1.0_2026-06-23.md)
 - [SOP-GRW-001 — Organic Social & Community](../../post-organic/template/sop_grw-001_organic-social_v1.0_2026-06-23.md)

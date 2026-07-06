@@ -1,0 +1,57 @@
+{
+  "task": "Chay thu buoc nghien cuu thi truong (actuator) — US, he 2026",
+  "generated_at": "2026-06-24",
+  "sop": "PRD-001, PRD-002",
+  "data_source": "WebSearch live (proxy cho Meta Ad Library/Google Trends khi chua cam token). Co nguon trich dan, KHONG bia so.",
+  "rubric": "demand 40 / competition 25 / margin-fit 20 / IP-risk 15; pass: score>=70 & audience>=500k",
+  "validated_niches": [
+    {
+      "niche": "Pickleball",
+      "type": "sport",
+      "score": 88,
+      "audience_us": "9.6M+ nguoi choi thuong xuyen, +22% YoY; NA chiem 62.7% thi truong apparel",
+      "demand_signal": "Pickleball apparel market $365.31M (2026) -> $750.64M (2035), CAGR 8.5-10.1%; 68% player choi >=2 lan/tuan -> chu ky thay do cao",
+      "fit": "Activewear-native: legging + sports-bra dung san pham loi; he la peak mua choi ngoai troi",
+      "ip_risk": "LOW-MED — 'pickleball' tu chung OK; TRANH logo giai (USA Pickleball/PPA), brand paddle (Selkirk/JOOLA)",
+      "evidence": [
+        {"claim": "9.6M player US, +22% YoY", "source": "coherentmarketinsights.com / brandedpickleball.com"},
+        {"claim": "Apparel market $365M 2026, NA 62.7%", "source": "marketgrowthreports.com / intelmarketresearch.com"}
+      ],
+      "confidence_score": 0.8,
+      "need_review": false
+    },
+    {
+      "niche": "Yoga / Wellness",
+      "type": "lifestyle",
+      "score": 85,
+      "audience_us": "4M+ nguoi tap yoga US; yoga apparel market $31.93B (2025), du kien x2 vao 2034",
+      "demand_signal": "Athleisure tang tu giua 2025; leggings la SAN PHAM LOI cua niche nay",
+      "fit": "Legging AOP = trung tam; evergreen, audience khong theo mua",
+      "ip_risk": "LOW — motif yoga/wellness chung, it TM",
+      "evidence": [
+        {"claim": "Yoga market $31.93B 2025, 4M+ US practitioners", "source": "teeinblue.com / printful.com POD niches"}
+      ],
+      "confidence_score": 0.78,
+      "need_review": false
+    },
+    {
+      "niche": "Cat / Cat-mom",
+      "type": "pet",
+      "score": 80,
+      "audience_us": "Pet care market $283B vao 2033 (CAGR 5.9%); pet-parent apparel la revenue driver lon",
+      "demand_signal": "Pet-parent campaign engagement spike (Eventbrite +47.7%); breed-specific 'Mom' designs convert cao, repeat purchase manh",
+      "fit": "Song song dog-mom; cat-print leggings da ban tren Etsy; cross-sell tap pet-parent hien co",
+      "ip_risk": "LOW — TRANH nhan vat ban quyen (Hello Kitty, Garfield)",
+      "evidence": [
+        {"claim": "Pet care $283B by 2033; pet-parent apparel revenue driver", "source": "qikink.com / printkk.com"},
+        {"claim": "Khong tim thay so audience FB cu the cho cat-mom leggings", "source": "WebSearch — gap", "note": "ha confidence"}
+      ],
+      "confidence_score": 0.68,
+      "need_review": true
+    }
+  ],
+  "recommendation": "Pickleball (score 88) lam SP demo dot nay: demand manh nhat + he-fit + activewear-native. Yoga la evergreen scale ben canh. Cat-mom can verify audience FB truoc (need_review).",
+  "seasonal_note": "He 2026: pickleball/outdoor sport peak. July 4 patriotic da lo deadline.",
+  "overall_confidence": 0.78,
+  "need_review": true
+}

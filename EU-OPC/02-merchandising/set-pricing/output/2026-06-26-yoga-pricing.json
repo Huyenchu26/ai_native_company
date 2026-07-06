@@ -1,0 +1,32 @@
+{
+  "sku": "DAKO-YOGA-LEG-001",
+  "market": "US",
+  "phase": "validation",
+  "us": {
+    "sell_price": 59.99,
+    "base_cost": 22.00,
+    "shipping": 6.00,
+    "fees": 2.04,
+    "fees_formula": "2.9% * 59.99 + 0.30",
+    "cogs_non_ad": 30.04,
+    "gross_margin_pct": 49.9,
+    "break_even_roas": 2.00,
+    "target_cpa": 20.00,
+    "contribution_at_target_cpa": 9.95,
+    "contribution_pct": 16.6
+  },
+  "base_cost_caveat": "base_cost/shipping LA GIA DINH Printify AOP legging (ke thua Husky/Pickleball). Validation chua co Printify product that -> xac nhan cost that khi production.",
+  "competitor_price_ref": {"min": 40.00, "max": 98.00, "currency": "USD", "note": "yoga leggings: mid-tier $40-70, premium (Lululemon-class) $98+"},
+  "competitive_position": "premium_mid_within_band",
+  "below_breakeven_flag": false,
+  "gate_check": {
+    "pricing_floor_15pct": "PASS (16.6% > 15%)",
+    "be_roas_vs_winner": "PASS (2.00)",
+    "gpsr_eu": "N/A (US only)",
+    "variant_coverage_xs_3xl": "PASS"
+  },
+  "pricing_rationale": "$59.99 premium-mid trong band yoga ($40-98). GM 49.9% -> BE-ROAS 2.0 khoe cho cold-ads US. Dong gia voi Pickleball de A/B fair giua 2 niche.",
+  "decision": "APPROVE publish (validation) o $59.99 US",
+  "confidence_score": 0.76,
+  "need_review": true
+}
