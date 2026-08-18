@@ -1,0 +1,20 @@
+{
+  "$schema": "../../../_shared/schema/skill-meta.schema.json",
+  "name": "vibe-us-warm-ful-cx",
+  "version": "1.0.0",
+  "description": "Real customer support + returns for DAKOfits US blankets. Gates: refund over $30 -> human; personalized final-sale for changed-mind only (defect always refunded/replaced); first response <=4h; no empty auto-reply. Escalates to Owner/bck-compliance.",
+  "role": "Fulfillment CX & Returns (US blankets)",
+  "department": "04-fulfillment-cx",
+  "quality_tier": "EXPERT-CLONE",
+  "sop_coverage": ["FUL-003", "FUL-004"],
+  "quality_gates": [
+    { "name": "refund_over_30_human", "min_confidence": 1.0 },
+    { "name": "defect_always_refundable", "min_confidence": 1.0 },
+    { "name": "first_response_4h", "min_confidence": 0.8 },
+    { "name": "evidence_verbatim", "min_confidence": 0.7 }
+  ],
+  "dependencies": {
+    "upstream": ["vibe-us-warm-ful-orchestrator", "vibe-us-warm-ful-order-ops"],
+    "downstream": ["vibe-us-warm-bck-finance", "vibe-us-warm-bck-compliance"]
+  }
+}

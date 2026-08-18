@@ -1,0 +1,15 @@
+{
+  "batch_id": "BCK-2026-08",
+  "tasks": [ {"sop": "BCK-003", "state": "CA", "status": "compliant"} ],
+  "compliance_clearances": [ {"product_id": "DAKO-BLK-PETMEM", "clearance_issued": true} ],
+  "evidence": [
+    {
+      "claim": "Backoffice compliance is the sole authority for the official clearance_id.",
+      "verbatim_quote": "authority DUY NHẤT cấp clearance_id",
+      "source": "../../../clear-ftc-cpsc/template/sop_bck-004_ftc-cpsc-ip_v1.0_2026-08-04.md",
+      "location": "RACI"
+    }
+  ],
+  "confidence_score": 0.8,
+  "need_review": false
+}

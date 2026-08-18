@@ -1,0 +1,20 @@
+{
+  "state": "CA",
+  "period_sales_usd": 128000,
+  "nexus_met": true,
+  "registered": true,
+  "tax_collected": true,
+  "remitted": true,
+  "filing_confirmation": "CA-CDTFA-2026Q2-CONF-88213",
+  "status": "compliant",
+  "evidence": [
+    {
+      "claim": "Sales tax is a pass-through liability, excluded from revenue/contribution.",
+      "verbatim_quote": "thu hộ",
+      "source": "../../../file-sales-tax/template/sop_bck-003_sales-tax_v1.0_2026-08-04.md",
+      "location": "goal"
+    }
+  ],
+  "confidence_score": 0.85,
+  "need_review": false
+}

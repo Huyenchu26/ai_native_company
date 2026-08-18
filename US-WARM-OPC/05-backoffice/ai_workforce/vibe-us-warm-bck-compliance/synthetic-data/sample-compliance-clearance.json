@@ -1,0 +1,27 @@
+{
+  "product_id": "DAKO-BLK-PETMEM",
+  "cpsc_pass": true,
+  "cpsc_fiber_label": "100% Polyester sherpa fleece · Made in USA · RN# [assigned]",
+  "flammability_class": "Class 1",
+  "ftc_pass": true,
+  "ip_status": "CLEAR",
+  "uspto_checked": true,
+  "licensed_char_match": 0,
+  "clearance_id": "CLR-DAKO-BLK-PETMEM-2026-08",
+  "evidence": [
+    {
+      "claim": "bck-compliance is the sole authority issuing the official clearance_id.",
+      "verbatim_quote": "authority DUY NHẤT cấp clearance_id",
+      "source": "../../../clear-ftc-cpsc/template/sop_bck-004_ftc-cpsc-ip_v1.0_2026-08-04.md",
+      "location": "RACI"
+    },
+    {
+      "claim": "CPSC requires fiber content, origin, and RN per the Textile Fiber Products Identification Act.",
+      "verbatim_quote": "Textile Fiber Products Identification Act",
+      "source": "../../../clear-ftc-cpsc/template/sop_bck-004_ftc-cpsc-ip_v1.0_2026-08-04.md",
+      "location": "CPSC"
+    }
+  ],
+  "confidence_score": 0.9,
+  "need_review": false
+}

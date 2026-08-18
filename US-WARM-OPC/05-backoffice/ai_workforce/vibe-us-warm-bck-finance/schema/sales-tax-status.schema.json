@@ -1,0 +1,41 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://us-warm-opc/schema/sales-tax-status.schema.json",
+  "title": "Sales Tax Status (BCK-003 output)",
+  "description": "Per-state US sales tax. Gate: collect only if registered (Wayfair nexus); remit only if collected + filing confirmed. Sales tax is a pass-through liability, not revenue. evidence[] unified contract.",
+  "type": "object",
+  "additionalProperties": true,
+  "required": ["state", "nexus_met", "registered", "tax_collected", "remitted", "evidence", "confidence_score", "need_review"],
+  "properties": {
+    "state": { "type": "string", "minLength": 2 },
+    "period_sales_usd": { "type": ["number", "null"] },
+    "nexus_met": { "type": "boolean", "description": "Economic nexus threshold met (e.g. $100k or 200 transactions)." },
+    "registered": { "type": "boolean" },
+    "tax_collected": { "type": "boolean" },
+    "remitted": { "type": "boolean" },
+    "filing_confirmation": { "type": ["string", "null"] },
+    "status": { "type": "string", "enum": ["compliant", "needs_registration", "pending_filing", "no_nexus"] },
+    "evidence": {
+      "type": "array", "minItems": 1,
+      "items": { "type": "object", "required": ["claim", "verbatim_quote", "source"],
+        "properties": { "claim": {"type": "string"}, "verbatim_quote": {"type": "string", "minLength": 1}, "source": {"type": "string"}, "location": {"type": "string"} } }
+    },
+    "confidence_score": { "type": "number", "minimum": 0, "maximum": 1 },
+    "need_review": { "type": "boolean" }
+  },
+  "allOf": [
+    {
+      "$comment": "GATE: tax_collected => registered (never collect without registering).",
+      "if": { "required": ["tax_collected"], "properties": { "tax_collected": { "const": true } } },
+      "then": { "required": ["registered"], "properties": { "registered": { "const": true } } }
+    },
+    {
+      "$comment": "GATE: remitted => collected + filing_confirmation present.",
+      "if": { "required": ["remitted"], "properties": { "remitted": { "const": true } } },
+      "then": { "required": ["tax_collected", "filing_confirmation"],
+        "properties": { "tax_collected": {"const": true}, "filing_confirmation": {"type": "string", "minLength": 1} } }
+    },
+    { "if": { "required": ["need_review"], "properties": { "need_review": { "const": false } } },
+      "then": { "required": ["confidence_score"], "properties": { "confidence_score": { "minimum": 0.7 } } } }
+  ]
+}

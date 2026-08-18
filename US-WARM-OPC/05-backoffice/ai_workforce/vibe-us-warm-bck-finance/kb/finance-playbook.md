@@ -1,0 +1,1 @@
+# Finance Playbook. SOP tax: [../../../file-sales-tax/template/sop_bck-003_sales-tax_v1.0_2026-08-04.md](../../../file-sales-tax/template/sop_bck-003_sales-tax_v1.0_2026-08-04.md). Nexus ~$100k/200 tx per bang; register→collect→remit. Profit: [../../../../_shared/unit-economics.md](../../../../_shared/unit-economics.md).

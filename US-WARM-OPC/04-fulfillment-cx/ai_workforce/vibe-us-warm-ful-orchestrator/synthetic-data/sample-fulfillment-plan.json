@@ -1,0 +1,16 @@
+{
+  "batch_id": "FUL-2026-08-W3",
+  "orders": [ { "order_id": "ORD-2026-08-1042", "status": "shipped" } ],
+  "shipped": [ { "order_id": "ORD-2026-08-1042", "qc_photo_pass": true, "carrier_verified": true } ],
+  "open_tickets": [],
+  "evidence": [
+    {
+      "claim": "No fake tracking is a company non-negotiable.",
+      "verbatim_quote": "No fake tracking",
+      "source": "../../../_rules/README.md",
+      "location": "non-negotiable 1"
+    }
+  ],
+  "confidence_score": 0.8,
+  "need_review": false
+}

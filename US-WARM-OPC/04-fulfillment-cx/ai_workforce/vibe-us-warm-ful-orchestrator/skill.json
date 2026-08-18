@@ -1,0 +1,18 @@
+{
+  "$schema": "../../../_shared/schema/skill-meta.schema.json",
+  "name": "vibe-us-warm-ful-orchestrator",
+  "version": "1.0.0",
+  "description": "Manager for Fulfillment-CX — routes order -> QC -> ship -> CX for DAKOfits US blankets. Does not execute. Enforces QC-before-ship and no-fake-tracking on shipped orders; the department that delivers the 3 brand promises.",
+  "role": "Fulfillment-CX Orchestrator / Manager (US blankets)",
+  "department": "04-fulfillment-cx",
+  "quality_tier": "GPS-ENHANCED",
+  "sop_coverage": ["FUL-001", "FUL-002", "FUL-003", "FUL-004"],
+  "quality_gates": [
+    { "name": "shipped_requires_qc_and_real_tracking", "min_confidence": 1.0 },
+    { "name": "evidence_verbatim", "min_confidence": 0.7 }
+  ],
+  "dependencies": {
+    "upstream": ["vibe-us-warm-grw-orchestrator"],
+    "downstream": ["vibe-us-warm-bck-orchestrator"]
+  }
+}

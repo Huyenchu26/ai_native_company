@@ -1,0 +1,18 @@
+{
+  "$schema": "../../../_shared/schema/skill-meta.schema.json",
+  "name": "vibe-us-warm-bck-ops-hr",
+  "version": "1.0.0",
+  "description": "Ops/HR for the DAKOfits AI workforce: uptime, token/API cost, output reject rate, skill/SOP versions. Counts the roster ACTUALLY from ai_workforce/ folders (never hard-codes a number; fixes EU hard-code-12).",
+  "role": "Backoffice Ops/HR (AI workforce)",
+  "department": "05-backoffice",
+  "quality_tier": "TEMPLATED",
+  "sop_coverage": ["BCK-006"],
+  "quality_gates": [
+    { "name": "worker_count_actual_not_hardcoded", "min_confidence": 0.8 },
+    { "name": "evidence_verbatim", "min_confidence": 0.7 }
+  ],
+  "dependencies": {
+    "upstream": ["vibe-us-warm-bck-orchestrator"],
+    "downstream": ["vibe-us-warm-bck-orchestrator"]
+  }
+}

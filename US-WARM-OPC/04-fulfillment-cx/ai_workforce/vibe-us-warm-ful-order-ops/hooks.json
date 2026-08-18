@@ -1,0 +1,16 @@
+{
+  "$comment": "PreToolUse guard for vibe-us-warm-ful-order-ops. Blocks Edit/Write into any /template/ or /archive/ path (read-only per 01-product-studio/_rules). Exit code 2 denies the tool call and returns the reason to the model. Mirrors _shared/script/validator.py preflight().",
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "Edit|Write|MultiEdit|NotebookEdit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python3 -c \"import json,sys; d=json.load(sys.stdin); ti=d.get('tool_input',{}) or {}; p=(ti.get('file_path') or ti.get('notebook_path') or '').replace('\\\\\\\\','/'); block='/template/' in p or '/archive/' in p; sys.stderr.write('BLOCKED: '+p+' is read-only (template/ and archive/ are immutable; copy to input/ first).\\n') if block else None; sys.exit(2 if block else 0)\""
+          }
+        ]
+      }
+    ]
+  }
+}

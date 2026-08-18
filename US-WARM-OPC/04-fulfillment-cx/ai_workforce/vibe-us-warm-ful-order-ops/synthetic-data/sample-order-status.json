@@ -1,0 +1,30 @@
+{
+  "order_id": "ORD-2026-08-1042",
+  "sku": "DAKO-BLK-PETMEM-59",
+  "order_value": 59.95,
+  "routed": true,
+  "supplier_qc_capable": true,
+  "qc_photo_pass": true,
+  "material_gsm": 300,
+  "personalization_correct": true,
+  "ship_approved": true,
+  "tracking_sent": true,
+  "carrier_code": "1Z999AA10123456784",
+  "carrier_verified": true,
+  "evidence": [
+    {
+      "claim": "QC gate requires material_gsm at least 260 before ship.",
+      "verbatim_quote": "material_gsm ≥ 260",
+      "source": "../../../monitor-orders/template/sop_ful-001_order-monitoring_v1.0_2026-08-04.md",
+      "location": "control"
+    },
+    {
+      "claim": "Tracking is only sent with a real verified carrier code (no fake tracking).",
+      "verbatim_quote": "no-fake-tracking",
+      "source": "../../../monitor-orders/template/sop_ful-001_order-monitoring_v1.0_2026-08-04.md",
+      "location": "gate"
+    }
+  ],
+  "confidence_score": 0.85,
+  "need_review": false
+}

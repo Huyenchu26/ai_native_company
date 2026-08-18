@@ -1,0 +1,19 @@
+{
+  "$schema": "../../../_shared/schema/skill-meta.schema.json",
+  "name": "vibe-us-warm-ful-order-ops",
+  "version": "1.0.0",
+  "description": "Monitor + route + QC + tracking for DAKOfits US blanket orders. Two ethical hard gates: QC-before-ship (material GSM>=260 + QC photo) and no-fake-tracking (real verified carrier code only). Fail-closed: no carrier API -> tracking_sent=false (never a placeholder code); QC fail -> HOLD not ship.",
+  "role": "Fulfillment Order Ops (US blankets)",
+  "department": "04-fulfillment-cx",
+  "quality_tier": "TEMPLATED",
+  "sop_coverage": ["FUL-001", "FUL-002"],
+  "quality_gates": [
+    { "name": "qc_before_ship", "min_confidence": 1.0 },
+    { "name": "no_fake_tracking", "min_confidence": 1.0 },
+    { "name": "evidence_verbatim", "min_confidence": 0.7 }
+  ],
+  "dependencies": {
+    "upstream": ["vibe-us-warm-ful-orchestrator", "vibe-us-warm-grw-orchestrator"],
+    "downstream": ["vibe-us-warm-ful-cx", "vibe-us-warm-bck-finance"]
+  }
+}

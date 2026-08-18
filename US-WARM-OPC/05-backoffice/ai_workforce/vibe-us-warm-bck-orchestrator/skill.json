@@ -1,0 +1,18 @@
+{
+  "$schema": "../../../_shared/schema/skill-meta.schema.json",
+  "name": "vibe-us-warm-bck-orchestrator",
+  "version": "1.0.0",
+  "description": "Manager for Backoffice — routes tax/books/profit, FTC/CPSC/IP/CCPA compliance, and workforce ops for DAKOfits US. Does not execute.",
+  "role": "Backoffice Orchestrator / Manager (US)",
+  "department": "05-backoffice",
+  "quality_tier": "GPS-ENHANCED",
+  "sop_coverage": ["BCK-001", "BCK-002", "BCK-003", "BCK-004", "BCK-005", "BCK-006"],
+  "quality_gates": [
+    { "name": "route_compliance_and_finance", "min_confidence": 0.7 },
+    { "name": "evidence_verbatim", "min_confidence": 0.7 }
+  ],
+  "dependencies": {
+    "upstream": ["vibe-us-warm-ful-orchestrator"],
+    "downstream": []
+  }
+}

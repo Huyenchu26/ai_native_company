@@ -1,0 +1,1 @@
+# Workforce Playbook. SOP: [../../../manage-workforce/template/sop_bck-006_workforce_v1.0_2026-08-04.md](../../../manage-workforce/template/sop_bck-006_workforce_v1.0_2026-08-04.md). Đếm roster thật; uptime; reject<10%.

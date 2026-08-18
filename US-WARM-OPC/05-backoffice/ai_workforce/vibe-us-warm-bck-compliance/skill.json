@@ -1,0 +1,20 @@
+{
+  "$schema": "../../../_shared/schema/skill-meta.schema.json",
+  "name": "vibe-us-warm-bck-compliance",
+  "version": "1.0.0",
+  "description": "US compliance authority for DAKOfits: CPSC textile (16 CFR 1610 + Fiber Identification Act/RN), FTC advertising (16 CFR 255, no fake reviews, Made-in-USA), IP/TM sign-off (USPTO), and CCPA/CPRA privacy. SOLE issuer of official clearance_id (fixes EU dual-ownership bug). Fail-closed: uncertain -> PENDING, never fabricated clearance.",
+  "role": "Backoffice Compliance (US CPSC/FTC/IP/CCPA)",
+  "department": "05-backoffice",
+  "quality_tier": "EXPERT-CLONE",
+  "sop_coverage": ["BCK-004", "BCK-005"],
+  "quality_gates": [
+    { "name": "clearance_requires_cpsc_ftc_ip", "min_confidence": 1.0 },
+    { "name": "ip_clear_requires_uspto", "min_confidence": 1.0 },
+    { "name": "dsar_45_days", "min_confidence": 0.8 },
+    { "name": "evidence_verbatim", "min_confidence": 0.7 }
+  ],
+  "dependencies": {
+    "upstream": ["vibe-us-warm-prd-design", "vibe-us-warm-mer-product-page", "vibe-us-warm-ful-cx"],
+    "downstream": ["vibe-us-warm-prd-orchestrator", "vibe-us-warm-mer-catalog"]
+  }
+}

@@ -1,0 +1,19 @@
+{
+  "$schema": "../../../_shared/schema/skill-meta.schema.json",
+  "name": "vibe-us-warm-bck-finance",
+  "version": "1.0.0",
+  "description": "US finance for DAKOfits: sales-tax nexus/collect/remit (Wayfair, register-before-collect), bookkeeping, and profit by contribution + BE-ROAS per-SKU (no VAT, no hard-coded ROAS). Fail-closed: missing tool -> needs_registration/pending, never claims remitted.",
+  "role": "Backoffice Finance (US sales tax / books / profit)",
+  "department": "05-backoffice",
+  "quality_tier": "EXPERT-CLONE",
+  "sop_coverage": ["BCK-001", "BCK-002", "BCK-003"],
+  "quality_gates": [
+    { "name": "register_before_collect", "min_confidence": 1.0 },
+    { "name": "profit_contribution_be_roas", "min_confidence": 0.8 },
+    { "name": "evidence_verbatim", "min_confidence": 0.7 }
+  ],
+  "dependencies": {
+    "upstream": ["vibe-us-warm-bck-orchestrator", "vibe-us-warm-ful-order-ops"],
+    "downstream": ["vibe-us-warm-bck-orchestrator"]
+  }
+}

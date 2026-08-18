@@ -1,0 +1,28 @@
+{
+  "ticket_id": "TKT-2026-08-338",
+  "category": "return",
+  "reason": "defect",
+  "personalized": true,
+  "refund_amount": 25.00,
+  "refund_auto_approved": true,
+  "final_sale_applies": false,
+  "first_response_hours": 2.5,
+  "auto_resolved": true,
+  "reply_text": "So sorry your blanket arrived with a stitching defect. We're refunding you in full and no need to return it — thank you for the photo.",
+  "evidence": [
+    {
+      "claim": "A defect is always refunded or replaced; final-sale does not apply to defects.",
+      "verbatim_quote": "refund/replace bất kể",
+      "source": "../../../handle-returns/template/sop_ful-004_returns_v1.0_2026-08-04.md",
+      "location": "control"
+    },
+    {
+      "claim": "Refunds over $30 require a human; auto-approval only up to $30.",
+      "verbatim_quote": "refund > $30 → human",
+      "source": "../../../handle-returns/template/sop_ful-004_returns_v1.0_2026-08-04.md",
+      "location": "control"
+    }
+  ],
+  "confidence_score": 0.82,
+  "need_review": false
+}

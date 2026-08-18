@@ -1,0 +1,17 @@
+{
+  "period": "2026-08",
+  "worker_count": 13,
+  "count_method": "actual",
+  "uptime_pct": 99.2,
+  "reject_rate": 0.06,
+  "evidence": [
+    {
+      "claim": "Worker count is counted from real folders, not hard-coded.",
+      "verbatim_quote": "đếm THẬT",
+      "source": "../../../manage-workforce/template/sop_bck-006_workforce_v1.0_2026-08-04.md",
+      "location": "goal"
+    }
+  ],
+  "confidence_score": 0.8,
+  "need_review": false
+}

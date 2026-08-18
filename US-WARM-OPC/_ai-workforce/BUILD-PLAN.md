@@ -55,7 +55,7 @@ US-WARM-OPC/
 
 ## 5. Harness đã sửa (áp dụng ngay từ đầu — không lặp bug pipeline test)
 
-Từ [EU pipeline-test](../../EU-POD-OPC/_ai-workforce/pipeline-test_2026-08-03/PIPELINE-TEST-REPORT.md), 5 bug harness sẽ được fix trong `_shared/script/validator.py` dùng chung:
+Từ EU pipeline-test (đã retire — xem git history), 5 bug harness sẽ được fix trong `_shared/script/validator.py` dùng chung:
 1. **P1** — validator thực thi `allOf`/`if`/`then` (hoặc dùng `jsonschema` draft-07) → gate cứng thành thật.
 2. **P2** — 1 quy ước `evidence` thống nhất toàn hệ + `verify_evidence()` khớp.
 3. **P3** — schema model được trạng thái fail-closed (PENDING/blocked/validation-phase).

@@ -1,0 +1,1 @@
+# Order Ops Playbook. SOP: [../../../monitor-orders/template/sop_ful-001_order-monitoring_v1.0_2026-08-04.md](../../../monitor-orders/template/sop_ful-001_order-monitoring_v1.0_2026-08-04.md). QC gsm≥260, no-fake-tracking, route ≤18h, track ≤24h.
