@@ -1,0 +1,29 @@
+{
+  "_doc": "Hooks cho vibe-us-warm-prd-orchestrator. Dùng SHARED validator (_shared/script/validator.py, harness v2 đã sửa). Preflight chặn edit template/ và archive/ (immutable). Chỉ tham chiếu flag CÓ THẬT của shared validator: --preflight-target.",
+  "validator_path": "../../../_shared/script/validator.py",
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "Write|Edit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python3 \"${CLAUDE_PROJECT_DIR}/../../../_shared/script/validator.py\" --preflight-target \"${CLAUDE_TOOL_INPUT_FILE_PATH:-$TOOL_INPUT}\""
+          }
+        ]
+      }
+    ],
+    "PostToolUse": [
+      {
+        "matcher": "Write",
+        "_note": "Sau khi ghi pipeline-plan.json, validate --run-all với schema + threshold 0.7. Chỉ handoff khi ok=true.",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "case \"${CLAUDE_TOOL_INPUT_FILE_PATH:-$TOOL_INPUT}\" in *pipeline-plan*.json) python3 \"${CLAUDE_PROJECT_DIR}/../../../_shared/script/validator.py\" --run-all --artifact \"${CLAUDE_TOOL_INPUT_FILE_PATH:-$TOOL_INPUT}\" --schema \"${CLAUDE_PROJECT_DIR}/schema/pipeline-plan.schema.json\" --threshold 0.7 ;; esac"
+          }
+        ]
+      }
+    ]
+  }
+}

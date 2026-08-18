@@ -25,7 +25,7 @@ Công ty có **2 lớp skill** chạy song song. **Quy tắc: luôn đếm trự
 
 ### Lớp A — legacy `vibe-opc-pod-*`
 - Cài tại `~/.claude/skills/`, dùng cho phòng **chưa có bản EU-OPC riêng**.
-- Snapshot 2026-06-23 theo [workforce-map](../../../_ai-workforce/workforce-map_v1.0_2026-06-23.md): **12 worker** = 2 PRD + 2 MER + 3 GRW + 2 FUL + 3 BCK. (12 là tổng theo map, KHÔNG phải 3/phòng × 5.)
+- Snapshot 2026-06-23 theo [workforce-map](../../../../_ai-workforce/workforce-map_v1.0_2026-06-23.md): **12 worker** = 2 PRD + 2 MER + 3 GRW + 2 FUL + 3 BCK. (12 là tổng theo map, KHÔNG phải 3/phòng × 5.)
 - Phủ 24/24 SOP responsible.
 
 ### Lớp B — EU-OPC-specific `vibe-eu-opc-{prd,mer,grw,ful,bck}-*`
@@ -93,6 +93,6 @@ Công ty có **2 lớp skill** chạy song song. **Quy tắc: luôn đếm trự
 ---
 
 ## Links
-- SOP-BCK-006: [manage-workforce](../../manage-workforce/template/sop_bck-006_workforce-ops_v1.0_2026-06-23.md)
-- Roster canonical: [workforce-map](../../../_ai-workforce/workforce-map_v1.0_2026-06-23.md)
+- SOP-BCK-006: [manage-workforce](../../../manage-workforce/template/sop_bck-006_workforce-ops_v1.0_2026-06-23.md)
+- Roster canonical: [workforce-map](../../../../_ai-workforce/workforce-map_v1.0_2026-06-23.md)
 - Output schema: [workforce-review.schema.json](../schema/workforce-review.schema.json)

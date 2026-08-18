@@ -28,7 +28,7 @@ Manager-level routing cho phòng 03-growth, DAKOfits. Orchestrator **KHÔNG exec
 | **Winner = Blended ROAS ≥ BE-ROAS per-SKU** (US ~2.75, EU ~5.3) | Blended ≥ BE-ROAS của SKU đó | KHÔNG scale (lãi ảo) → HOLD, đề xuất nâng giá/đổi provider. **KHÔNG dùng 2.5 cứng** |
 | **Budget escalate** | tổng spend ≤ $150/ngày trong khung cap đã duyệt | > $150/ngày hoặc discount ăn margin ⇒ HOLD + escalate OPC + 05-finance |
 
-Nguồn BE-ROAS: [`../../../_shared/unit-economics.md`](../../../_shared/unit-economics.md). Luật vận hành đầy đủ: [`../../_rules/README.md`](../../_rules/README.md).
+Nguồn BE-ROAS: [`../../../_shared/unit-economics.md`](../../../../_shared/unit-economics.md). Luật vận hành đầy đủ: [`../../_rules/README.md`](../../../_rules/README.md).
 
 ---
 

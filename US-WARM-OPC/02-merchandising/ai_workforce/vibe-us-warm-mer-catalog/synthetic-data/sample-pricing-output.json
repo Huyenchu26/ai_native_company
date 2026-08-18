@@ -1,0 +1,39 @@
+{
+  "sku": "DAKO-BLK-PETMEM-59",
+  "sell_price": 59.95,
+  "base_cost": 18.0,
+  "ship_cost": 7.5,
+  "fees": {
+    "gateway_fee": 2.04,
+    "return_reserve": 1.8
+  },
+  "gross_before_ads": 30.61,
+  "allocated_cpa": 18.0,
+  "contribution_margin": 0.21,
+  "break_even_roas": 1.96,
+  "below_floor": false,
+  "cost_basis": "assumption",
+  "aov_free_ship_ready": true,
+  "evidence": [
+    {
+      "claim": "BE-ROAS is computed per-SKU as sell_price / gross_before_ads, not a hard-coded number.",
+      "verbatim_quote": "sell_price / gross_before_ads",
+      "source": "../../../../_shared/unit-economics.md",
+      "location": "section 3"
+    },
+    {
+      "claim": "US market has no VAT, so revenue is not reduced by VAT in the contribution formula.",
+      "verbatim_quote": "US KHÔNG có VAT",
+      "source": "../../../../_shared/unit-economics.md",
+      "location": "section 1"
+    },
+    {
+      "claim": "Contribution floor is 15% after target CPA.",
+      "verbatim_quote": "contribution_% ≥ 15% sau CPA mục tiêu",
+      "source": "../../../../_shared/unit-economics.md",
+      "location": "section 3 floor"
+    }
+  ],
+  "confidence_score": 0.72,
+  "need_review": true
+}

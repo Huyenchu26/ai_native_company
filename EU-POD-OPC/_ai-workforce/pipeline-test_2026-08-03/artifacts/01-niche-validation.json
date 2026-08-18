@@ -1,0 +1,80 @@
+{
+  "niche": "Horse Riding / Equestrian",
+  "niche_category": "hobby",
+  "demand_score": 74,
+  "score_breakdown": {
+    "demand": 30,
+    "competition": 16,
+    "margin_fit": 14,
+    "ip_risk": 14
+  },
+  "audience_size": 3200000,
+  "competition_level": "medium",
+  "margin_fit": "good",
+  "ip_risk_flag": "CLEAR",
+  "seasonal_window": {
+    "type": "evergreen",
+    "peak_event": "Christmas gifting (secondary lift; core demand is year-round)",
+    "peak_week": "2026-W51",
+    "design_deadline": "2026-W44",
+    "lead_time_weeks": 7
+  },
+  "evidence": [
+    {
+      "source": "other",
+      "detail": "ESTIMATE — no live tool access (no Meta Audience Insights). Interest-stack size for US+EU on 'Horse'/'Equestrian'/'Horse riding'/'Dressage' inferred from general knowledge: equestrian is a large mainstream hobby in both markets. Figure is an order-of-magnitude estimate, NOT a Meta number.",
+      "value": 3200000,
+      "date": "2026-08-04"
+    },
+    {
+      "source": "other",
+      "detail": "ESTIMATE — no live tool access (no AdSpy/BigSpy). Demand rated high because riding tights/leggings are a native activewear category and equestrian buyers show strong identity-affinity purchase behavior. Ad-volume and ad-age (<90d) NOT verified against a real spy tool.",
+      "value": "demand=30/40 (estimate)",
+      "date": "2026-08-04"
+    },
+    {
+      "source": "other",
+      "detail": "ESTIMATE — no live tool access (no Google Trends/pytrends). Seasonality classified evergreen from general knowledge (riding is year-round; mild Christmas gifting lift). 12-24 month Trends curve NOT pulled — seasonal_window is provisional.",
+      "value": "evergreen (unverified)",
+      "date": "2026-08-04"
+    },
+    {
+      "source": "other",
+      "detail": "ESTIMATE — no live tool access (no Meta Ad Library / landing-page capture). Competitor AOP-legging price band and offers for horse designs approximated from typical Gearbunch-class POD pricing seen historically ($49.99-$59.99, 2-for bundle, free-ship threshold). NOT captured from a live ad/landing page today. Ad longevity is a rough proxy, NOT a real spend figure.",
+      "value": "USD 49.99-59.99 (estimate)",
+      "date": "2026-08-04"
+    },
+    {
+      "source": "other",
+      "detail": "Margin-fit judged against _shared/unit-economics.md (REF-ECON-001): US AOP legging @ $49.99 gives GM ~36.4% / BE-ROAS ~2.75; EU @ EUR49.99 VAT-incl is tight (BE-ROAS ~5.3, needs EUR59-69 pricing). Equestrian's higher willingness-to-pay supports 'good' fit for US, borderline for EU. This uses the real economics doc, but the winning price/CPA are still assumptions.",
+      "value": "margin_fit=14/20",
+      "date": "2026-08-04"
+    },
+    {
+      "source": "other",
+      "detail": "IP/TM pre-flag = CLEAR. Generic descriptors ('horse', 'equestrian', 'horse riding', 'dressage', 'love horses') carry no obvious brand/club/breed-registry trademark. NOTE: named breed registries, specific show/club names, or 'My Little Pony'-type characters would flip this to FLAG/HIGH — those must be excluded at design time. Pre-flag only; not a formal clearance.",
+      "value": "CLEAR",
+      "date": "2026-08-04"
+    },
+    {
+      "source": "ShopBase catalog",
+      "detail": "Dedupe check vs ~3,200-SKU catalog was NOT run against a live catalog export (no access to current catalog file in this test). Possible overlap with existing horse/animal designs is UNVERIFIED; if overlap exists, decision should move to refresh-iterate.",
+      "value": "dedupe not performed",
+      "date": "2026-08-04"
+    }
+  ],
+  "competitor_price_range": {
+    "min": 49.99,
+    "max": 59.99,
+    "currency": "USD"
+  },
+  "competitor_offers": [
+    "ESTIMATE — no live capture: typical '2-for-$80' bundle",
+    "ESTIMATE — no live capture: 'free-ship >$50'"
+  ],
+  "competitor_ad_longevity_days": 0,
+  "confidence_score": 0.42,
+  "need_review": true,
+  "decision": "watchlist",
+  "notes": "PROVISIONAL / ESTIMATE-ONLY RUN. This artifact was produced WITHOUT live access to Meta Audience Insights, AdSpy, BigSpy, Google Trends, or Meta Ad Library. By rubric arithmetic (demand_score 74 >= 70, estimated audience >= 500k) the niche would tentatively qualify as 'validated', but because every demand/audience/competitor figure is an unverified estimate, the anti-hallucination contract forces need_review=true and confidence < 0.7. decision is set to 'watchlist' (hold, do NOT auto-hand-off to PRD-003 design) until the four live-tool pulls are re-run and audience>=500k + ad-age<90d + competitor price are confirmed. competitor_ad_longevity_days set to 0 because it could not be measured (no Meta Ad Library access) rather than fabricated."
+}

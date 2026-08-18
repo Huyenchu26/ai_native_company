@@ -1,4 +1,5 @@
 {
+  "$schema": "./schema/skill-meta.schema.json",
   "name": "vibe-eu-opc-mer-catalog",
   "version": "1.0",
   "description": "Catalog-Sync AI cho DAKOfits: setup product Printify/PrintBase (variant XS-3XL, provider US/EU), pricing theo contribution margin sau ad+fee+VAT, dinh gia canh tranh theo gia doi thu (van tren floor), sync ShopBase QC >=99%. SOP-MER-002/003/004.",

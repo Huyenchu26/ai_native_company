@@ -2,7 +2,7 @@
 
 Dữ liệu mẫu cho 1 tuần (`period: 2026-W25`, 2026-06-16..2026-06-22) để chạy smoke-test / weekly-review-prompt. Số liệu giả lập, vài skill đại diện cho roster.
 
-> Nhắc: `total_workers` phải đếm THẬT từ [workforce-map](../../../_ai-workforce/workforce-map_v1.0_2026-06-23.md) + folder `EU-OPC/**/ai_workforce/*/SKILL.md`. KHÔNG hard-code "12". Bảng dưới chỉ là sample cho vài worker.
+> Nhắc: `total_workers` phải đếm THẬT từ [workforce-map](../../../../_ai-workforce/workforce-map_v1.0_2026-06-23.md) + folder `EU-OPC/**/ai_workforce/*/SKILL.md`. KHÔNG hard-code "12". Bảng dưới chỉ là sample cho vài worker.
 
 ## 1. Run log → uptime (cron/trigger)
 

@@ -1,0 +1,162 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://us-warm-opc/schema/pricing-decision.schema.json",
+  "title": "Blanket Pricing Decision (SOP-MER-001)",
+  "description": "Một record per SKU — pricing chăn cá nhân hoá theo CONTRIBUTION MARGIN + BE-ROAS per-SKU (unit-economics.md). US KHÔNG có VAT → KHÔNG có field vat trừ doanh thu. KHÔNG gross-45 ảo (giá=cost/(1−margin)). BE-ROAS = sell_price / gross_before_ads (KHÔNG hard-code 2.5). Gate fail-closed: below_floor=false ⇒ contribution_margin ≥ 0.15; cost_basis=assumption ⇒ need_review (KHÔNG chốt giá production trên số giả định). evidence = unified contract INLINE (không $ref ngoài).",
+  "type": "object",
+  "required": [
+    "sku",
+    "sell_price",
+    "base_cost",
+    "ship_cost",
+    "fees",
+    "allocated_cpa",
+    "contribution_margin",
+    "break_even_roas",
+    "below_floor",
+    "cost_basis",
+    "evidence",
+    "confidence_score",
+    "need_review"
+  ],
+  "properties": {
+    "sku": {
+      "type": "string",
+      "description": "SKU duy nhất của variant chăn (vd BLK-US-PET-5995)"
+    },
+    "sell_price": {
+      "type": "number",
+      "exclusiveMinimum": 0,
+      "description": "Giá bán USD. Band khuyến nghị $39.95–59.95; ưu tiên >$59 (free-ship threshold)."
+    },
+    "base_cost": {
+      "type": "number",
+      "minimum": 0,
+      "description": "Base cost thật từ supplier (blank blanket + in cá nhân hoá). Thiếu quote → dùng ASSUMPTION unit-economics + cost_basis=assumption + need_review."
+    },
+    "ship_cost": {
+      "type": "number",
+      "minimum": 0,
+      "description": "Ship US mình chịu (chăn nặng/cồng kềnh). Free-ship <$59 → nằm trong contribution."
+    },
+    "fees": {
+      "type": "object",
+      "description": "Fee stack US (KHÔNG VAT). Không gộp sales tax (thu hộ, không phải chi phí của mình).",
+      "required": ["gateway_fee", "return_reserve"],
+      "properties": {
+        "gateway_fee": {
+          "type": "number",
+          "minimum": 0,
+          "description": "Shopify/Stripe = 2.9% + $0.30"
+        },
+        "return_reserve": {
+          "type": "number",
+          "minimum": 0,
+          "description": "Quỹ đổi trả/defect ~3% giá"
+        }
+      }
+    },
+    "gross_before_ads": {
+      "type": "number",
+      "description": "sell_price − base_cost − ship_cost − gateway_fee − return_reserve (US: KHÔNG trừ VAT). Mẫu số của BE-ROAS."
+    },
+    "allocated_cpa": {
+      "type": "number",
+      "minimum": 0,
+      "description": "CPA mục tiêu phân bổ per-SKU (từ 03-growth). CPA thật đo từ growth để chốt floor."
+    },
+    "contribution_margin": {
+      "type": "number",
+      "description": "TỈ LỆ (fraction 0–1) = (gross_before_ads − allocated_cpa) / sell_price. Floor = 0.15 (15%)."
+    },
+    "break_even_roas": {
+      "type": "number",
+      "exclusiveMinimum": 0,
+      "description": "BE-ROAS = sell_price / gross_before_ads (per-SKU, KHÔNG hard-code 2.5). ROAS thực tế phải ≥ giá trị này mới có lãi."
+    },
+    "below_floor": {
+      "type": "boolean",
+      "description": "true khi contribution_margin < 0.15 @ CPA mục tiêu → KHÔNG scale ads, chuyển organic/bundle/đổi supplier, need_review."
+    },
+    "cost_basis": {
+      "type": "string",
+      "enum": ["quote", "assumption"],
+      "description": "quote=cost thật từ supplier (được chốt giá production) · assumption=số giả định unit-economics (BẮT BUỘC need_review, KHÔNG chốt giá production)."
+    },
+    "aov_free_ship_ready": {
+      "type": "boolean",
+      "description": "true khi sell_price/bundle đạt >$59 free-ship threshold (đẩy AOV, hạ BE-ROAS)."
+    },
+    "evidence": {
+      "type": "array",
+      "minItems": 1,
+      "description": "Unified evidence contract (company-wide) INLINE: array<{claim, verbatim_quote, source(filepath), location?}>. verify_evidence() khớp shape này; quote phải xuất hiện nguyên văn trong file source.",
+      "items": {
+        "type": "object",
+        "required": ["claim", "verbatim_quote", "source"],
+        "properties": {
+          "claim": {"type": "string"},
+          "verbatim_quote": {"type": "string", "minLength": 1},
+          "source": {"type": "string"},
+          "location": {"type": "string"}
+        }
+      }
+    },
+    "confidence_score": {
+      "type": "number",
+      "minimum": 0,
+      "maximum": 1,
+      "description": "Độ tự tin; < 0.7 → need_review=true (fail-closed)."
+    },
+    "need_review": {
+      "type": "boolean",
+      "description": "True khi below_floor / cost_basis=assumption / confidence<0.7 / giá lệch band → Owner review (HITL)."
+    }
+  },
+  "allOf": [
+    {
+      "$comment": "GATE 1 — below_floor=false ⇒ contribution_margin ≥ 0.15 (floor 15% @ CPA). Nếu khai không dưới floor thì phải THẬT không dưới floor.",
+      "if": {
+        "properties": {"below_floor": {"const": false}},
+        "required": ["below_floor"]
+      },
+      "then": {
+        "properties": {"contribution_margin": {"minimum": 0.15}},
+        "required": ["contribution_margin"]
+      }
+    },
+    {
+      "$comment": "GATE 2 — dưới floor thì BẮT BUỘC need_review (KHÔNG chốt/scale khi dưới floor).",
+      "if": {
+        "properties": {"below_floor": {"const": true}},
+        "required": ["below_floor"]
+      },
+      "then": {
+        "properties": {"need_review": {"const": true}},
+        "required": ["need_review"]
+      }
+    },
+    {
+      "$comment": "GATE 3 — cost_basis=assumption ⇒ need_review (KHÔNG chốt giá production trên số giả định).",
+      "if": {
+        "properties": {"cost_basis": {"const": "assumption"}},
+        "required": ["cost_basis"]
+      },
+      "then": {
+        "properties": {"need_review": {"const": true}},
+        "required": ["need_review"]
+      }
+    },
+    {
+      "$comment": "GATE 4 — confidence < 0.7 ⇒ need_review (fail-closed).",
+      "if": {
+        "properties": {"confidence_score": {"exclusiveMaximum": 0.7}},
+        "required": ["confidence_score"]
+      },
+      "then": {
+        "properties": {"need_review": {"const": true}},
+        "required": ["need_review"]
+      }
+    }
+  ]
+}

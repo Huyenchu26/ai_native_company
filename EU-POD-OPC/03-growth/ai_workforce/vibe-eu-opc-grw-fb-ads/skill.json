@@ -1,4 +1,5 @@
 {
+  "$schema": "./schema/skill-meta.schema.json",
   "name": "vibe-eu-opc-grw-fb-ads",
   "version": "1.0",
   "description": "Chạy & tối ưu FB Ads cho POD AOP leggings DAKOfits (US+EU) theo SOP-GRW-002 & SOP-GRW-004: build ABO→CBO, 4-layer targeting, verify CAPI EMQ≥6, scale/kill theo Blended ROAS ≥ BE-ROAS per-SKU, BM 5-tier anti-ban. Gate cứng: no Meta Ad Policy → no ads.",

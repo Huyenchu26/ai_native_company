@@ -1,6 +1,6 @@
 # KB — Catalog · Pricing · Sync Playbook (DAKOfits)
 
-> Canonical economics: **[../../../_shared/unit-economics.md](../../../_shared/unit-economics.md)** — mọi công thức ROAS/margin/profit phải KHỚP file đó.
+> Canonical economics: **[../../../_shared/unit-economics.md](../../../../_shared/unit-economics.md)** — mọi công thức ROAS/margin/profit phải KHỚP file đó.
 > SOP: MER-002 (setup) · MER-003 (pricing) · MER-004 (sync-qc).
 
 ---

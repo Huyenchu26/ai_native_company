@@ -1,0 +1,2 @@
+{"timestamp": "2026-08-04T08:21:51Z", "step": "validate", "action": "run_all", "target": "artifacts/06b-fb-ads-plan.json", "actor": "vibe-aiworkforce", "status": "fail", "duration_ms": 0, "schema_validated": true, "evidence_verified": true}
+{"timestamp": "2026-08-04T08:57:12Z", "step": "validate", "action": "run_all", "target": "artifacts/06b-fb-ads-plan.json", "actor": "vibe-aiworkforce", "status": "fail", "duration_ms": 1, "schema_validated": true, "evidence_verified": true}

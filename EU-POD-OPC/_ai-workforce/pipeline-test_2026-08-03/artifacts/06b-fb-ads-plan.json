@@ -1,0 +1,56 @@
+{
+  "campaign_id": "PLAN-DAKO-HORSE-US-ABO-2026W32 (PROVISIONAL — NOT created in Meta Ads Manager; no Marketing API access in this test)",
+  "decision": "HOLD",
+  "sku": "DAKO-HORSE-LEG-US-BLK-M",
+  "market": "US",
+  "platform_roas": 0,
+  "blended_roas": 0,
+  "break_even_roas": 2.15,
+  "cpa": 0,
+  "emq": 0,
+  "attribution_window": "7d-click/1d-view",
+  "bm_tier": "T3",
+  "policy_cleared": false,
+  "rationale": "HOLD (gate cứng: No Meta Ad Policy → No ads). Campaign is NOT launched — no Meta Marketing/Insights API in this test, so platform_roas / blended_roas / cpa / emq = 0 mean NO DATA (not fabricated, not real results). SETUP PLAN (per SOP-GRW-002 §3): BM 5-tier anti-ban, run ABO test on T3, scale winner to T2. ABO objective = Conversions/Purchase, budget $10/ad set/day fixed. 4-layer targeting: (1) Interest = 'Horse Riding','Equestrian','Dressage','Horses' (generic, no breed-registry); (2) Behavior = Engaged Shoppers/Online buyers; (3) Custom Audience = ShopBase visitors/ATC + opt-in email (GDPR); (4) Lookalike 1–3% from purchasers. 5–10 SP/batch, 3–5 audiences × ≥2 creative variants (from 06a). Evaluation window ≥3 days or ~50 ATC/ad set. WINNER RULE (per-SKU BE-ROAS, NOT hard-coded 2.5): Platform ROAS ≥ 3.0 AND Blended ≥ BE-ROAS 2.15 (US SKU, from 03-pricing) AND CPA < $20 → SCALE (CBO +20%/2 days, cap $100/day) + write winner-registry. KILL RULE (this skill's owner SOP-GRW-002 §4): Platform ROAS < 1.8 after 3 days & spend ≥ $40 → KILL; OR CPA > $20 & 0 conv after $30 → KILL. CAPI gate: EMQ ≥ 6.0 before any scale. Kill (Platform<1.8 ≈ Blended~1.5) and scale (Blended ≥ 2.15) thresholds are BOTH set at/above BE-ROAS logic — scale threshold ≥ BE-ROAS 2.15 confirmed (no scaling into loss). GATE BLOCKERS forcing HOLD: 02-design ip_clearance=REJECT + no Meta policy clearance; 04b page publish_status=blocked + GPSR MISSING; 06a creative policy_self_check=false + no rendered asset. Return task to grw-creative / 05-compliance. Note EU SKU (DAKO-HORSE-LEG-EU-BLK-M €69.99) BE-ROAS 2.27 with contribution only 7.9% after CPA → EU flagged retention/organic per pricing, do NOT cold-ads EU.",
+  "evidence": [
+    {
+      "claim": "US SKU break-even ROAS = 2.15 (per-SKU, not hard-coded 2.5); scale/winner threshold set at/above it",
+      "verbatim_quote": "\"break_even_roas\": 2.15,",
+      "source": "/home/huyenctn/ai_native_company/EU-POD-OPC/_ai-workforce/pipeline-test_2026-08-03/artifacts/03-pricing.json"
+    },
+    {
+      "claim": "Owner SOP-GRW-002 §4 KILL threshold is Platform ROAS < 1.8 after 3 days & spend ≥ $40",
+      "verbatim_quote": "Platform ROAS < 1.8 sau 3 ngày & spend ≥ 2× CPA target ($40)",
+      "source": "/home/huyenctn/ai_native_company/EU-POD-OPC/03-growth/run-fb-ads/template/sop_grw-002_fb-ads_v1.0_2026-06-23.md"
+    },
+    {
+      "claim": "CONFLICT: _rules KILL threshold is ROAS < 1.5 (type Platform/Blended unspecified) — differs from SOP/skill 1.8",
+      "verbatim_quote": "ROAS < 1.5 sau 3 ngày & spend ≥ 2× CPA target ($40)",
+      "source": "/home/huyenctn/ai_native_company/EU-POD-OPC/03-growth/_rules/README.md"
+    },
+    {
+      "claim": "Winner threshold must be BE-ROAS per SKU/market, NOT a hard 2.5 (unit-economics rejects 2.5)",
+      "verbatim_quote": "KHÔNG dùng 2.5 cứng",
+      "source": "/home/huyenctn/ai_native_company/EU-POD-OPC/_shared/unit-economics.md"
+    },
+    {
+      "claim": "Gate cứng: no Meta Ad Policy clearance → HOLD, no launch (policy_cleared=false here)",
+      "verbatim_quote": "No Meta Ad Policy pass → No ads.",
+      "source": "/home/huyenctn/ai_native_company/EU-POD-OPC/03-growth/run-fb-ads/template/sop_grw-002_fb-ads_v1.0_2026-06-23.md"
+    },
+    {
+      "claim": "EU SKU is not cold-ads viable (retention) — BE-ROAS 2.27, contribution 7.9% after CPA",
+      "verbatim_quote": "\"break_even_roas\": 2.27,",
+      "source": "/home/huyenctn/ai_native_company/EU-POD-OPC/_ai-workforce/pipeline-test_2026-08-03/artifacts/03-pricing.json"
+    },
+    {
+      "claim": "No real campaign metrics — no Meta Marketing/Insights API in this test (0 = no data, not fabricated)",
+      "verbatim_quote": "Meta Marketing API (tạo campaign/adset/ad, ABO test US; set budget; bật/tắt)",
+      "source": "/home/huyenctn/ai_native_company/EU-POD-OPC/03-growth/ai_workforce/vibe-eu-opc-grw-fb-ads/SKILL.md"
+    }
+  ],
+  "confidence_score": 0.3,
+  "need_review": true,
+  "next_action": "STAY HOLD. Return to grw-creative + 05-compliance: (1) obtain Meta Ad Policy clearance + IP/TM clearance (02 REJECT, 'Born to Ride™' unverified); (2) clear GPSR + unblock 04b page; (3) render ≥2 real creative variants (06a is script-only). THEN pre-launch checklist: BE-ROAS per SKU set as winner gate (US 2.15), attribution 7d-click/1d-view, CAPI EMQ ≥ 6, budget test $10/ad set on T3, escalate OPC if >$150/day. ESCALATE the KILL-threshold conflict (SOP/skill=1.8 Platform vs _rules/_knowledge/orchestrator=1.5) to 03-growth owner to reconcile before live kill decisions.",
+  "winner_registry_written": false
+}

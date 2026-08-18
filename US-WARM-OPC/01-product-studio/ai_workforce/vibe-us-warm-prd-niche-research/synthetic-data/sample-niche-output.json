@@ -1,0 +1,51 @@
+{
+  "niche": "pet memorial blanket for dog owners",
+  "niche_category": "pet-memorial",
+  "demand_score": 78,
+  "audience_proxy": 620000,
+  "competition_level": "medium",
+  "margin_fit": "good",
+  "ip_risk_flag": "CLEAR",
+  "seasonal_window": {
+    "type": "evergreen",
+    "peak_week": "none",
+    "design_deadline": "rolling",
+    "weeks_before_peak": 0
+  },
+  "rubric_breakdown": {
+    "demand_40": 32,
+    "competition_25": 18,
+    "margin_fit_20": 16,
+    "ip_risk_15": 12
+  },
+  "evidence": [
+    {
+      "claim": "Demand gate for validating a niche is demand_score >= 70, which this niche (78) clears.",
+      "verbatim_quote": "gate demand_score ≥ 70",
+      "source": "../../../research-niche/template/sop_prd-001_gift-niche-research_v1.0_2026-08-04.md",
+      "location": "SOP-PRD-001 §2 Control"
+    },
+    {
+      "claim": "Evergreen pet-memorial niche has no hard seasonal design deadline; the >=6-week rule applies only to seasonal peaks.",
+      "verbatim_quote": "seasonal design-deadline ≥ 6 tuần trước peak",
+      "source": "../../../research-niche/template/sop_prd-001_gift-niche-research_v1.0_2026-08-04.md",
+      "location": "SOP-PRD-001 §2 Control"
+    },
+    {
+      "claim": "At $59.95 the blanket clears the 15% contribution floor comfortably, so margin_fit=good.",
+      "verbatim_quote": "Giá $59.95 khoẻ hơn nhiều: BE-ROAS thấp + đạt free-ship threshold.",
+      "source": "../../../../_shared/unit-economics.md",
+      "location": "unit-economics §4 example"
+    },
+    {
+      "claim": "pet-memorial is an in-scope personalization for the P0 blanket line (own photo/name/message => IP CLEAR concept).",
+      "verbatim_quote": "tên, ảnh, thông điệp, pet-memorial",
+      "source": "../../../../00-company/charter_company-charter_v1.0_2026-08-04.md",
+      "location": "Charter §3 Product table (P0)"
+    }
+  ],
+  "confidence_score": 0.8,
+  "need_review": false,
+  "decision": "validated",
+  "notes": "Synthetic fixture. audience_proxy and demand_score are documented estimates corroborated by cited repo files; a production run must replace them with measured Google Trends + Meta Ad Library signals. IP CLEAR = no third-party IP in concept (own pet photo); official trademark clearance is out of scope for this skill (-> bck-compliance)."
+}

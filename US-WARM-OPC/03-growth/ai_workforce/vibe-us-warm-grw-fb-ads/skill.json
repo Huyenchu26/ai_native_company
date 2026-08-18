@@ -1,0 +1,20 @@
+{
+  "$schema": "../../../_shared/schema/skill-meta.schema.json",
+  "name": "vibe-us-warm-grw-fb-ads",
+  "version": "1.0.0",
+  "description": "Run US Facebook ads for DAKOfits personalized blankets. Single KILL threshold 1.8 (fix EU 1.5/1.8 split); scale gated by per-SKU BE-ROAS, never hard-coded (fix EU ROAS-2.5). Fail-closed: no Meta token -> launch=false plan-only, ROAS/spend=null (never fabricated); no ads without a live product.",
+  "role": "Growth / Facebook Ads Buyer (US blankets)",
+  "department": "03-growth",
+  "quality_tier": "GPS-ENHANCED",
+  "sop_coverage": ["GRW-002"],
+  "quality_gates": [
+    { "name": "launch_requires_live_product_and_ftc", "min_confidence": 0.8 },
+    { "name": "scale_requires_be_roas", "min_confidence": 0.8 },
+    { "name": "single_kill_threshold_1_8", "min_confidence": 0.7 },
+    { "name": "evidence_verbatim", "min_confidence": 0.7 }
+  ],
+  "dependencies": {
+    "upstream": ["vibe-us-warm-grw-orchestrator", "vibe-us-warm-mer-catalog", "vibe-us-warm-grw-creative"],
+    "downstream": ["vibe-us-warm-ful-orchestrator"]
+  }
+}

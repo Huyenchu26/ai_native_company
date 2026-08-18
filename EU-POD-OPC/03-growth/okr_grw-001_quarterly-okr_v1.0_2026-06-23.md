@@ -3,7 +3,7 @@
 **Dept:** grw · **Set bởi:** OPC · **Ngày:** 2026-06-23
 **Align:** Company **O1** (doanh số ổn định & có lãi)
 
-> v2.0 Evidence-bound: mọi target có evidence + confidence_score + need_review. Stretch (hiệu suất/tự-động-hóa, giữ trần 500tr) → need_review = true → [review-queue](../00-company/output/review-queue.md).
+> v2.0 Evidence-bound: mọi target có evidence + confidence_score + need_review. Stretch (hiệu suất/tự-động-hóa, giữ trần 500tr) → need_review = true → [review-queue](../output/review-queue.md).
 
 ---
 
@@ -44,7 +44,7 @@
 - **Cashflow fund winner:** vốn xoay để scale winner có hạn → không thể đẩy budget đột biến lên mốc 5 tỷ.
 - **Số BM/ad account:** BM 5-tier hiện hữu chỉ đủ chạy số batch promote giới hạn song song; mở rộng x10 cần nhiều BM verified (rủi ro ban + thời gian warm-up).
 
-**Evidence:** Không có benchmark nội bộ cho target hiệu suất mới (auto-optimize %, CPA $15) → cần đo baseline 30 ngày. *confidence: 0.4 · need_review: **true*** → [review-queue](../00-company/output/review-queue.md)
+**Evidence:** Không có benchmark nội bộ cho target hiệu suất mới (auto-optimize %, CPA $15) → cần đo baseline 30 ngày. *confidence: 0.4 · need_review: **true*** → [review-queue](../output/review-queue.md)
 
 ---
 

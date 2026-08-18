@@ -1,0 +1,58 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://us-warm-opc/schema/mockup-set.schema.json",
+  "title": "Mockup Set / Personalization Preview (MER-002 output)",
+  "description": "2-phase (validation/production). Fixes EU bugs: M4 (schema supports validation-first + 9:16 ratio) and H1 (no phantom images). evidence[] = unified company contract (inlined). Gate allOf/if-then: phase=production => min_images_met AND every image rendered with local_file.",
+  "type": "object",
+  "additionalProperties": true,
+  "required": ["set_id", "sku", "phase", "images", "min_images_met", "print_accuracy_pass", "evidence", "confidence_score", "need_review"],
+  "properties": {
+    "set_id": { "type": "string", "minLength": 1 },
+    "sku": { "type": "string", "minLength": 1 },
+    "phase": { "type": "string", "enum": ["validation", "production"] },
+    "images": {
+      "type": "array", "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": ["type", "ratio", "render_status", "local_file"],
+        "properties": {
+          "type": { "type": "string", "enum": ["hero", "lifestyle", "personalization-demo", "flat-lay", "story"] },
+          "ratio": { "type": "string", "enum": ["1:1", "4:5", "9:16"] },
+          "render_status": { "type": "string", "enum": ["rendered", "not-generated"] },
+          "local_file": { "type": ["string", "null"], "description": "Path to file ON DISK, or null when not-generated. NEVER claim a file that is not on disk (fix H1)." },
+          "prompt": { "type": "string" }
+        }
+      }
+    },
+    "min_images_met": { "type": "boolean" },
+    "print_accuracy_pass": { "type": ["boolean", "null"], "description": "null in validation phase (not measurable yet); boolean in production." },
+    "evidence": {
+      "type": "array", "minItems": 1,
+      "items": { "type": "object", "required": ["claim", "verbatim_quote", "source"],
+        "properties": { "claim": {"type": "string"}, "verbatim_quote": {"type": "string", "minLength": 1}, "source": {"type": "string"}, "location": {"type": "string"} } }
+    },
+    "confidence_score": { "type": "number", "minimum": 0, "maximum": 1 },
+    "need_review": { "type": "boolean" }
+  },
+  "allOf": [
+    {
+      "$comment": "GATE (MER-002, fix H1+M4): phase=production => min_images_met=true AND every image rendered with a local_file.",
+      "if": { "required": ["phase"], "properties": { "phase": { "const": "production" } } },
+      "then": {
+        "required": ["min_images_met", "images"],
+        "properties": {
+          "min_images_met": { "const": true },
+          "images": { "items": { "properties": {
+            "render_status": { "const": "rendered" },
+            "local_file": { "type": "string", "minLength": 1 }
+          } } }
+        }
+      }
+    },
+    {
+      "$comment": "Fail-closed: need_review=false => confidence>=0.7.",
+      "if": { "required": ["need_review"], "properties": { "need_review": { "const": false } } },
+      "then": { "required": ["confidence_score"], "properties": { "confidence_score": { "minimum": 0.7 } } }
+    }
+  ]
+}

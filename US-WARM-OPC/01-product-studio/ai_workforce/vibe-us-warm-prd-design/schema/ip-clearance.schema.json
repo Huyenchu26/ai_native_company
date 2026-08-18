@@ -1,0 +1,103 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://us-warm-opc/schema/ip-clearance.schema.json",
+  "title": "IP / TM Clearance Pre-check (SOP-PRD-003, US single-market)",
+  "description": "Một record per phrase/artwork/photo — kết quả IP/TM pre-check của prd-design. US ONLY: USPTO TESS (KHÔNG có EUIPO — đây là single-market, khác EU dual-market). Vocabulary NHẤT QUÁN: enum CLEAR (KHÔNG 'PASS'). Gate fail-closed: status=CLEAR ⇒ uspto_checked=true AND licensed_char_match=0 AND clearance_id present.",
+  "type": "object",
+  "required": [
+    "status",
+    "uspto_checked",
+    "licensed_char_match",
+    "photo_consent",
+    "clearance_id",
+    "evidence",
+    "confidence_score",
+    "need_review"
+  ],
+  "properties": {
+    "status": {
+      "type": "string",
+      "enum": ["CLEAR", "MODIFY", "REJECT", "PENDING"],
+      "description": "CLEAR=clear để handoff · MODIFY=sửa term/artwork → re-clear · REJECT=loại (match TM/licensed) · PENDING=chưa tra được (fail-closed, KHÔNG mặc định CLEAR)"
+    },
+    "phrase": {
+      "type": "string",
+      "description": "Slogan/phrase/tên trên design nền hoặc field khách nhập được tra"
+    },
+    "uspto_checked": {
+      "type": "boolean",
+      "description": "Đã tra USPTO TESS. false → KHÔNG được CLEAR (→ PENDING)."
+    },
+    "licensed_char_match": {
+      "type": "integer",
+      "minimum": 0,
+      "description": "Số match với blocklist licensed character (Disney/sports/brand). > 0 → REJECT."
+    },
+    "photo_consent": {
+      "type": ["boolean", "null"],
+      "description": "Khách xác nhận sở hữu/được phép dùng ảnh. null = không áp dụng (design không có field ảnh). false + có ảnh → block."
+    },
+    "clearance_id": {
+      "type": ["string", "null"],
+      "description": "ID clearance CHÍNH THỨC do bck-compliance cấp. prd-design chỉ pre-check → null cho tới khi compliance ký. CLEAR bắt buộc có clearance_id (không null)."
+    },
+    "risk_level": {
+      "type": "string",
+      "enum": ["LOW", "MED", "HIGH"],
+      "description": "Mức rủi ro pre-flag; HIGH/uncertain → need_review=true → Owner"
+    },
+    "evidence": {
+      "type": "array",
+      "minItems": 1,
+      "description": "Unified evidence contract: array<{claim, verbatim_quote, source(filepath), location?}>. Nguồn: uspto-tess, licensed-blocklist, photo-consent-policy.",
+      "items": {
+        "type": "object",
+        "required": ["claim", "verbatim_quote", "source"],
+        "properties": {
+          "claim": {"type": "string"},
+          "verbatim_quote": {"type": "string", "minLength": 1},
+          "source": {"type": "string"},
+          "location": {"type": "string"}
+        }
+      }
+    },
+    "confidence_score": {
+      "type": "number",
+      "minimum": 0,
+      "maximum": 1,
+      "description": "Độ tự tin; < 0.7 → need_review=true"
+    },
+    "need_review": {
+      "type": "boolean",
+      "description": "True khi HIGH-risk / uncertain / dưới confidence floor → Owner. Official sign-off → bck-compliance."
+    }
+  },
+  "allOf": [
+    {
+      "$comment": "GATE — status=CLEAR ⇒ uspto_checked=true AND licensed_char_match=0 AND clearance_id present (string, not null)",
+      "if": {
+        "properties": {"status": {"const": "CLEAR"}},
+        "required": ["status"]
+      },
+      "then": {
+        "properties": {
+          "uspto_checked": {"const": true},
+          "licensed_char_match": {"const": 0},
+          "clearance_id": {"type": "string", "minLength": 1}
+        },
+        "required": ["uspto_checked", "licensed_char_match", "clearance_id"]
+      }
+    },
+    {
+      "$comment": "Fail-closed: confidence thấp thì phải need_review",
+      "if": {
+        "properties": {"confidence_score": {"exclusiveMaximum": 0.7}},
+        "required": ["confidence_score"]
+      },
+      "then": {
+        "properties": {"need_review": {"const": true}},
+        "required": ["need_review"]
+      }
+    }
+  ]
+}

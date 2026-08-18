@@ -1,0 +1,62 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://us-warm-opc/schema/product-page.schema.json",
+  "title": "Gift Product Page / Listing (MER-003 output)",
+  "description": "US listing with FTC/CPSC compliance. Fixes EU bugs: models a blocked state (P3), gate enforced via allOf/if-then (not decorative). evidence[] = unified company contract. Escalate compliance -> vibe-us-warm-bck-compliance.",
+  "type": "object",
+  "additionalProperties": true,
+  "required": ["page_id", "sku", "title", "bullets", "description", "personalization_ux", "cpsc_fiber_label", "care_label", "ftc_clean", "final_sale_disclosed", "publish_status", "social_proof", "evidence", "confidence_score", "need_review"],
+  "properties": {
+    "page_id": { "type": "string", "minLength": 1 },
+    "sku": { "type": "string", "minLength": 1 },
+    "title": { "type": "string", "minLength": 1 },
+    "bullets": { "type": "array", "minItems": 5, "items": { "type": "string" } },
+    "description": { "type": "string", "minLength": 1 },
+    "personalization_ux": {
+      "type": "object", "required": ["fields", "photo_required"],
+      "properties": {
+        "fields": { "type": "array", "items": { "type": "string" } },
+        "max_chars": { "type": "integer" },
+        "photo_required": { "type": "boolean" }
+      }
+    },
+    "cpsc_fiber_label": { "type": ["string", "null"], "description": "Textile Fiber Products Identification Act label (fiber content + RN). null = not present -> cannot publish." },
+    "care_label": { "type": "string" },
+    "ftc_clean": { "type": "boolean", "description": "No deceptive claim / no fake review (FTC 16 CFR 255). Verify with validator --prose." },
+    "final_sale_disclosed": { "type": "boolean", "description": "Personalized = final sale (except defect). Must be disclosed." },
+    "publish_status": { "type": "string", "enum": ["publish-ready", "blocked", "draft"] },
+    "social_proof": {
+      "type": "object", "required": ["rating"],
+      "properties": {
+        "rating": { "type": "number", "minimum": 0, "maximum": 5, "description": "0 until real reviews exist. NEVER fabricate." },
+        "review_count": { "type": "integer", "minimum": 0 }
+      }
+    },
+    "evidence": {
+      "type": "array", "minItems": 1,
+      "items": { "type": "object", "required": ["claim", "verbatim_quote", "source"],
+        "properties": { "claim": {"type": "string"}, "verbatim_quote": {"type": "string", "minLength": 1}, "source": {"type": "string"}, "location": {"type": "string"} } }
+    },
+    "confidence_score": { "type": "number", "minimum": 0, "maximum": 1 },
+    "need_review": { "type": "boolean" }
+  },
+  "allOf": [
+    {
+      "$comment": "GATE (MER-003): publish-ready => CPSC label present AND FTC clean AND final-sale disclosed. A blocked page is valid (fixes EU P3 happy-path-only).",
+      "if": { "required": ["publish_status"], "properties": { "publish_status": { "const": "publish-ready" } } },
+      "then": {
+        "required": ["cpsc_fiber_label", "ftc_clean", "final_sale_disclosed"],
+        "properties": {
+          "cpsc_fiber_label": { "type": "string", "minLength": 1 },
+          "ftc_clean": { "const": true },
+          "final_sale_disclosed": { "const": true }
+        }
+      }
+    },
+    {
+      "$comment": "Fail-closed: need_review=false => confidence>=0.7.",
+      "if": { "required": ["need_review"], "properties": { "need_review": { "const": false } } },
+      "then": { "required": ["confidence_score"], "properties": { "confidence_score": { "minimum": 0.7 } } }
+    }
+  ]
+}

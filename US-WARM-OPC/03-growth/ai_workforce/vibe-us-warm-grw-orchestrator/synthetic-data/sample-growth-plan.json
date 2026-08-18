@@ -1,0 +1,18 @@
+{
+  "batch_id": "GROWTH-2026-08-PETMEM",
+  "live_product_ready": true,
+  "creatives": [ { "creative_id": "CRE-DAKO-BLK-PETMEM-01", "angle": "pet-memorial", "launch_ready": false } ],
+  "active_ads": [
+    { "sku": "DAKO-BLK-PETMEM-59", "live_product_ready": true, "ftc_clean": true }
+  ],
+  "evidence": [
+    {
+      "claim": "The single KILL threshold is Platform ROAS below 1.8, consistent across orchestrator and executor.",
+      "verbatim_quote": "1 ngưỡng KILL duy nhất",
+      "source": "../../../_rules/README.md",
+      "location": "non-negotiable 1"
+    }
+  ],
+  "confidence_score": 0.8,
+  "need_review": false
+}

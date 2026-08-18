@@ -1,4 +1,5 @@
 {
+  "$schema": "./schema/skill-meta.schema.json",
   "name": "vibe-eu-opc-ful-cx",
   "version": "1.0",
   "description": "CX support EN + returns/refund/exchange cho khách US/EU của DAKOfits theo SOP-FUL-003/004: classify ticket (WISMO/size/defect/refund/GDPR), respond EN SLO 2h/SLA 4h, CSAT >=4.0, size XS-3XL, reprint-first, refund auto <=$30 else escalate OPC, EU Art.16(c), GDPR DSAR <=20d.",

@@ -1,0 +1,20 @@
+{
+  "$schema": "../../../_shared/schema/skill-meta.schema.json",
+  "name": "vibe-us-warm-prd-niche-research",
+  "version": "1.0.0",
+  "description": "Research + score personalized-gift blanket niches (occasion x relationship x recipient) for DAKOfits US. Produces evidence-bound niche-validation.json for design handoff. Fail-closed: missing live tool -> estimate + confidence<0.7 + need_review, never fabricated numbers.",
+  "role": "Gift Niche Research Analyst (US personalized blankets)",
+  "department": "01-product-studio",
+  "quality_tier": "GPS-ENHANCED",
+  "sop_coverage": ["PRD-001"],
+  "quality_gates": [
+    { "name": "demand_score", "min_confidence": 0.7 },
+    { "name": "margin_fit_contribution_15pct", "min_confidence": 0.7 },
+    { "name": "ip_pre_flag_not_high", "min_confidence": 0.7 },
+    { "name": "evidence_verbatim", "min_confidence": 0.7 }
+  ],
+  "dependencies": {
+    "upstream": ["vibe-us-warm-prd-orchestrator"],
+    "downstream": ["vibe-us-warm-prd-design"]
+  }
+}

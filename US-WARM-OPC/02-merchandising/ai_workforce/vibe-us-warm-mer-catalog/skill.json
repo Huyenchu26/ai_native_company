@@ -1,0 +1,20 @@
+{
+  "$schema": "../../../_shared/schema/skill-meta.schema.json",
+  "name": "vibe-us-warm-mer-catalog",
+  "version": "1.0.0",
+  "description": "Price personalized blankets by contribution margin + BE-ROAS per-SKU (US, no VAT), and go-live catalog for DAKOfits. Fail-closed: missing supplier cost -> ASSUMPTION + need_review, never fabricated; missing Shopify token -> live_status=pending, never claims live.",
+  "role": "Merchandising Pricing & Catalog Ops (US personalized blankets)",
+  "department": "02-merchandising",
+  "quality_tier": "EXPERT-CLONE",
+  "sop_coverage": ["MER-001", "MER-004"],
+  "quality_gates": [
+    { "name": "contribution_floor_15pct", "min_confidence": 0.7 },
+    { "name": "be_roas_per_sku_no_hardcode", "min_confidence": 0.7 },
+    { "name": "go_live_three_gate", "min_confidence": 0.8 },
+    { "name": "evidence_verbatim", "min_confidence": 0.7 }
+  ],
+  "dependencies": {
+    "upstream": ["vibe-us-warm-prd-orchestrator", "vibe-us-warm-mer-orchestrator"],
+    "downstream": ["vibe-us-warm-mer-visual", "vibe-us-warm-mer-product-page", "vibe-us-warm-grw-orchestrator"]
+  }
+}

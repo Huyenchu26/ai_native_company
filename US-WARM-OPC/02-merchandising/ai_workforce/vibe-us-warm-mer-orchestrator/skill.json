@@ -1,0 +1,19 @@
+{
+  "$schema": "../../../_shared/schema/skill-meta.schema.json",
+  "name": "vibe-us-warm-mer-orchestrator",
+  "version": "1.0.0",
+  "description": "Manager for Merchandising — routes pricing -> preview -> listing -> go-live for DAKOfits US blankets. Consumes design CLEAR from 01 (enum matches prd-orchestrator, no PASS/CLEAR mismatch). Does not execute; dispatches and enforces the go-live gate.",
+  "role": "Merchandising Orchestrator / Manager (US blankets)",
+  "department": "02-merchandising",
+  "quality_tier": "GPS-ENHANCED",
+  "sop_coverage": ["MER-001", "MER-002", "MER-003", "MER-004"],
+  "quality_gates": [
+    { "name": "go_live_three_gate", "min_confidence": 0.8 },
+    { "name": "design_clearance_enum_match", "min_confidence": 0.7 },
+    { "name": "evidence_verbatim", "min_confidence": 0.7 }
+  ],
+  "dependencies": {
+    "upstream": ["vibe-us-warm-prd-orchestrator"],
+    "downstream": ["vibe-us-warm-grw-orchestrator"]
+  }
+}

@@ -1,0 +1,35 @@
+{
+  "design_id": "DSG-US-0001",
+  "niche": "pet-memorial",
+  "personalization_fields": ["name", "photo", "message"],
+  "material_type": "fleece",
+  "material_gsm": 300,
+  "min_dpi": 180,
+  "safe_area_pass": true,
+  "design_status": "CLEAR",
+  "ip_status": "CLEAR",
+  "handoff_ready": true,
+  "preview_brief": "Nền tưởng niệm thú cưng (soft pastel); slot ảnh khách + tên + message canh giữa trong safe-area; đề nghị mer-visual render mockup preview XS-representative.",
+  "evidence": [
+    {
+      "claim": "Material fleece 300 GSM đạt ngưỡng brand-promise (>=260), no under-spec.",
+      "verbatim_quote": "Fleece/sherpa GSM tối thiểu brand-promise = 260 GSM; dưới ngưỡng = under-spec, đổi vải không hạ ngưỡng.",
+      "source": "/home/huyenctn/ai_native_company/US-WARM-OPC/01-product-studio/ai_workforce/vibe-us-warm-prd-design/kb/design-ip-playbook.md",
+      "location": "section 2.3"
+    },
+    {
+      "claim": "Ảnh khách 180 DPI tại size in thật đạt floor no-upscale (>=150), không upscale.",
+      "verbatim_quote": "Ảnh khách phải đạt tối thiểu 150 DPI tại kích thước in thật; dưới ngưỡng REJECT và re-source, tuyệt đối không upscale.",
+      "source": "/home/huyenctn/ai_native_company/US-WARM-OPC/01-product-studio/ai_workforce/vibe-us-warm-prd-design/kb/design-ip-playbook.md",
+      "location": "section 2.2"
+    },
+    {
+      "claim": "Chữ và ảnh nằm trong safe-area, tránh mép seam.",
+      "verbatim_quote": "Mọi chữ và ảnh cá nhân hoá phải nằm trọn trong safe-area, cách mép seam an toàn.",
+      "source": "/home/huyenctn/ai_native_company/US-WARM-OPC/01-product-studio/ai_workforce/vibe-us-warm-prd-design/kb/design-ip-playbook.md",
+      "location": "section 2.1"
+    }
+  ],
+  "confidence_score": 0.88,
+  "need_review": false
+}

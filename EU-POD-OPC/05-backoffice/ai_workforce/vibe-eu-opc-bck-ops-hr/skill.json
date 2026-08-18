@@ -1,4 +1,5 @@
 {
+  "$schema": "./schema/skill-meta.schema.json",
   "name": "vibe-eu-opc-bck-ops-hr",
   "version": "1.0",
   "description": "Ops/HR AI cho AI Workforce DAKOfits: theo doi uptime (>=99%), token/API cost, output quality (reject <10%), capacity, cap nhat skill/SOP theo version, weekly report + escalation. Quan roster 2 lop skill (legacy vibe-opc-pod-* + EU-OPC-specific), dem so that. SOP-BCK-006.",

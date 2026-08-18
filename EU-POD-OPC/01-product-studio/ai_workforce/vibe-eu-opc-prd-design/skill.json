@@ -1,4 +1,5 @@
 {
+  "$schema": "./schema/skill-meta.schema.json",
   "name": "vibe-eu-opc-prd-design",
   "version": "1.0",
   "description": "Tạo AOP design print-ready 300 DPI (4 loại tile/watercolor/funny/mandala) + QC 360° seamless và IP/TM clearance USPTO+EUIPO theo SOP-PRD-003/004 cho DAKOfits; gate cứng no-clearance-no-listing, handoff Merch.",

@@ -1,4 +1,5 @@
 {
+  "$schema": "./schema/skill-meta.schema.json",
   "name": "vibe-eu-opc-prd-orchestrator",
   "version": "1.0",
   "description": "Manager điều phối Product Studio DAKOfits: chuỗi niche -> AOP design -> IP/TM clearance -> handoff Merch (đăng ShopBase), theo SOP-PRD-001..004, enforce gate no-clearance-no-listing, conservative REJECT khi nghi ngờ trademark.",

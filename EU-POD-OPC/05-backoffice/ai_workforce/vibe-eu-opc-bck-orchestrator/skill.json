@@ -1,5 +1,5 @@
 {
-  "$schema": "../schema/skill-meta.schema.json",
+  "$schema": "./schema/skill-meta.schema.json",
   "name": "vibe-eu-opc-bck-orchestrator",
   "version": "1.0",
   "description": "Manager điều phối toàn bộ phòng Backoffice (L3) DAKOfits: route task tài chính/compliance/workforce sang đúng specialist theo SOP-BCK-001..006, enforce gate cứng legal (GPSR/Meta policy/GDPR/VAT), tổng hợp CEO brief cho Owner. KHÔNG execute trực tiếp.",

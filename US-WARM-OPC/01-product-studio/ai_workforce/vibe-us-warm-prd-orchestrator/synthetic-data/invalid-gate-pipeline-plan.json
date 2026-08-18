@@ -1,0 +1,47 @@
+{
+  "batch_id": "PRD-PIPE-2026-08-17-batchBAD-pending-in-handoff",
+  "handoff_to_merch": true,
+  "handoff_target": "vibe-us-warm-mer-orchestrator",
+  "validated_niches": [
+    {
+      "niche_name": "pet memorial blanket",
+      "occasion": "memorial",
+      "relationship": "pet",
+      "demand_score": 74,
+      "ip_preflag": "MEDIUM",
+      "status": "validated"
+    }
+  ],
+  "designs": [
+    {
+      "design_id": "DSGN-PETMEM-01",
+      "niche": "pet memorial blanket",
+      "design_status": "PENDING",
+      "ip_status": "PENDING",
+      "clearance_id": null,
+      "uspto_checked": false
+    }
+  ],
+  "gate_checks": {
+    "ip_clearance": "CLEAR"
+  },
+  "cleared_for_handoff": [
+    {
+      "design_id": "DSGN-PETMEM-01",
+      "niche": "pet memorial blanket",
+      "clearance_status": "CLEAR",
+      "design_status": "PENDING",
+      "clearance_id": "IP-US-2026-0899-9999"
+    }
+  ],
+  "evidence": [
+    {
+      "claim": "Enum clearance CLEAR/MODIFY/REJECT/PENDING",
+      "verbatim_quote": "CLEAR / MODIFY / REJECT / PENDING",
+      "source": "../../../clear-ip/template/sop_prd-003_ip-tm-clearance-us_v1.0_2026-08-04.md",
+      "location": "SOP-PRD-003 §2"
+    }
+  ],
+  "confidence_score": 0.84,
+  "need_review": false
+}

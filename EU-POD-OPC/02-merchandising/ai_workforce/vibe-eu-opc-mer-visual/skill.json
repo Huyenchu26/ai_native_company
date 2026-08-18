@@ -1,4 +1,5 @@
 {
+  "$schema": "./schema/skill-meta.schema.json",
   "name": "vibe-eu-opc-mer-visual",
   "version": "1.0",
   "description": "Tạo brief + render-prompt mockup + QC bộ 6 ảnh sản phẩm theo mockup-style-guide cho ShopBase DAKOfits (POD AOP leggings đa-niche) theo SOP-MER-005. Pipeline 2 bước giữ print 100%, gate print-accuracy cứng. Tạo SPEC+PROMPT, KHÔNG tự render ảnh.",

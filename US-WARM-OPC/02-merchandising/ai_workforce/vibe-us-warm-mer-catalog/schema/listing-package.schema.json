@@ -1,0 +1,40 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://us-warm-opc/schema/listing-package.schema.json",
+  "title": "Listing Package / Go-Live (MER-004 output)",
+  "description": "Catalog go-live artifact. evidence[] = unified company contract (inlined). Gate allOf/if-then: live_status=live => pricing_floor_pass AND images_on_disk AND product_page_publish_ready. Fail-closed: missing Shopify token -> pending.",
+  "type": "object",
+  "additionalProperties": true,
+  "required": ["sku", "price", "images_ref", "page_ref", "live_status", "pricing_floor_pass", "images_on_disk", "product_page_publish_ready", "evidence", "confidence_score", "need_review"],
+  "properties": {
+    "sku": { "type": "string", "minLength": 1 },
+    "price": { "type": "number", "minimum": 0 },
+    "images_ref": { "type": "string", "description": "Path/ref to mockup-set output" },
+    "page_ref": { "type": "string", "description": "Path/ref to product-page output" },
+    "live_status": { "type": "string", "enum": ["live", "pending", "blocked"] },
+    "pricing_floor_pass": { "type": "boolean" },
+    "images_on_disk": { "type": "boolean" },
+    "product_page_publish_ready": { "type": "boolean" },
+    "shopify_synced": { "type": "boolean" },
+    "evidence": {
+      "type": "array", "minItems": 1,
+      "items": { "type": "object", "required": ["claim", "verbatim_quote", "source"],
+        "properties": { "claim": {"type": "string"}, "verbatim_quote": {"type": "string", "minLength": 1}, "source": {"type": "string"}, "location": {"type": "string"} } }
+    },
+    "confidence_score": { "type": "number", "minimum": 0, "maximum": 1 },
+    "need_review": { "type": "boolean" }
+  },
+  "allOf": [
+    {
+      "$comment": "GATE (MER-004): live_status=live => all three upstream gates pass.",
+      "if": { "required": ["live_status"], "properties": { "live_status": { "const": "live" } } },
+      "then": { "required": ["pricing_floor_pass", "images_on_disk", "product_page_publish_ready"],
+        "properties": { "pricing_floor_pass": {"const": true}, "images_on_disk": {"const": true}, "product_page_publish_ready": {"const": true} } }
+    },
+    {
+      "$comment": "Fail-closed: need_review=false => confidence>=0.7.",
+      "if": { "required": ["need_review"], "properties": { "need_review": { "const": false } } },
+      "then": { "required": ["confidence_score"], "properties": { "confidence_score": { "minimum": 0.7 } } }
+    }
+  ]
+}

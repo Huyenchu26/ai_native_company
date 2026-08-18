@@ -1,0 +1,197 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://us-warm-opc/schema/pipeline-plan.schema.json",
+  "title": "Product Studio Pipeline Plan (vibe-us-warm-prd-orchestrator)",
+  "description": "Artifact điều phối của orchestrator: kế hoạch chuỗi niche-research (PRD-001) -> design+personalization (PRD-002) -> IP/TM clearance (PRD-003) -> handoff 02-merchandising. Orchestrator KHÔNG execute, chỉ route + enforce gate. Enum clearance = CLEAR/MODIFY/REJECT/PENDING (KHỚP y hệt output vibe-us-warm-prd-design; KHÔNG dùng PASS như bug EU). Evidence theo shape chung _shared/schema/evidence.schema.json.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "batch_id",
+    "validated_niches",
+    "designs",
+    "gate_checks",
+    "cleared_for_handoff",
+    "evidence",
+    "confidence_score",
+    "need_review"
+  ],
+  "properties": {
+    "batch_id": {
+      "type": "string",
+      "description": "Định danh đợt pipeline, vd PRD-PIPE-2026-08-17-batch01"
+    },
+    "handoff_to_merch": {
+      "type": "boolean",
+      "description": "True khi cleared_for_handoff đã đóng gói + bàn giao vibe-us-warm-mer-orchestrator. KHÔNG bao giờ route thẳng Growth."
+    },
+    "handoff_target": {
+      "type": "string",
+      "description": "Downstream nhận handoff (mặc định vibe-us-warm-mer-orchestrator)."
+    },
+    "validated_niches": {
+      "type": "array",
+      "description": "Output route PRD-001 (vibe-us-warm-prd-niche-research): niche quà tặng cá nhân hoá đã chấm điểm.",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": ["niche_name", "status"],
+        "properties": {
+          "niche_name": {"type": "string"},
+          "occasion": {"type": "string"},
+          "relationship": {"type": "string"},
+          "demand_score": {"type": "number"},
+          "audience_proxy": {"type": "integer", "minimum": 0},
+          "margin_fit_pct": {"type": "number"},
+          "ip_preflag": {
+            "type": "string",
+            "enum": ["NONE", "LOW", "MEDIUM", "HIGH"]
+          },
+          "peak_week": {"type": "string"},
+          "design_deadline": {"type": "string"},
+          "status": {
+            "type": "string",
+            "enum": ["validated", "watchlist", "rejected"]
+          }
+        }
+      }
+    },
+    "designs": {
+      "type": "array",
+      "description": "Output route PRD-002/PRD-003 (vibe-us-warm-prd-design): design-spec + ip-clearance đã merge. KHÔNG đặt additionalProperties:false ở item để field design thật (dpi/material/safe-area/variable slots) truyền qua không gãy handoff.",
+      "items": {
+        "type": "object",
+        "required": ["design_id", "niche", "design_status", "ip_status"],
+        "properties": {
+          "design_id": {"type": "string"},
+          "niche": {"type": "string", "description": "KHỚP field 'niche' của design-spec vibe-us-warm-prd-design (không phải niche_name)."},
+          "design_status": {
+            "type": "string",
+            "enum": ["CLEAR", "MODIFY", "REJECT", "PENDING"],
+            "description": "KHỚP y hệt design_status của vibe-us-warm-prd-design/schema/design-spec.schema.json (SOP-PRD-002 §5)."
+          },
+          "ip_status": {
+            "type": "string",
+            "enum": ["CLEAR", "MODIFY", "REJECT", "PENDING"],
+            "description": "KHỚP y hệt ip_status (design-spec) / status (ip-clearance) của vibe-us-warm-prd-design (SOP-PRD-003 §2). PENDING = chưa tra được, fail-closed, KHÔNG mặc định CLEAR."
+          },
+          "clearance_id": {
+            "type": ["string", "null"],
+            "description": "ID clearance chính thức do bck-compliance cấp (design-spec/ip-clearance: null cho tới khi ký); CHỈ khi có (string) mới cho handoff."
+          },
+          "min_dpi": {"type": "integer", "minimum": 0, "description": "Passthrough từ design-spec (no-upscale)."},
+          "material_gsm": {"type": "integer", "minimum": 0},
+          "material_type": {"type": "string"},
+          "safe_area_pass": {"type": "boolean"},
+          "personalization_fields": {"type": "array"},
+          "handoff_ready": {"type": "boolean"},
+          "uspto_checked": {"type": "boolean"}
+        }
+      }
+    },
+    "gate_checks": {
+      "type": "object",
+      "description": "Kết quả các hard gate của Product Studio (error budget 0).",
+      "required": ["ip_clearance"],
+      "properties": {
+        "ip_clearance": {
+          "type": "string",
+          "description": "Kết quả IP/TM gate tổng hợp (SOP-PRD-003, US USPTO). Enum khớp prd-design.",
+          "enum": ["CLEAR", "MODIFY", "REJECT", "PENDING"]
+        },
+        "material_spec_ok": {"type": "boolean", "description": "GSM ≥ ngưỡng brand-promise (no under-spec)."},
+        "no_upscale_dpi_ok": {"type": "boolean", "description": "Ảnh khách ≥ min DPI @ print size (no upscale)."},
+        "uspto_before_clear_ok": {"type": "boolean", "description": "USPTO TESS đã tra trước khi CLEAR."},
+        "safe_area_ok": {"type": "boolean"}
+      }
+    },
+    "cleared_for_handoff": {
+      "type": "array",
+      "description": "CHỈ design đủ điều kiện bàn giao merch. Gate cứng (allOf/if-then bên dưới + const): mỗi item ⇒ design_status=CLEAR AND clearance_id present AND clearance_status=CLEAR. Không đặt additionalProperties:false để design payload thật truyền qua.",
+      "items": {
+        "type": "object",
+        "required": ["design_id", "niche", "clearance_status", "design_status", "clearance_id"],
+        "properties": {
+          "design_id": {"type": "string"},
+          "niche": {"type": "string"},
+          "clearance_status": {
+            "type": "string",
+            "enum": ["CLEAR"],
+            "description": "CHỈ nhận CLEAR (fail-closed) — item vào đây tức đã qua gate."
+          },
+          "design_status": {
+            "type": "string",
+            "enum": ["CLEAR", "MODIFY", "REJECT", "PENDING"]
+          },
+          "clearance_id": {"type": "string"},
+          "print_ready_path": {"type": "string"}
+        },
+        "allOf": [
+          {
+            "comment": "GATE: một design vào cleared_for_handoff ⇒ design_status=CLEAR AND có clearance_id. clearance_status luôn const CLEAR nên if luôn kích hoạt.",
+            "if": {
+              "required": ["clearance_status"],
+              "properties": {"clearance_status": {"const": "CLEAR"}}
+            },
+            "then": {
+              "required": ["clearance_id"],
+              "properties": {"design_status": {"const": "CLEAR"}}
+            }
+          }
+        ]
+      }
+    },
+    "evidence": {
+      "type": "array",
+      "description": "Shape chung company-wide (_shared/schema/evidence.schema.json): verbatim_quote phải xuất hiện nguyên văn trong file source. verify_evidence() chấm -0.2/thiếu.",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": ["claim", "verbatim_quote", "source"],
+        "properties": {
+          "claim": {"type": "string"},
+          "verbatim_quote": {"type": "string", "minLength": 1},
+          "source": {"type": "string"},
+          "location": {"type": "string"}
+        }
+      }
+    },
+    "confidence_score": {
+      "type": "number",
+      "minimum": 0,
+      "maximum": 1,
+      "description": "Độ tin cậy tổng của plan; < 0.7 ⇒ need_review=true (enforce bên dưới)."
+    },
+    "need_review": {
+      "type": "boolean",
+      "description": "True khi confidence < 0.7, thiếu evidence, IP HIGH/uncertain, hoặc gate chưa CLEAR."
+    }
+  },
+  "allOf": [
+    {
+      "comment": "Conservative: confidence < 0.7 ⇒ need_review=true.",
+      "if": {
+        "properties": {"confidence_score": {"exclusiveMaximum": 0.7}}
+      },
+      "then": {
+        "properties": {"need_review": {"const": true}},
+        "required": ["need_review"]
+      }
+    },
+    {
+      "comment": "Batch gate: có ít nhất 1 design handoff ⇒ IP gate tổng phải CLEAR (no clearance -> no handoff).",
+      "if": {
+        "properties": {"cleared_for_handoff": {"minItems": 1}},
+        "required": ["cleared_for_handoff"]
+      },
+      "then": {
+        "properties": {
+          "gate_checks": {
+            "properties": {"ip_clearance": {"const": "CLEAR"}},
+            "required": ["ip_clearance"]
+          }
+        },
+        "required": ["gate_checks"]
+      }
+    }
+  ]
+}

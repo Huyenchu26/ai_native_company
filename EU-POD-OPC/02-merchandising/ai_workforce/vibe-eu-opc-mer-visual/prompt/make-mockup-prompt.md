@@ -12,7 +12,7 @@
 - `lifestyle_context`: gợi ý bối cảnh niche (vd "yoga ngoài trời lúc bình minh").
 
 ## NHIỆM VỤ
-1. Đọc [_shared/mockup-style-guide.md](../../../_shared/mockup-style-guide.md) + SOP-MER-005 để bám chuẩn.
+1. Đọc [_shared/mockup-style-guide.md](../../../../_shared/mockup-style-guide.md) + SOP-MER-005 để bám chuẩn.
 2. Xác định số ảnh: `is_winner=true` → 6 ảnh (hero-front, hero-back, lifestyle, detail, size, ad); ngược lại → tối thiểu 3 (hero-front, hero-back, lifestyle).
 3. Với MỖI ảnh, viết 1 render-prompt theo chuẩn đồng nhất (#F2F2F0, soft light, đúng tỷ lệ, **KEEP legging print exactly as input**).
 4. Ghi rõ pipeline 2 bước: base mockup (tool nào) → AI enhance (tool nào, inpaint ngoài vùng quần).

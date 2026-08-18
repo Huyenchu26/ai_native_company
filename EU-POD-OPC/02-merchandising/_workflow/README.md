@@ -59,7 +59,7 @@ Index 5 SOP + dependency graph + review-queue.
 
 ## 5. Review-queue
 
-`need_review = true` (stretch OKR x10, target ngoài band, margin ngoại lệ) → ghi vào [`review-queue.md`](review-queue.md) để OPC duyệt.
+`need_review = true` (stretch OKR x10, target ngoài band, margin ngoại lệ) → ghi vào [`review-queue.md`](../../output/review-queue.md) để OPC duyệt.
 
 ## 6. Liên kết
 

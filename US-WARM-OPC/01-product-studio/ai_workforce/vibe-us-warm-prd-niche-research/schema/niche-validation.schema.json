@@ -1,0 +1,137 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://us-warm-opc/schema/niche-validation.schema.json",
+  "title": "Niche Validation (PRD-001 output)",
+  "description": "Output artifact for vibe-us-warm-prd-niche-research. evidence[] uses the COMPANY-WIDE unified evidence contract, inlined identical to _shared/schema/evidence.schema.json#/definitions/evidence_array so the shared validator --run-all can verify verbatim quotes without an external $ref base_uri. Gate encoded with allOf/if-then so Draft7Validator (harness v2) enforces it.",
+  "type": "object",
+  "additionalProperties": true,
+  "required": [
+    "niche",
+    "niche_category",
+    "demand_score",
+    "audience_proxy",
+    "competition_level",
+    "margin_fit",
+    "ip_risk_flag",
+    "seasonal_window",
+    "evidence",
+    "confidence_score",
+    "need_review",
+    "decision"
+  ],
+  "properties": {
+    "niche": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Niche label = occasion x relationship x recipient, e.g. 'pet memorial blanket for dog owners'."
+    },
+    "niche_category": {
+      "type": "string",
+      "enum": ["gift-occasion", "relationship", "pet", "pet-memorial", "baby", "military", "other"]
+    },
+    "demand_score": {
+      "type": "number",
+      "minimum": 0,
+      "maximum": 100,
+      "description": "Weighted rubric score (demand40/competition25/margin-fit20/ip-risk15) normalized 0-100. Gate: >=70 to validate."
+    },
+    "audience_proxy": {
+      "type": "integer",
+      "minimum": 0,
+      "description": "US addressable-audience proxy (Meta reach or documented estimate). SLO >=500000. If from estimate (no live Meta tool), confidence must drop + need_review=true."
+    },
+    "competition_level": {
+      "type": "string",
+      "enum": ["low", "medium", "high"]
+    },
+    "margin_fit": {
+      "type": "string",
+      "enum": ["good", "borderline", "poor"],
+      "description": "good=contribution >=15% comfortably @ target CPA; borderline=only at higher price / lower CPA; poor=below floor -> reject/reprice."
+    },
+    "ip_risk_flag": {
+      "type": "string",
+      "enum": ["CLEAR", "FLAG", "HIGH"],
+      "description": "Pre-flag only (not official clearance). HIGH -> mandatory PRD-003 before design, cannot auto-validate."
+    },
+    "seasonal_window": {
+      "type": "object",
+      "additionalProperties": true,
+      "required": ["type", "peak_week", "design_deadline"],
+      "properties": {
+        "type": { "type": "string", "enum": ["seasonal", "evergreen"] },
+        "peak_week": { "type": "string", "description": "ISO week or occasion date of demand peak, or 'none' for evergreen." },
+        "design_deadline": { "type": "string", "description": "Latest design-ready date; SLO >= 6 weeks before peak." },
+        "weeks_before_peak": { "type": "number" }
+      }
+    },
+    "evidence": {
+      "type": "array",
+      "minItems": 1,
+      "description": "Unified company evidence contract (inlined from _shared/schema/evidence.schema.json). Each verbatim_quote MUST appear verbatim in the file at `source`.",
+      "items": {
+        "type": "object",
+        "required": ["claim", "verbatim_quote", "source"],
+        "properties": {
+          "claim": { "type": "string" },
+          "verbatim_quote": { "type": "string", "minLength": 1, "description": "Text that appears verbatim in the file `source`." },
+          "source": { "type": "string", "description": "Filepath containing the quote (relative to this artifact, or absolute)." },
+          "location": { "type": "string" }
+        }
+      }
+    },
+    "confidence_score": {
+      "type": "number",
+      "minimum": 0,
+      "maximum": 1,
+      "description": "Analyst confidence AFTER evidence verification. Fail-closed: missing live tool / estimated inputs -> keep < 0.7."
+    },
+    "need_review": {
+      "type": "boolean",
+      "description": "true whenever confidence < 0.7, a required input was estimated, or ip_risk_flag != CLEAR. Blocks auto-validate."
+    },
+    "decision": {
+      "type": "string",
+      "enum": ["validated", "watchlist", "rejected", "refresh"],
+      "description": "validated=handoff PRD-002; watchlist=promising but blocked (Owner decides); rejected=fails floor/IP; refresh=stale, re-run."
+    },
+    "rubric_breakdown": {
+      "type": "object",
+      "additionalProperties": true,
+      "properties": {
+        "demand_40": { "type": "number" },
+        "competition_25": { "type": "number" },
+        "margin_fit_20": { "type": "number" },
+        "ip_risk_15": { "type": "number" }
+      }
+    }
+  },
+  "allOf": [
+    {
+      "$comment": "GATE (PRD-001 §5): decision=validated => demand_score>=70 AND ip_risk_flag!=HIGH AND need_review=false. Enforced by Draft7Validator allOf/if-then.",
+      "if": {
+        "required": ["decision"],
+        "properties": { "decision": { "const": "validated" } }
+      },
+      "then": {
+        "required": ["demand_score", "ip_risk_flag", "need_review"],
+        "properties": {
+          "demand_score": { "minimum": 70 },
+          "ip_risk_flag": { "not": { "const": "HIGH" } },
+          "need_review": { "const": false }
+        }
+      }
+    },
+    {
+      "$comment": "Fail-closed coupling: if need_review=false then confidence_score must be >= 0.7 (no auto-pass on low confidence).",
+      "if": {
+        "required": ["need_review"],
+        "properties": { "need_review": { "const": false } }
+      },
+      "then": {
+        "required": ["confidence_score"],
+        "properties": { "confidence_score": { "minimum": 0.7 } }
+      }
+    }
+  ]
+}

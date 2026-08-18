@@ -27,7 +27,7 @@ Manager-level routing cho phòng 04-fulfillment-cx, DAKOfits. Orchestrator **KH�
 | **GDPR data minimization** | chỉ truy cập data cần xử item; không leak data khách giữa ticket; reply EN không lộ đơn/khách khác | leak/over-access ⇒ BLOCK reply; erasure quá 30 ngày ⇒ escalate; KHÔNG xóa data có nghĩa vụ kế toán/VAT |
 | **Fraud-hold** | đơn không risk/mismatch, ≤ $150 | risk cao / billing-shipping mismatch / nhiều đơn cùng card / > $150 ⇒ HOLD + escalate OPC ≤12h; KHÔNG auto-route đơn fraud-hold sang print |
 
-Luật vận hành đầy đủ: [`../../_rules/README.md`](../../_rules/README.md). KPI/SLA: [`../../README.md`](../../README.md).
+Luật vận hành đầy đủ: [`../../_rules/README.md`](../../../_rules/README.md). KPI/SLA: [`../../README.md`](../../README.md).
 
 ---
 
@@ -57,7 +57,7 @@ Cadence (theo `_workflow/README.md`): liên tục monitor đơn (FUL-001) → ro
 
 ## 4. Cost handoff → 05-backoffice (downstream)
 
-Sau mỗi batch dispatch, tổng hợp và **bàn giao [`vibe-eu-opc-bck-orchestrator`](../../../05-backoffice/)** (finance reconcile P&L):
+Sau mỗi batch dispatch, tổng hợp và **bàn giao [`vibe-eu-opc-bck-orchestrator`](../../../../05-backoffice/)** (finance reconcile P&L):
 - **print/ship cost** per đơn đã route (theo provider US/EU).
 - **refund_total** + **chargeback_total** đã thực thi trong batch.
 - Đính kèm `cost_handoff` trong `fulfillment-dispatch.json` + evidence[] (link đơn/refund).

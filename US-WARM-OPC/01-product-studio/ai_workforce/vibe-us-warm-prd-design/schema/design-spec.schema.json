@@ -1,0 +1,144 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://us-warm-opc/schema/design-spec.schema.json",
+  "title": "Blanket Personalization Design Spec (SOP-PRD-002)",
+  "description": "Một record per design template — layout cá nhân hoá chăn + variable slots + material spec + IP status. Vocabulary NHẤT QUÁN với orchestrator downstream: enum CLEAR (KHÔNG dùng 'PASS'). Gate fail-closed: có PENDING. No-upscale + no-under-spec-material enforce ở allOf/if-then.",
+  "type": "object",
+  "required": [
+    "design_id",
+    "niche",
+    "personalization_fields",
+    "material_gsm",
+    "min_dpi",
+    "safe_area_pass",
+    "design_status",
+    "ip_status",
+    "handoff_ready",
+    "evidence",
+    "confidence_score",
+    "need_review"
+  ],
+  "properties": {
+    "design_id": {
+      "type": "string",
+      "description": "ID duy nhất của design template (vd DSG-US-0001)"
+    },
+    "niche": {
+      "type": "string",
+      "description": "Validated niche/intent từ PRD-001 (vd pet-memorial, dog-mom, family)"
+    },
+    "personalization_fields": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "string",
+        "enum": ["name", "photo", "message", "pet-memorial"]
+      },
+      "description": "Các field biến cá nhân hoá cho phép trên template"
+    },
+    "material_type": {
+      "type": "string",
+      "enum": ["fleece", "sherpa"],
+      "description": "Loại vải chăn"
+    },
+    "material_gsm": {
+      "type": "integer",
+      "minimum": 0,
+      "description": "GSM vải; ngưỡng brand-promise = 260. Dưới ngưỡng = under-spec (chống 'chăn mỏng')."
+    },
+    "min_dpi": {
+      "type": "integer",
+      "minimum": 0,
+      "description": "DPI thực tế của ảnh khách ĐẠT ĐƯỢC tại kích thước in thật (KHÔNG upscale). Floor no-upscale cho soft-good khổ lớn = 150."
+    },
+    "safe_area_pass": {
+      "type": "boolean",
+      "description": "100% chữ/ảnh nằm trong safe-area, tránh mép seam"
+    },
+    "design_status": {
+      "type": "string",
+      "enum": ["CLEAR", "MODIFY", "REJECT", "PENDING"],
+      "description": "CLEAR=đủ điều kiện handoff · MODIFY=sửa layout/re-source · REJECT=loại · PENDING=chưa đủ (fail-closed, vd IP chưa CLEAR)"
+    },
+    "ip_status": {
+      "type": "string",
+      "enum": ["CLEAR", "MODIFY", "REJECT", "PENDING"],
+      "description": "IP status pre-check (SOP-PRD-003). Vocabulary khớp ip-clearance.schema.json + orchestrator."
+    },
+    "handoff_ready": {
+      "type": "boolean",
+      "description": "CHỈ true khi design_status=CLEAR VÀ ip_status=CLEAR (gate cứng fail-closed)"
+    },
+    "preview_brief": {
+      "type": "string",
+      "description": "Mô tả mockup preview để mer-visual render. KHÔNG tự khai 'đã render' nếu chưa có tool."
+    },
+    "evidence": {
+      "type": "array",
+      "minItems": 1,
+      "description": "Unified evidence contract (company-wide): array<{claim, verbatim_quote, source(filepath), location?}>. verify_evidence() khớp shape này.",
+      "items": {
+        "type": "object",
+        "required": ["claim", "verbatim_quote", "source"],
+        "properties": {
+          "claim": {"type": "string"},
+          "verbatim_quote": {"type": "string", "minLength": 1},
+          "source": {"type": "string"},
+          "location": {"type": "string"}
+        }
+      }
+    },
+    "confidence_score": {
+      "type": "number",
+      "minimum": 0,
+      "maximum": 1,
+      "description": "Độ tự tin; < 0.7 → need_review=true"
+    },
+    "need_review": {
+      "type": "boolean",
+      "description": "True khi HIGH-risk / uncertain / dưới confidence floor → human review (Owner)"
+    }
+  },
+  "allOf": [
+    {
+      "$comment": "GATE 1 — handoff_ready=true CHỈ khi design_status=CLEAR AND ip_status=CLEAR",
+      "if": {
+        "properties": {"handoff_ready": {"const": true}},
+        "required": ["handoff_ready"]
+      },
+      "then": {
+        "properties": {
+          "design_status": {"const": "CLEAR"},
+          "ip_status": {"const": "CLEAR"}
+        },
+        "required": ["design_status", "ip_status"]
+      }
+    },
+    {
+      "$comment": "GATE 2 — design_status=CLEAR ⇒ safe_area_pass=true AND material_gsm>=260 (no under-spec) AND min_dpi>=150 (no upscale)",
+      "if": {
+        "properties": {"design_status": {"const": "CLEAR"}},
+        "required": ["design_status"]
+      },
+      "then": {
+        "properties": {
+          "safe_area_pass": {"const": true},
+          "material_gsm": {"minimum": 260},
+          "min_dpi": {"minimum": 150}
+        },
+        "required": ["safe_area_pass", "material_gsm", "min_dpi"]
+      }
+    },
+    {
+      "$comment": "GATE 3 — confidence thấp thì phải need_review (fail-closed)",
+      "if": {
+        "properties": {"confidence_score": {"exclusiveMaximum": 0.7}},
+        "required": ["confidence_score"]
+      },
+      "then": {
+        "properties": {"need_review": {"const": true}},
+        "required": ["need_review"]
+      }
+    }
+  ]
+}

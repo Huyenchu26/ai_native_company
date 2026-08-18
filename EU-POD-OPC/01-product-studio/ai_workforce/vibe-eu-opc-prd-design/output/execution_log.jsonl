@@ -1,0 +1,1 @@
+{"timestamp": "2026-08-04T01:44:04Z", "step": "validate", "action": "run_all", "target": "/home/huyenctn/ai_native_company/EU-POD-OPC/_ai-workforce/pipeline-test_2026-08-03/artifacts/02-design-clearance.json", "actor": "vibe-aiworkforce", "status": "fail", "duration_ms": 0, "schema_validated": true, "evidence_verified": false}

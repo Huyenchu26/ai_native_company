@@ -1,5 +1,5 @@
 {
-  "$schema": "../schema/skill-meta.schema.json",
+  "$schema": "./schema/skill-meta.schema.json",
   "name": "vibe-eu-opc-ful-orchestrator",
   "version": "1.0",
   "description": "Manager điều phối toàn bộ phòng Fulfillment & CX DAKOfits: route đơn & ticket sang đúng specialist theo SOP-FUL-001..004, enforce gate cứng (route ≤24h SLO 18h, refund AI ≤$30/>$30 OPC, GDPR data minimization, fraud-hold), bàn giao cost/refund data sang 05-backoffice. KHÔNG execute trực tiếp.",

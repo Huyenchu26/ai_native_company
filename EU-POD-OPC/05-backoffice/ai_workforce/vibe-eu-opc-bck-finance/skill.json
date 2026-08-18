@@ -1,4 +1,5 @@
 {
+  "$schema": "./schema/skill-meta.schema.json",
   "name": "vibe-eu-opc-bck-finance",
   "version": "1.0",
   "description": "Finance AI của DAKOfits (POD AOP đa-niche, US+EU): bookkeeping + fee reconciliation (ShopBase/Printify/Meta/gateway), profit-per-SKU đầy đủ (base+ship+fee+ad+VAT+fx), true/blended ROAS + break-even=1/GM, P&L, FX Vietcombank, VAT OSS/IOSS + US nexus, CEO brief theo SOP-BCK-001/002/003.",

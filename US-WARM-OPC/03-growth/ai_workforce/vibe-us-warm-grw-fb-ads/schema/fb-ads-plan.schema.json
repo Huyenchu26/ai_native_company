@@ -1,0 +1,49 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://us-warm-opc/schema/fb-ads-plan.schema.json",
+  "title": "FB Ads Plan (GRW-002 output)",
+  "description": "US gift-blanket ads. Fixes EU bugs: single KILL threshold 1.8 (H3), scale gated by BE-ROAS per-SKU not hard-coded (C1). evidence[] unified contract. Fail-closed: no Meta token -> launch=false (plan only).",
+  "type": "object",
+  "additionalProperties": true,
+  "required": ["sku", "break_even_roas", "kill_threshold", "scale_decision", "launch", "live_product_ready", "ftc_clean", "evidence", "confidence_score", "need_review"],
+  "properties": {
+    "sku": { "type": "string", "minLength": 1 },
+    "break_even_roas": { "type": "number", "minimum": 0, "description": "Per-SKU BE-ROAS from unit-economics (NOT hard-coded)." },
+    "kill_threshold": { "type": "number", "const": 1.8, "description": "Single company-wide KILL threshold (Platform ROAS). Fix EU H3 (no 1.5/1.8 split)." },
+    "blended_roas": { "type": ["number", "null"], "description": "Actual blended ROAS, or null if not launched (no Meta data). NEVER fabricate." },
+    "scale_decision": { "type": "string", "enum": ["scale", "hold", "kill"] },
+    "launch": { "type": "boolean" },
+    "live_product_ready": { "type": "boolean" },
+    "ftc_clean": { "type": "boolean" },
+    "spend": { "type": ["number", "null"] },
+    "evidence": {
+      "type": "array", "minItems": 1,
+      "items": { "type": "object", "required": ["claim", "verbatim_quote", "source"],
+        "properties": { "claim": {"type": "string"}, "verbatim_quote": {"type": "string", "minLength": 1}, "source": {"type": "string"}, "location": {"type": "string"} } }
+    },
+    "confidence_score": { "type": "number", "minimum": 0, "maximum": 1 },
+    "need_review": { "type": "boolean" }
+  },
+  "allOf": [
+    {
+      "$comment": "GATE 1 (GRW-002): launch=true => live_product_ready AND ftc_clean. No ads without a live product (fix EU M7).",
+      "if": { "required": ["launch"], "properties": { "launch": { "const": true } } },
+      "then": { "required": ["live_product_ready", "ftc_clean"],
+        "properties": { "live_product_ready": {"const": true}, "ftc_clean": {"const": true} } }
+    },
+    {
+      "$comment": "GATE 2 (fix EU C1): scale_decision=scale => blended_roas >= break_even_roas (never scale into loss).",
+      "if": { "required": ["scale_decision"], "properties": { "scale_decision": { "const": "scale" } } },
+      "then": {
+        "required": ["blended_roas", "break_even_roas"],
+        "properties": { "blended_roas": { "type": "number", "minimum": 0 } },
+        "$comment_note": "cross-field blended>=BE enforced in validator prose/logic; schema ensures blended present & numeric when scaling"
+      }
+    },
+    {
+      "$comment": "Fail-closed: need_review=false => confidence>=0.7.",
+      "if": { "required": ["need_review"], "properties": { "need_review": { "const": false } } },
+      "then": { "required": ["confidence_score"], "properties": { "confidence_score": { "minimum": 0.7 } } }
+    }
+  ]
+}

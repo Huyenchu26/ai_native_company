@@ -1,0 +1,110 @@
+{
+  "batch_id": "PRD-PIPE-2026-08-17-batch01",
+  "handoff_to_merch": true,
+  "handoff_target": "vibe-us-warm-mer-orchestrator",
+  "validated_niches": [
+    {
+      "niche_name": "to my daughter christmas blanket",
+      "occasion": "Christmas",
+      "relationship": "to my daughter",
+      "demand_score": 78,
+      "audience_proxy": 820000,
+      "margin_fit_pct": 18.5,
+      "ip_preflag": "LOW",
+      "peak_week": "2026-W51",
+      "design_deadline": "2026-11-09",
+      "status": "validated"
+    },
+    {
+      "niche_name": "pet memorial blanket",
+      "occasion": "memorial",
+      "relationship": "pet",
+      "demand_score": 74,
+      "audience_proxy": 610000,
+      "margin_fit_pct": 16.2,
+      "ip_preflag": "MEDIUM",
+      "peak_week": "rolling",
+      "design_deadline": "2026-09-30",
+      "status": "validated"
+    }
+  ],
+  "designs": [
+    {
+      "design_id": "DSGN-XMAS-DAUGHTER-01",
+      "niche": "to my daughter christmas blanket",
+      "design_status": "CLEAR",
+      "ip_status": "CLEAR",
+      "clearance_id": "IP-US-2026-0812-0447",
+      "min_dpi": 320,
+      "material_gsm": 300,
+      "material_type": "sherpa",
+      "safe_area_pass": true,
+      "handoff_ready": true,
+      "uspto_checked": true
+    },
+    {
+      "design_id": "DSGN-PETMEM-01",
+      "niche": "pet memorial blanket",
+      "design_status": "PENDING",
+      "ip_status": "PENDING",
+      "clearance_id": null,
+      "min_dpi": 300,
+      "material_gsm": 300,
+      "material_type": "fleece",
+      "safe_area_pass": true,
+      "handoff_ready": false,
+      "uspto_checked": false
+    }
+  ],
+  "gate_checks": {
+    "ip_clearance": "CLEAR",
+    "material_spec_ok": true,
+    "no_upscale_dpi_ok": true,
+    "uspto_before_clear_ok": true,
+    "safe_area_ok": true
+  },
+  "cleared_for_handoff": [
+    {
+      "design_id": "DSGN-XMAS-DAUGHTER-01",
+      "niche": "to my daughter christmas blanket",
+      "clearance_status": "CLEAR",
+      "design_status": "CLEAR",
+      "clearance_id": "IP-US-2026-0812-0447",
+      "print_ready_path": "design-personalization/output/DSGN-XMAS-DAUGHTER-01.json"
+    }
+  ],
+  "evidence": [
+    {
+      "claim": "Niche validated theo gate demand_score >= 70 của PRD-001",
+      "verbatim_quote": "demand_score ≥ 70",
+      "source": "../../../research-niche/template/sop_prd-001_gift-niche-research_v1.0_2026-08-04.md",
+      "location": "SOP-PRD-001 §2 Control"
+    },
+    {
+      "claim": "Enum clearance dùng CLEAR/MODIFY/REJECT/PENDING khớp prd-design (design)",
+      "verbatim_quote": "CLEAR / MODIFY / REJECT / PENDING",
+      "source": "../../../design-personalization/template/sop_prd-002_blanket-personalization-design_v1.0_2026-08-04.md",
+      "location": "SOP-PRD-002 §5 Gate handoff"
+    },
+    {
+      "claim": "Enum clearance khớp prd-design (IP clearance)",
+      "verbatim_quote": "CLEAR / MODIFY / REJECT / PENDING",
+      "source": "../../../clear-ip/template/sop_prd-003_ip-tm-clearance-us_v1.0_2026-08-04.md",
+      "location": "SOP-PRD-003 §2 Output"
+    },
+    {
+      "claim": "Chỉ clearance_id mới cho phép handoff design sang merch",
+      "verbatim_quote": "mới cho phép handoff design",
+      "source": "../../../clear-ip/template/sop_prd-003_ip-tm-clearance-us_v1.0_2026-08-04.md",
+      "location": "SOP-PRD-003 §4 RACI"
+    },
+    {
+      "claim": "clearance_id phải từ bck-compliance mới cho handoff (hard rule)",
+      "verbatim_quote": "từ bck-compliance mới cho handoff",
+      "source": "../../../_rules/README.md",
+      "location": "_rules Non-negotiables #3 No IP guess"
+    }
+  ],
+  "confidence_score": 0.84,
+  "need_review": false
+}

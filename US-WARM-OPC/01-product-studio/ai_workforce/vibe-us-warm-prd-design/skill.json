@@ -1,0 +1,62 @@
+{
+  "$schema": "../../../_shared/schema/skill-meta.schema.json",
+  "name": "vibe-us-warm-prd-design",
+  "version": "1.0",
+  "description": "Blanket personalization design (SOP-PRD-002): layout template + variable-data slots + material/DPI QC (no-upscale, no-under-spec) và IP/TM pre-check US single-market (SOP-PRD-003, USPTO TESS — KHÔNG EUIPO). Vocabulary CLEAR nhất quán với orchestrator; gate cứng fail-closed; handoff sang mer/orchestrator + bck-compliance.",
+  "role": "AI Worker — Blanket Personalization Design + IP/TM Pre-check",
+  "department": "01-product-studio",
+  "quality_tier": "EXPERT-CLONE",
+  "sop_coverage": ["PRD-002", "PRD-003"],
+  "quality_gates": [
+    {"name": "personalization-dpi-no-upscale", "min_confidence": 0.7},
+    {"name": "safe-area-compliance", "min_confidence": 0.7},
+    {"name": "material-gsm-no-under-spec", "min_confidence": 0.7},
+    {"name": "ip-precheck-uspto", "min_confidence": 0.7},
+    {"name": "handoff-gate", "min_confidence": 0.7}
+  ],
+  "dependencies": {
+    "upstream": ["vibe-us-warm-prd-niche-research"],
+    "downstream": ["vibe-us-warm-prd-orchestrator", "vibe-us-warm-bck-compliance"]
+  },
+  "phases": {
+    "design-layout": {
+      "sop": "PRD-002",
+      "inputs": ["validated_niche", "personalization_spec", "supplier_print_spec"],
+      "outputs": ["design-spec.json"],
+      "schema": "schema/design-spec.schema.json",
+      "min_confidence": 0.7,
+      "evidence_required": true
+    },
+    "ip-precheck": {
+      "sop": "PRD-003",
+      "inputs": ["design_phrase", "personalization_fields", "customer_photo_policy"],
+      "outputs": ["ip-clearance.json"],
+      "schema": "schema/ip-clearance.schema.json",
+      "min_confidence": 0.7,
+      "evidence_required": true
+    },
+    "handoff": {
+      "inputs": ["design-spec.json", "ip-clearance.json"],
+      "outputs": ["merch_handoff_package"],
+      "min_confidence": 0.7,
+      "evidence_required": true
+    }
+  },
+  "schemas": {
+    "design_spec": "schema/design-spec.schema.json",
+    "ip_clearance": "schema/ip-clearance.schema.json"
+  },
+  "hooks": {"config": "hooks.json"},
+  "folders": {
+    "kb": true,
+    "prompt": true,
+    "schema": true,
+    "test": true,
+    "synthetic_data": true
+  },
+  "harness": {
+    "validator": "../../../_shared/script/validator.py",
+    "skill_meta_schema": "../../../_shared/schema/skill-meta.schema.json",
+    "evidence_schema": "../../../_shared/schema/evidence.schema.json"
+  }
+}

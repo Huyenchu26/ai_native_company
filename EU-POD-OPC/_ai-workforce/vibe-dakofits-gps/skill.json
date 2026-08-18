@@ -1,4 +1,5 @@
 {
+  "$schema": "./schema/skill-meta.schema.json",
   "name": "vibe-dakofits-gps",
   "version": "1.0.0",
   "description": "AI Chief of Staff cho DAKOfits (POD AOP leggings, shop ShopBase domain riêng, US+EU). Nhận task tự nhiên -> classify -> route đến đúng phòng/skill (17 AI Worker, 5 phòng) -> enforce gate cứng (IP/GPSR/Meta/refund) -> report. Điều phối theo operating-flow ShopBase-first, không execute trực tiếp.",

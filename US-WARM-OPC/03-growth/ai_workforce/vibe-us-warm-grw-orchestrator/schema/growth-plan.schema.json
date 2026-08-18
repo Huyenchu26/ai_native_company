@@ -1,0 +1,31 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://us-warm-opc/schema/growth-plan.schema.json",
+  "title": "Growth Plan (orchestrator output)",
+  "description": "Routes creative -> ads/organic for DAKOfits US. Consumes live-product from 02. Gate: active ad requires live_product_ready + ftc_clean. evidence[] unified contract.",
+  "type": "object",
+  "additionalProperties": true,
+  "required": ["batch_id", "live_product_ready", "creatives", "active_ads", "evidence", "confidence_score", "need_review"],
+  "properties": {
+    "batch_id": { "type": "string", "minLength": 1 },
+    "live_product_ready": { "type": "boolean" },
+    "creatives": { "type": "array", "items": { "type": "object" } },
+    "active_ads": {
+      "type": "array",
+      "description": "Ads actually running. Each requires live_product + ftc_clean (no ads without live product).",
+      "items": { "type": "object", "required": ["sku", "live_product_ready", "ftc_clean"],
+        "properties": { "sku": {"type": "string"}, "live_product_ready": {"const": true}, "ftc_clean": {"const": true} } }
+    },
+    "evidence": {
+      "type": "array", "minItems": 1,
+      "items": { "type": "object", "required": ["claim", "verbatim_quote", "source"],
+        "properties": { "claim": {"type": "string"}, "verbatim_quote": {"type": "string", "minLength": 1}, "source": {"type": "string"}, "location": {"type": "string"} } }
+    },
+    "confidence_score": { "type": "number", "minimum": 0, "maximum": 1 },
+    "need_review": { "type": "boolean" }
+  },
+  "allOf": [
+    { "if": { "required": ["need_review"], "properties": { "need_review": { "const": false } } },
+      "then": { "required": ["confidence_score"], "properties": { "confidence_score": { "minimum": 0.7 } } } }
+  ]
+}

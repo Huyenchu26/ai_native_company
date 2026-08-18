@@ -1,0 +1,45 @@
+{
+  "niche": "Horse Riding / Equestrian",
+  "design_type": "tile",
+  "dpi": 300,
+  "qc_360_pass": false,
+  "ip_clearance_status": "REJECT",
+  "uspto_checked": false,
+  "euipo_checked": false,
+  "provider": "printify-us",
+  "bleed_ok": false,
+  "blocklist_checked": false,
+  "evidence": [
+    {
+      "source": "design-brief",
+      "detail": "DESIGN BRIEF ONLY — no artwork rendered (no image-gen/tiling API access in this test run). Planned per SOP-PRD-003: style=tile (equestrian silhouettes: horseshoe, snaffle bit, jumping-horse, stirrup, dressage motif) as a seamless repeat; alt style=watercolor (galloping horse loang mau). Motifs are GENERIC equestrian objects, deliberately excluding any named breed registry, show/club name, or licensed character (My Little Pony, Spirit, specific stud farm logos). Canvas TARGET = Printify AOP legging print-area (~4500x5400px @ 300 DPI, US profile); EU profile to be split separately. NOTHING was generated or measured."
+    },
+    {
+      "source": "file-metadata",
+      "detail": "dpi=300 is the TARGET spec locked at the correct print-canvas size per SOP-PRD-003 (no upscale). It is NOT a measured value from a rendered file — no file exists. Field set to 300 only because the schema requires an integer >= 300 and has no null/unknown state; treat as design intent, not verification."
+    },
+    {
+      "source": "qc-report",
+      "detail": "QC 360deg NOT run — no artwork to inspect. seam / crotch / waistband alignment, bleed, and canvas-px checks are all UNVERIFIED. qc_360_pass=false (fail-closed) and bleed_ok=false accordingly."
+    },
+    {
+      "source": "uspto-tess",
+      "detail": "NOT QUERIED — no live access to USPTO TESS / tmsearch.uspto.gov in this run. No US trademark lookup was performed for 'Horse Riding' / 'Equestrian' / 'Dressage' or any design term. uspto_checked=false. (Terms are plausibly generic/descriptive in class 25, but that is an UNVERIFIED assumption, not a cleared result.)"
+    },
+    {
+      "source": "euipo",
+      "detail": "NOT QUERIED — no live access to EUIPO eSearch/TMview in this run. No EU trademark lookup performed. euipo_checked=false. This is exactly the C3 audit failure mode (claiming 'EUIPO PASS' without querying) — deliberately NOT done here."
+    },
+    {
+      "source": "blocklist",
+      "detail": "No live brand/celebrity/club blocklist file was queried (blocklist_checked=false). A conceptual exclusion list was applied at brief stage only: exclude named breed registries, specific show/club/stud-farm names, and licensed characters. Conceptual, not a verified blocklist pass."
+    },
+    {
+      "source": "gate-rule",
+      "detail": "Per _rules G3 (no dual-market USPTO+EUIPO lookup -> NOT CLEAR) and SOP-PRD-004 rubric (uncertain / insufficient sources -> conservative REJECT + human review). Because 0 of 2 required databases were queried, status CANNOT be PASS. Conservative default within the design schema's 3-value enum = REJECT. handoff_ready=false."
+    }
+  ],
+  "confidence_score": 0.28,
+  "need_review": true,
+  "handoff_ready": false
+}

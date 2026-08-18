@@ -1,0 +1,28 @@
+{
+  "batch_id": "MERCH-2026-08-PETMEM",
+  "priced_skus": [
+    { "sku": "DAKO-BLK-PETMEM-59", "design_clearance": "CLEAR" }
+  ],
+  "previews": [ { "sku": "DAKO-BLK-PETMEM-59", "phase": "production", "min_images_met": true } ],
+  "listings": [ { "sku": "DAKO-BLK-PETMEM-59", "publish_status": "publish-ready" } ],
+  "go_live": [
+    { "sku": "DAKO-BLK-PETMEM-59", "pricing_floor_pass": true, "images_on_disk": true, "product_page_publish_ready": true }
+  ],
+  "gate_checks": { "design_clearance": "CLEAR" },
+  "evidence": [
+    {
+      "claim": "Go-live requires pricing floor pass, images on disk, and listing publish-ready.",
+      "verbatim_quote": "Go-live CHỈ khi pricing floor pass ∧ images on disk ∧ listing publish-ready",
+      "source": "../../../_workflow/README.md",
+      "location": "dependency map"
+    },
+    {
+      "claim": "The manifest must not claim images that are not on disk (no phantom images).",
+      "verbatim_quote": "manifest không được khai ảnh không có trên đĩa",
+      "source": "../../../_rules/README.md",
+      "location": "non-negotiable 3"
+    }
+  ],
+  "confidence_score": 0.82,
+  "need_review": false
+}

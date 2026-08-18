@@ -1,0 +1,21 @@
+{
+  "creative_id": "CRE-DAKO-BLK-PETMEM-01",
+  "sku": "DAKO-BLK-PETMEM-59",
+  "angle": "pet-memorial",
+  "hooks": ["The blanket that keeps their pawprints close", "A keepsake for the pet you'll never forget"],
+  "script": "Open on a grieving owner holding a soft blanket printed with their dog's photo and name. Voiceover: keep their memory close. Show thick sherpa texture. Soft CTA: link in bio.",
+  "policy_self_check": true,
+  "asset_status": "script-only",
+  "asset_file": null,
+  "launch_ready": false,
+  "evidence": [
+    {
+      "claim": "Creative angle is gift-emotional (pet-memorial), not niche AOP.",
+      "verbatim_quote": "gift-emotional",
+      "source": "../../../create-creative/template/sop_grw-005_gift-creative_v1.0_2026-08-04.md",
+      "location": "delta"
+    }
+  ],
+  "confidence_score": 0.5,
+  "need_review": true
+}

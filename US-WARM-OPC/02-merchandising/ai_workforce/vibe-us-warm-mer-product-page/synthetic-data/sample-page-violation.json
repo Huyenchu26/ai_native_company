@@ -1,0 +1,47 @@
+{
+  "page_id": "PAGE-DAKO-BLK-PETMEM-59",
+  "sku": "DAKO-BLK-PETMEM-59",
+  "title": "Personalized Pet Memorial Blanket — Your Photo & Name, Soft Sherpa Keepsake",
+  "bullets": [
+    "Add your pet's photo, name, and dates — a lasting keepsake to remember them by",
+    "Premium 300 GSM sherpa fleece — genuinely thick and warm, not paper-thin",
+    "Printed and shipped from the US with real order tracking",
+    "Machine-washable, fade-resistant personalization",
+    "Made-to-order gift — final sale (except manufacturing defects)"
+  ],
+  "description": "A personalized pet memorial blanket to keep their memory close. Upload your favorite photo and we print it on soft, thick sherpa fleece with your pet's name and dates. A comforting keepsake for anyone grieving a beloved companion.",
+  "personalization_ux": {
+    "fields": [
+      "pet_name",
+      "pet_photo",
+      "dates"
+    ],
+    "max_chars": 40,
+    "photo_required": true
+  },
+  "cpsc_fiber_label": null,
+  "care_label": "Machine wash cold, tumble dry low, do not bleach",
+  "ftc_clean": true,
+  "final_sale_disclosed": true,
+  "publish_status": "publish-ready",
+  "social_proof": {
+    "rating": 0,
+    "review_count": 0
+  },
+  "evidence": [
+    {
+      "claim": "Reviews and ratings are not fabricated; rating stays 0 until real reviews exist.",
+      "verbatim_quote": "Không bịa review/rating/số bán",
+      "source": "../../../write-product-page/template/sop_mer-003_gift-product-page_v1.0_2026-08-04.md",
+      "location": "step 3.1"
+    },
+    {
+      "claim": "A missing CPSC fiber label blocks publishing.",
+      "verbatim_quote": "thiếu label → publish_status=blocked",
+      "source": "../../../write-product-page/template/sop_mer-003_gift-product-page_v1.0_2026-08-04.md",
+      "location": "step 3.3"
+    }
+  ],
+  "confidence_score": 0.8,
+  "need_review": false
+}

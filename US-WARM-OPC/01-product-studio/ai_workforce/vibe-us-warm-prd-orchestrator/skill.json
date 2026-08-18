@@ -1,0 +1,38 @@
+{
+  "$schema": "../../../_shared/schema/skill-meta.schema.json",
+  "name": "vibe-us-warm-prd-orchestrator",
+  "version": "1.0",
+  "description": "Manager điều phối Product Studio DAKOfits US (chăn cá nhân hoá). Route pipeline niche-research (PRD-001) -> design+personalization (PRD-002) -> IP/TM clearance US (PRD-003) -> handoff 02-merchandising. KHÔNG execute chuyên môn — chỉ route + enforce hard gate (no-upscale, material-spec, USPTO-before-CLEAR, no-handoff-without-clearance_id). Enum clearance CLEAR/MODIFY/REJECT/PENDING khớp y hệt prd-design.",
+  "role": "orchestrator",
+  "department": "01-product-studio",
+  "quality_tier": "GPS-ENHANCED",
+  "sop_coverage": ["PRD-001", "PRD-002", "PRD-003"],
+  "quality_gates": [
+    {"name": "niche-validated (PRD-001: demand>=70, margin-fit>=15%, evidence)", "min_confidence": 0.7},
+    {"name": "design-qc (PRD-002: no-upscale DPI, material GSM, safe-area)", "min_confidence": 0.7},
+    {"name": "ip-clearance (PRD-003: USPTO-before-CLEAR, licensed-char reject)", "min_confidence": 0.7},
+    {"name": "handoff-merch (design_status=CLEAR AND clearance_id present)", "min_confidence": 0.7}
+  ],
+  "dependencies": {
+    "upstream": ["vibe-us-warm-company-orchestrator"],
+    "downstream": ["vibe-us-warm-mer-orchestrator"],
+    "routes_to": [
+      "vibe-us-warm-prd-niche-research",
+      "vibe-us-warm-prd-design"
+    ],
+    "reads_clearance_from": ["vibe-us-warm-bck-compliance"]
+  },
+  "artifact_schema": "schema/pipeline-plan.schema.json",
+  "evidence_contract": "../../../_shared/schema/evidence.schema.json",
+  "validator": "../../../_shared/script/validator.py",
+  "components": {
+    "skill_manifest": "skill.json",
+    "skill_doc": "SKILL.md",
+    "schema": "schema/pipeline-plan.schema.json",
+    "kb": "kb/routing-map.md",
+    "prompt": "prompt/run-pipeline-prompt.md",
+    "synthetic_data": "synthetic-data/",
+    "test": "test/",
+    "hooks": "hooks.json"
+  }
+}

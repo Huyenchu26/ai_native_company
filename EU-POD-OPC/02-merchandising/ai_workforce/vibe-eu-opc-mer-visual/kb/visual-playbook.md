@@ -1,6 +1,6 @@
 # Visual Playbook — chị Ảnh (vibe-eu-opc-mer-visual)
 
-> Cẩm nang vận hành tạo mockup/visual cho ShopBase DAKOfits. Chuẩn canonical là [_shared/mockup-style-guide.md](../../../_shared/mockup-style-guide.md) (REF-VISUAL-001) — file này KHÔNG ghi đè, chỉ diễn giải cách làm. SOP gốc: SOP-MER-005.
+> Cẩm nang vận hành tạo mockup/visual cho ShopBase DAKOfits. Chuẩn canonical là [_shared/mockup-style-guide.md](../../../../_shared/mockup-style-guide.md) (REF-VISUAL-001) — file này KHÔNG ghi đè, chỉ diễn giải cách làm. SOP gốc: SOP-MER-005.
 
 ## ⚠️ Trung thực: tạo SPEC+PROMPT+QC, KHÔNG tự render
 Skill cho ra **brief + render-prompt + checklist QC**. Ảnh thật render bằng **tool ngoài**. Đừng bao giờ báo cáo là "đã có ảnh" khi mới chỉ có prompt.

@@ -1,0 +1,35 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://us-warm-opc/schema/skill-meta.schema.json",
+  "title": "Skill Metadata (skill.json)",
+  "type": "object",
+  "required": ["name", "version", "role", "department", "sop_coverage", "quality_gates", "dependencies"],
+  "properties": {
+    "$schema": {"type": "string"},
+    "name": {"type": "string", "pattern": "^vibe-us-warm-(prd|mer|grw|ful|bck)-[a-z-]+$"},
+    "version": {"type": "string"},
+    "description": {"type": "string"},
+    "role": {"type": "string"},
+    "department": {"type": "string"},
+    "quality_tier": {"enum": ["TEMPLATED", "EXPERT-CLONE", "GPS-ENHANCED"]},
+    "sop_coverage": {"type": "array", "items": {"type": "string"}, "minItems": 1},
+    "quality_gates": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["name", "min_confidence"],
+        "properties": {
+          "name": {"type": "string"},
+          "min_confidence": {"type": "number", "minimum": 0, "maximum": 1}
+        }
+      }
+    },
+    "dependencies": {
+      "type": "object",
+      "properties": {
+        "upstream": {"type": "array", "items": {"type": "string"}},
+        "downstream": {"type": "array", "items": {"type": "string"}}
+      }
+    }
+  }
+}

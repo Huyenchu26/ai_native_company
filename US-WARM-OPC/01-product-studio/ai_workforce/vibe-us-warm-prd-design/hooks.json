@@ -1,0 +1,16 @@
+{
+  "_comment": "PreToolUse preflight dùng SHARED validator (_shared/script/validator.py --preflight-target) để CHẶN edit vào template/ và archive/ (read-only/immutable). CLAUDE_PROJECT_DIR = gốc US-WARM-OPC. Không có upscaler hook — no-upscale là non-negotiable.",
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "Write|Edit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python3 \"${CLAUDE_PROJECT_DIR}/_shared/script/validator.py\" --preflight-target \"${CLAUDE_TOOL_INPUT_FILE_PATH:-$TOOL_INPUT}\""
+          }
+        ]
+      }
+    ]
+  }
+}

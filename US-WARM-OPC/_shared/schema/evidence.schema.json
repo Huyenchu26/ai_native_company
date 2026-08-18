@@ -1,0 +1,22 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://us-warm-opc/schema/evidence.schema.json",
+  "title": "Unified Evidence Contract (company-wide)",
+  "description": "P2 fix: MỌI artifact dùng CHUNG shape này. verify_evidence() trong _shared/script/validator.py khớp đúng shape này nên --run-all chạy cho mọi skill.",
+  "definitions": {
+    "evidence_array": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": ["claim", "verbatim_quote", "source"],
+        "properties": {
+          "claim": {"type": "string"},
+          "verbatim_quote": {"type": "string", "minLength": 1, "description": "Trích nguyên văn xuất hiện trong file `source`"},
+          "source": {"type": "string", "description": "Đường dẫn file chứa quote (relative tới artifact hoặc absolute)"},
+          "location": {"type": "string"}
+        }
+      }
+    }
+  }
+}

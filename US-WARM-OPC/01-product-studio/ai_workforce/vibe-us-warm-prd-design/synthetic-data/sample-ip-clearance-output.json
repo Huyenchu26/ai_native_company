@@ -1,0 +1,31 @@
+{
+  "status": "CLEAR",
+  "phrase": "Always in our hearts",
+  "uspto_checked": true,
+  "licensed_char_match": 0,
+  "photo_consent": true,
+  "clearance_id": "CLR-US-2026-0001",
+  "risk_level": "LOW",
+  "evidence": [
+    {
+      "claim": "US single-market chỉ tra USPTO TESS, không EUIPO.",
+      "verbatim_quote": "USPTO TESS là nguồn tra trademark duy nhất cho thị trường US single-market; không dùng EUIPO.",
+      "source": "/home/huyenctn/ai_native_company/US-WARM-OPC/01-product-studio/ai_workforce/vibe-us-warm-prd-design/kb/design-ip-playbook.md",
+      "location": "section 3.1"
+    },
+    {
+      "claim": "Không match licensed-character blocklist (licensed_char_match=0).",
+      "verbatim_quote": "Licensed-character blocklist gồm Disney, sports leagues, brand; match bất kỳ là REJECT.",
+      "source": "/home/huyenctn/ai_native_company/US-WARM-OPC/01-product-studio/ai_workforce/vibe-us-warm-prd-design/kb/design-ip-playbook.md",
+      "location": "section 3.2"
+    },
+    {
+      "claim": "clearance_id chính thức do bck-compliance cấp, cho phép handoff.",
+      "verbatim_quote": "clearance_id chính thức chỉ do bck-compliance cấp sau sign-off.",
+      "source": "/home/huyenctn/ai_native_company/US-WARM-OPC/01-product-studio/ai_workforce/vibe-us-warm-prd-design/kb/design-ip-playbook.md",
+      "location": "section 3.4"
+    }
+  ],
+  "confidence_score": 0.9,
+  "need_review": false
+}

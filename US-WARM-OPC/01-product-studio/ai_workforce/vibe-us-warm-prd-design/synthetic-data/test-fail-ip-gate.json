@@ -1,0 +1,19 @@
+{
+  "_test": "GATE VIOLATION (self-check d): status=CLEAR nhưng uspto_checked=false → PHẢI FAIL schema (chứng minh IP gate enforce). Đây KHÔNG phải output hợp lệ.",
+  "status": "CLEAR",
+  "phrase": "Always in our hearts",
+  "uspto_checked": false,
+  "licensed_char_match": 0,
+  "photo_consent": true,
+  "clearance_id": "CLR-US-2026-0002",
+  "risk_level": "LOW",
+  "evidence": [
+    {
+      "claim": "US chỉ USPTO.",
+      "verbatim_quote": "USPTO TESS là nguồn tra trademark duy nhất cho thị trường US single-market; không dùng EUIPO.",
+      "source": "/home/huyenctn/ai_native_company/US-WARM-OPC/01-product-studio/ai_workforce/vibe-us-warm-prd-design/kb/design-ip-playbook.md"
+    }
+  ],
+  "confidence_score": 0.9,
+  "need_review": false
+}

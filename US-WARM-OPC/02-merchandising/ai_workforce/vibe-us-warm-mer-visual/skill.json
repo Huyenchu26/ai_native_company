@@ -1,0 +1,19 @@
+{
+  "$schema": "../../../_shared/schema/skill-meta.schema.json",
+  "name": "vibe-us-warm-mer-visual",
+  "version": "1.0.0",
+  "description": "Personalization preview + listing mockups for DAKOfits US blankets. 2-phase (validation/production). Fail-closed: no render tool (Canva unauth) -> phase=validation, render_status=not-generated, local_file=null; NEVER claims an image that is not on disk (fixes EU phantom-image bug).",
+  "role": "Merchandising Visual / Personalization Preview (US blankets)",
+  "department": "02-merchandising",
+  "quality_tier": "TEMPLATED",
+  "sop_coverage": ["MER-002"],
+  "quality_gates": [
+    { "name": "no_phantom_image", "min_confidence": 0.8 },
+    { "name": "production_min_images", "min_confidence": 0.7 },
+    { "name": "evidence_verbatim", "min_confidence": 0.7 }
+  ],
+  "dependencies": {
+    "upstream": ["vibe-us-warm-mer-catalog", "vibe-us-warm-prd-design"],
+    "downstream": ["vibe-us-warm-mer-product-page", "vibe-us-warm-grw-creative"]
+  }
+}

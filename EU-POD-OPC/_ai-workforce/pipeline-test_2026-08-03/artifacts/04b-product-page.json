@@ -1,0 +1,46 @@
+{
+  "sku": "DAKO-HORSE-LEG-EU-BLK-M",
+  "headline": "Born to Ride™ High-Waist Equestrian Leggings — All-Over Print | XS–3XL",
+  "body_copy": {
+    "bullets": [
+      "🐎 All-over equestrian print — horseshoes, snaffle bits & jumping-horse silhouettes wrap 360°, no boring side seams cutting the design.",
+      "🍑 Squat-proof & fully opaque — high-waist compression fabric stays put mucking out, tacking up or in the saddle.",
+      "💨 Buttery-soft + sweat-wicking — 4-way stretch keeps you cool from early barn chores to an evening schooling session.",
+      "📏 True size XS–3XL — inclusive fit with a hidden waistband pocket for your phone, treats or keys.",
+      "🎁 Match the set — pair with the matching equestrian all-over-print sports bra for a full barn-to-street look."
+    ],
+    "description": "**For the rider who thinks about horses all day.**\n\nYou don't just ride — you live it, from the 6am feed to the last evening turnout. These high-waist leggings put your favourite world right where everyone can see it: a bold all-over print of horseshoes, snaffle bits and jumping-horse silhouettes that wraps all the way around, so you look just as good at the yard as you do on the school run.\n\nMade from a thick, buttery-soft performance blend, they hold you in without squeezing, stay completely opaque through deep squats and mounting, and wick sweat so you stay dry through a full day at the barn. The high waistband smooths and supports, and there's a hidden pocket for your phone or a pocketful of treats.\n\nSchooling, hacking, or the supermarket after — these are the leggings you'll reach for every single time. **Reins in. Print on.**",
+    "size_guide": "Inclusive XS–3XL. Measure your natural waist and hips (cm and inch); if between sizes, size up for a relaxed fit. Waist XS ~60-64cm/24-25in → 3XL ~112-120cm/44-47in (full cm/inch chart on size-guide image slot #5). True to size for most riders.",
+    "care_info": "All-over sublimation print — the pattern is dyed into the fabric and will not crack or peel. Machine wash cold inside-out, mild detergent, no bleach, no fabric softener. Hang dry or tumble low. Do not iron directly on the print.",
+    "cro_elements_passed": 10
+  },
+  "upsell_bundle": {
+    "present": true,
+    "bundle_sku": "DAKO-HORSE-BRA-EU-BLK-M (PROPOSED same-AOP equestrian sports bra — NOT yet confirmed in catalog; fallback = generic DAKOfits activewear bra if same-niche bra not produced)",
+    "copy": "Complete the Set: add the matching equestrian all-over-print sports bra and save 15% on the bundle. No matching bra yet? Grab any DAKOfits activewear bra and still save."
+  },
+  "social_proof": {
+    "rating": 0,
+    "review_snippets": [
+      "PLACEHOLDER — NEW LAUNCH, NO REAL REVIEWS YET. Do NOT publish invented ratings or review counts. Seed via post-purchase flow / UGC, then replace with real verbatim quotes + source.",
+      "Trust badges only until real reviews exist: Secure checkout · Easy 30-day returns · Designed for horse lovers"
+    ],
+    "ugc_refs": []
+  },
+  "gpsr_clearance_id": null,
+  "gpsr_clearance_status": "MISSING",
+  "gpsr_label_present": false,
+  "gpsr_label_block": null,
+  "market": "EU",
+  "publish_status": "blocked",
+  "evidence": [
+    "GPSR gate (SOP-MER-001 step 1, fail-closed): NO gpsr_clearance_id supplied by upstream. pipeline-test artifacts present = 01-niche-validation.json, 02-design-clearance.json, 03-pricing.json only; NO SOP-BCK-004 GPSR clearance log exists to VERIFY status=PASS. Default = BLOCK publish for EU.",
+    "02-design-clearance.json: ip_clearance_status=REJECT, handoff_ready=false, qc_360_pass=false, uspto_checked=false, euipo_checked=false — design not cleared, so no GPSR clearance could have been issued for this SP/design.",
+    "01-niche-validation.json: niche='Horse Riding / Equestrian', decision=watchlist, confidence 0.42, need_review=true (all demand/audience figures are ESTIMATES, no live tool).",
+    "03-pricing.json: US sell_price 59.99 USD (DAKO-HORSE-LEG-US-BLK-M) / EU sell_price 69.99 EUR (DAKO-HORSE-LEG-EU-BLK-M); floor_pass=false on all SKUs; handoff.downstream_mockup_product_page='NOT READY — do not hand to product-page for publish'.",
+    "Copy (headline/bullets/description/size-guide/care/upsell) authored by product-page skill for niche 'Horse Riding / Equestrian'; motifs kept GENERIC (horseshoe/snaffle/jumping-horse) per 02 design brief, excluding named breed registries / clubs / licensed characters.",
+    "social_proof.rating=0 and review_snippets are explicit PLACEHOLDERS — no reviews fabricated (anti-hallucination)."
+  ],
+  "confidence_score": 0.5,
+  "need_review": true
+}

@@ -1,5 +1,5 @@
 {
-  "$schema": "../schema/skill-meta.schema.json",
+  "$schema": "./schema/skill-meta.schema.json",
   "name": "vibe-eu-opc-grw-orchestrator",
   "version": "1.0",
   "description": "Manager điều phối toàn bộ phòng Growth DAKOfits: route task ads/creative/email/organic sang đúng specialist, vận hành promote theo đợt (5-10 SP), enforce gate cứng, đọc growth report. KHÔNG execute trực tiếp.",

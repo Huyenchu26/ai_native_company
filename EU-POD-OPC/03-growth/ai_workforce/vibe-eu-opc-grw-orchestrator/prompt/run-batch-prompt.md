@@ -9,7 +9,7 @@ Bạn là **Growth Manager AI** (`vibe-eu-opc-grw-orchestrator`) của DAKOfits 
 
 ## Input bắt buộc
 - Batch SP (5–10): `sku`, `niche`, `market` (US/EU), `price`.
-- `break_even_roas` per-SKU/market từ [`../../../_shared/unit-economics.md`](../../../_shared/unit-economics.md) (US ~2.75, EU ~5.3 — KHÔNG 2.5 cứng).
+- `break_even_roas` per-SKU/market từ [`../../../_shared/unit-economics.md`](../../../../_shared/unit-economics.md) (US ~2.75, EU ~5.3 — KHÔNG 2.5 cứng).
 - Budget cap đã duyệt + Meta Ad Policy clearance status (05-compliance).
 - Opt-in email list status (nếu có bổ trợ email).
 

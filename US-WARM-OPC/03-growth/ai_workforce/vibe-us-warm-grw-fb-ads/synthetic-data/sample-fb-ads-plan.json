@@ -1,0 +1,27 @@
+{
+  "sku": "DAKO-BLK-PETMEM-59",
+  "break_even_roas": 1.96,
+  "kill_threshold": 1.8,
+  "blended_roas": null,
+  "scale_decision": "hold",
+  "launch": false,
+  "live_product_ready": true,
+  "ftc_clean": true,
+  "spend": null,
+  "evidence": [
+    {
+      "claim": "The single company KILL threshold is Platform ROAS below 1.8.",
+      "verbatim_quote": "Platform ROAS < 1.8",
+      "source": "../../../run-fb-ads/template/sop_grw-002_fb-ads_v1.0_2026-08-04.md",
+      "location": "control"
+    },
+    {
+      "claim": "BE-ROAS is per-SKU = sell_price / gross_before_ads, not a hard-coded number.",
+      "verbatim_quote": "sell_price / gross_before_ads",
+      "source": "../../../../_shared/unit-economics.md",
+      "location": "section 3"
+    }
+  ],
+  "confidence_score": 0.45,
+  "need_review": true
+}

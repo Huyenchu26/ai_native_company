@@ -1,0 +1,26 @@
+{
+  "niche": "GATE-VIOLATION fixture: validated with demand_score 50",
+  "niche_category": "pet-memorial",
+  "demand_score": 50,
+  "audience_proxy": 620000,
+  "competition_level": "medium",
+  "margin_fit": "good",
+  "ip_risk_flag": "CLEAR",
+  "seasonal_window": {
+    "type": "evergreen",
+    "peak_week": "none",
+    "design_deadline": "rolling"
+  },
+  "evidence": [
+    {
+      "claim": "Demand gate is demand_score >= 70 (this artifact violates it while claiming validated).",
+      "verbatim_quote": "gate demand_score ≥ 70",
+      "source": "../../../research-niche/template/sop_prd-001_gift-niche-research_v1.0_2026-08-04.md",
+      "location": "SOP-PRD-001 §2 Control"
+    }
+  ],
+  "confidence_score": 0.85,
+  "need_review": false,
+  "decision": "validated",
+  "notes": "NEGATIVE test: decision=validated but demand_score=50 (<70). The allOf/if-then gate MUST make the validator FAIL this. If this passes, the gate is not being enforced."
+}

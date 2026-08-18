@@ -29,7 +29,7 @@ Manager-level routing cho phòng 05-backoffice (L3 Support), DAKOfits. Orchestra
 | **GDPR breach → notify ≤ 72h** | R4 / BCK-005 | không có breach mở; nếu có → notify trong 72h | timer cứng 72h; Owner = notify authority; quá hạn = `breach=overdue`, legal vi phạm; `need_review=true` ngay |
 | **VAT filing 100% on-time** | R5 / BCK-003 | deadline VAT OSS/IOSS trong kỳ on-time 100% | `vat_ontime=late` = legal vi phạm; escalate Owner |
 
-> Bổ sung **R6 (no fabricated figures/FX):** số liệu finance thiếu nguồn ⇒ `need_review=true`, KHÔNG bịa. Nguồn unit-economics: [`../../../_shared/unit-economics.md`](../../../_shared/unit-economics.md). Luật đầy đủ: [`../../_rules/README.md`](../../_rules/README.md).
+> Bổ sung **R6 (no fabricated figures/FX):** số liệu finance thiếu nguồn ⇒ `need_review=true`, KHÔNG bịa. Nguồn unit-economics: [`../../../_shared/unit-economics.md`](../../../../_shared/unit-economics.md). Luật đầy đủ: [`../../_rules/README.md`](../../../_rules/README.md).
 
 ---
 

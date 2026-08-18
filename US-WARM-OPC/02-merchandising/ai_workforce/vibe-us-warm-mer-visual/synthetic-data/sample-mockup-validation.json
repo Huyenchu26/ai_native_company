@@ -1,0 +1,28 @@
+{
+  "set_id": "MOCK-DAKO-BLK-PETMEM-2026-08",
+  "sku": "DAKO-BLK-PETMEM-59",
+  "phase": "validation",
+  "images": [
+    {"type": "hero", "ratio": "4:5", "render_status": "not-generated", "local_file": null, "prompt": "Sherpa blanket, pet memorial layout, pet photo + name + dates, on couch"},
+    {"type": "personalization-demo", "ratio": "1:1", "render_status": "not-generated", "local_file": null, "prompt": "Blanket showing customer photo placeholder + 'In loving memory of [Pet]'"},
+    {"type": "story", "ratio": "9:16", "render_status": "not-generated", "local_file": null, "prompt": "Vertical story reel of blanket gift reveal"}
+  ],
+  "min_images_met": false,
+  "print_accuracy_pass": null,
+  "evidence": [
+    {
+      "claim": "In validation phase without a render tool, images are marked not-generated and are never claimed to exist on disk.",
+      "verbatim_quote": "TUYỆT ĐỐI không khai ảnh tồn tại nếu chưa render",
+      "source": "../../../personalization-preview/template/sop_mer-002_personalization-preview_v1.0_2026-08-04.md",
+      "location": "section 1"
+    },
+    {
+      "claim": "The mockup set must include a 9:16 story image (schema supports this ratio).",
+      "verbatim_quote": "story 9:16",
+      "source": "../../../personalization-preview/template/sop_mer-002_personalization-preview_v1.0_2026-08-04.md",
+      "location": "step 3.2"
+    }
+  ],
+  "confidence_score": 0.4,
+  "need_review": true
+}

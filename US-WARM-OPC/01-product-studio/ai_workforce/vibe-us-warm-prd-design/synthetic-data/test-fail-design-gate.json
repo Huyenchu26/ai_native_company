@@ -1,0 +1,22 @@
+{
+  "_test": "GATE VIOLATION (self-check c): handoff_ready=true nhưng ip_status=PENDING → PHẢI FAIL schema (chứng minh gate1 enforce). Đây KHÔNG phải output hợp lệ.",
+  "design_id": "DSG-US-0002",
+  "niche": "pet-memorial",
+  "personalization_fields": ["name", "photo"],
+  "material_type": "fleece",
+  "material_gsm": 300,
+  "min_dpi": 180,
+  "safe_area_pass": true,
+  "design_status": "CLEAR",
+  "ip_status": "PENDING",
+  "handoff_ready": true,
+  "evidence": [
+    {
+      "claim": "Material đạt ngưỡng.",
+      "verbatim_quote": "Fleece/sherpa GSM tối thiểu brand-promise = 260 GSM; dưới ngưỡng = under-spec, đổi vải không hạ ngưỡng.",
+      "source": "/home/huyenctn/ai_native_company/US-WARM-OPC/01-product-studio/ai_workforce/vibe-us-warm-prd-design/kb/design-ip-playbook.md"
+    }
+  ],
+  "confidence_score": 0.85,
+  "need_review": false
+}
